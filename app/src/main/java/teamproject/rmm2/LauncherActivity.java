@@ -1,17 +1,29 @@
 package teamproject.rmm2;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
+public class LauncherActivity extends MyActivityTemplate {
 
-public class LauncherActivity extends ActionBarActivity {
+    private Button buttonLogin;
+    private EditText editTextLogin;
+    private EditText editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launcher);
+
+        //TODO set UI
+
+        //TODO User is already logged?
+
+        //TODO Button Signin event click
+
+
     }
 
 
@@ -36,4 +48,15 @@ public class LauncherActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_launcher;
+    }
+
+    @Override
+    protected Context getContext() {
+        return this.getApplicationContext();
+    }
+
 }
