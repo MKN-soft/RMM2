@@ -19,7 +19,7 @@ public class SessionManager {
     int PRIVATE_MODE = 0;
 
     // Shared preferences file name
-    private final String PREF_NAME = "ProjektZespolowy";
+    private final String PREF_NAME = "rmm2";
 
     //private final String KEY_IS_.... = ".....";
 

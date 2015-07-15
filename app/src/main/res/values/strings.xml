@@ -8,4 +8,5 @@
     <string name="textView_password">Password</string>
     <string name="editText_password">password</string>
     <string name="button_login">Signin\\</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

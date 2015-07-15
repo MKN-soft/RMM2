@@ -9,6 +9,7 @@ import teamproject.rmm2.Helpers.SessionManager;
 
 /**
  * Created by Marcin on 2015-07-12.
+ * Activity template, all activities inherit after this one.
  */
 public abstract class MyActivityTemplate extends Activity {
 
@@ -18,7 +19,7 @@ public abstract class MyActivityTemplate extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.sessionManager = new SessionManager(getContext());
+        this.sessionManager = new SessionManager(getContext()); //creates SessionManager object that helps with managing
 
         setContentView(getLayoutResourceId());
     }
