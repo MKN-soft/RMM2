@@ -3,6 +3,7 @@ package teamproject.rmm2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInstaller;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,25 +13,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import teamproject.rmm2.Helpers.SessionManager;
 import teamproject.rmm2.login_registration.ConnectionTask;
 import teamproject.rmm2.login_registration.Validate;
 
 public class LauncherActivity extends MyActivityTemplate {
 
-    private Button buttonSignIn;
     private EditText editTextLogin;
     private EditText editTextPassword;
-    private SharedPreferences prefs;    // how does it work? I copied it like soviet scientist (MR)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-        prefs = getSharedPreferences("rmm2", MODE_PRIVATE);
-        Boolean imBackAgain = isLogged();
-
         //TODO Is user already logged?
-        if(imBackAgain == true){
+        if(isLogged() == true){
             //NOT my first time here!
 
             //Hooking activity
@@ -39,9 +35,8 @@ public class LauncherActivity extends MyActivityTemplate {
             finish();
         }
         // Else it's  users first time here so user has to sign in or sign up
-
-        //set UI
-        super.onCreate(savedInstanceState); //we have to create activity then.
+        //set UI (via super)
+        super.onCreate(savedInstanceState);
 
         //Validation formula
         registerViews();
@@ -68,7 +63,7 @@ public class LauncherActivity extends MyActivityTemplate {
      */
     private void submitForm() {
         // Set variables
-        SharedPreferences prefs = getSharedPreferences("rmm2", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(sessionManager.getPREF_NAME(), MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("username", editTextLogin.getText().toString());
         editor.putString("password", editTextPassword.getText().toString());
@@ -76,9 +71,9 @@ public class LauncherActivity extends MyActivityTemplate {
 
         editor.commit();
 
-        //It won't work until ConnectionTask class is completed
-        ConnectionTask connectionTask = new ConnectionTask(this, ConnectionTask.WhichSide.LOGIN);
-        connectionTask.execute();
+        //TODO It won't work until ConnectionTask class is completed
+        /*ConnectionTask connectionTask = new ConnectionTask(this, ConnectionTask.WhichSide.LOGIN);
+        connectionTask.execute();*/
     }
 
     /**
@@ -164,16 +159,12 @@ public class LauncherActivity extends MyActivityTemplate {
         return R.layout.activity_launcher;
     }
 
-    @Override
-    protected Context getContext() {
-        return this.getApplicationContext();
-    }
-
     /**
-     * returns boolean from SharedPreferences prefs
-     * @return boolean "imBackAgain"
+     * returns boolean from Shared preferences
+     * @return boolean telling if user was logged in earlier
      */
     public boolean isLogged() {
-        return prefs.getBoolean("imBackAgain", false);
+        return sessionManager.getPrefs().getBoolean(sessionManager.getKEY_IS_LOGGEDIN(), false);
     }
+
 }

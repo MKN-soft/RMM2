@@ -14,18 +14,15 @@ import teamproject.rmm2.Helpers.SessionManager;
 public abstract class MyActivityTemplate extends Activity {
 
     protected SessionManager sessionManager;
+    protected abstract int getLayoutResourceId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.sessionManager = new SessionManager(getContext()); //creates SessionManager object that helps with managing
+        this.sessionManager = new SessionManager(getApplicationContext()); //creates SessionManager object that helps with managing
 
         setContentView(getLayoutResourceId());
     }
-
-    protected abstract int getLayoutResourceId();
-
-    protected abstract Context getContext();
 
 }
