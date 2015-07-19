@@ -63,13 +63,8 @@ public class LauncherActivity extends MyActivityTemplate {
      */
     private void submitForm() {
         // Set variables
-        SharedPreferences prefs = getSharedPreferences(sessionManager.getPREF_NAME(), MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("username", editTextLogin.getText().toString());
-        editor.putString("password", editTextPassword.getText().toString());
-
-
-        editor.commit();
+        sessionManager.setSavedPassword(editTextLogin.getText().toString());
+        sessionManager.setSavedPassword(editTextPassword.getText().toString());
 
         //TODO It won't work until ConnectionTask class is completed
         /*ConnectionTask connectionTask = new ConnectionTask(this, ConnectionTask.WhichSide.LOGIN);
