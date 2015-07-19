@@ -89,7 +89,7 @@ public class LauncherActivity extends MyActivityTemplate {
     }
 
     /**
-     * I have no idea what it's doing (MR)
+     * Validates (on the run) if password and username are correct (not too short, not too long, correct symbols etc.)
      */
     private void registerViews() {
         //TODO MR doesn't know what the fuck exactly this is supposed to do
