@@ -15,19 +15,22 @@ import teamproject.rmm2.database.DbHelper;
 public abstract class MyActivityTemplate extends Activity {
 
     protected SessionManager sessionManager;
-    protected abstract int getLayoutResourceId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //creates SessionManager object that helps with managing
-        this.sessionManager = new SessionManager(getApplicationContext());
+        this.sessionManager = new SessionManager(getContext());
 
         //creates DbHelper to access database
-        DbHelper DbHelper = new DbHelper(getApplicationContext());
+        DbHelper DbHelper = new DbHelper(getContext());
 
         setContentView(getLayoutResourceId());
     }
+
+    protected abstract int getLayoutResourceId();
+
+    protected abstract Context getContext();
 
 }

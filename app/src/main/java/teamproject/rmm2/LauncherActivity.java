@@ -154,12 +154,17 @@ public class LauncherActivity extends MyActivityTemplate {
         return R.layout.activity_launcher;
     }
 
+    @Override
+    protected Context getContext() {
+        return getApplicationContext();
+    }
+
     /**
      * returns boolean from Shared preferences
      * @return boolean telling if user was logged in earlier
      */
     public boolean isLogged() {
-        return sessionManager.getPrefs().getBoolean(sessionManager.getKEY_IS_LOGGEDIN(), false);
+        return sessionManager.getKEY_IS_LOGGEDIN();
     }
 
 }

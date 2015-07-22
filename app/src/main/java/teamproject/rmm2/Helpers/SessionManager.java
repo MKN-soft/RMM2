@@ -33,28 +33,8 @@ public class SessionManager {
         this.editor = sharedPreferences.edit();
     }
 
-    public SharedPreferences getPrefs(){
-        return sharedPreferences;
-    }
-
-    public String getPREF_NAME(){
-        return PREF_NAME;
-    }
-
-    public String getKEY_IS_LOGGEDIN(){
-        return KEY_IS_LOGGEDIN;
-    }
-
-    public String getKEY_IS_SALT(){
-        return KEY_IS_SALT;
-    }
-
-    public String getKEY_PASSWORD(){
-        return KEY_PASSWORD;
-    }
-
-    public String getKEY_USERNAME(){
-        return KEY_USERNAME;
+    public boolean getKEY_IS_LOGGEDIN(){
+        return this.sharedPreferences.getBoolean(KEY_IS_LOGGEDIN, false);
     }
 
     //save user name to SharedPref
@@ -82,4 +62,5 @@ public class SessionManager {
         editor.clear();
         editor.commit();
     }
+
 }
