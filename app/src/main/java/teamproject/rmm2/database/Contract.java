@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  * Created by Marcin on 2015-07-21.
  * Contract class for SQLite. Contract class explicitly specifies the layout of schema in a systematic and self-documenting way.
  */
-public final class Contract {
+ final class Contract {
     //TODO schema and stuff with databases, these are just foundatiosn and example (MR)
     /*
      an empty constructor to prevent someone from accidentally instantiating the contract class
@@ -21,7 +21,7 @@ but this can help your database work harmoniously with the Android framework.*/
     /**
      * Inner class that defines the table contents
      */
-    public static abstract class Habits implements BaseColumns{
+    static abstract class Habits implements BaseColumns{
         public static final String TABLE_NAME = "habits";
         public static final String COLUMN_HABIT_ID = "habitid";
         public static final String COLUMN_HABIT_TITLE = "title";
@@ -29,7 +29,7 @@ but this can help your database work harmoniously with the Android framework.*/
         public static final String COLUMN_HABIT_FREQUENCY = "frequency";
     }
 
-    public static abstract class Calendar implements BaseColumns{
+    static abstract class Calendar implements BaseColumns{
         public static final String TABLE_NAME = "dates";
         public static final String COLUMN_HABIT_ID = "habitid";
         public static final String COLUMN_DATE = "date";
@@ -37,13 +37,13 @@ but this can help your database work harmoniously with the Android framework.*/
     }
 
     //aux constant
-    private static final String COMMA_SEP = ",";
+    static final String COMMA_SEP = ",";
 
     /*
     Constants used in SQL for HABITS table
      */
     //private static final String TEXT_TYPE = " TEXT";
-    private static final String SQL_CREATE_HABITS =
+    static final String SQL_CREATE_HABITS =
             "CREATE TABLE " + Habits.TABLE_NAME +
                     " (" +
                     Habits._ID + " INTEGER PRIMARY KEY," +
@@ -52,14 +52,14 @@ but this can help your database work harmoniously with the Android framework.*/
                     Habits.COLUMN_HABIT_DESCRIPTION + COMMA_SEP +
                     Habits.COLUMN_HABIT_FREQUENCY +COMMA_SEP+
                     " )";
-    private static final String SQL_DELETE_HABITS =
+    static final String SQL_DELETE_HABITS =
             "DROP TABLE IF EXISTS " + Habits.TABLE_NAME;
 
 
     /*
     Constants used in SQL for CALENDAR table
      */
-    private static final String SQL_CREATE_CALENDAR =
+    static final String SQL_CREATE_CALENDAR =
             "CREATE TABLE " + Habits.TABLE_NAME +
                     " (" +
                     Calendar._ID + " INTEGER PRIMARY KEY," +
@@ -68,9 +68,7 @@ but this can help your database work harmoniously with the Android framework.*/
                     Calendar.COLUMN_STATE + COMMA_SEP +
                     " )";
 
-    private static final String SQL_DELETE_CALENDAR =
+    static final String SQL_DELETE_CALENDAR =
             "DROP TABLE IF EXISTS " + Calendar.TABLE_NAME;
-
-
 
 }

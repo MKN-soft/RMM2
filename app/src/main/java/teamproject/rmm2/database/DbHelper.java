@@ -25,11 +25,25 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+        //TODO schema, it's still just an example/ foundation
+        sqLiteDatabase.execSQL(Contract.SQL_CREATE_CALENDAR);
+        sqLiteDatabase.execSQL(Contract.SQL_CREATE_HABITS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        //TODO
+        // This database is only a cache for online data, so its upgrade policy is
+        // to simply to discard the data and start over
+        sqLiteDatabase.execSQL(Contract.SQL_DELETE_CALENDAR);
+        sqLiteDatabase.execSQL(Contract.SQL_DELETE_HABITS);
+        onCreate(sqLiteDatabase);
     }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+    }
+
+
 }
