@@ -23,7 +23,6 @@ but this can help your database work harmoniously with the Android framework.*/
      */
     static abstract class Habits implements BaseColumns{
         public static final String TABLE_NAME = "habits";
-        public static final String COLUMN_HABIT_ID = "habitid";
         public static final String COLUMN_HABIT_TITLE = "title";
         public static final String COLUMN_HABIT_DESCRIPTION = "description";
         public static final String COLUMN_HABIT_FREQUENCY = "frequency";
@@ -31,7 +30,7 @@ but this can help your database work harmoniously with the Android framework.*/
 
     static abstract class Calendar implements BaseColumns{
         public static final String TABLE_NAME = "dates";
-        public static final String COLUMN_HABIT_ID = "habitid";
+        public static final String COLUMN_HABIT_TITLE = "habitid";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_STATE = "state";
     }
