@@ -46,7 +46,6 @@ but this can help your database work harmoniously with the Android framework.*/
             "CREATE TABLE " + Habits.TABLE_NAME +
                     " (" +
                     Habits._ID + " INTEGER PRIMARY KEY," +
-                    Habits.COLUMN_HABIT_ID + COMMA_SEP +
                     Habits.COLUMN_HABIT_TITLE + COMMA_SEP +
                     Habits.COLUMN_HABIT_DESCRIPTION + COMMA_SEP +
                     Habits.COLUMN_HABIT_FREQUENCY +COMMA_SEP+
@@ -62,7 +61,7 @@ but this can help your database work harmoniously with the Android framework.*/
             "CREATE TABLE " + Habits.TABLE_NAME +
                     " (" +
                     Calendar._ID + " INTEGER PRIMARY KEY," +
-                    Calendar.COLUMN_HABIT_ID + COMMA_SEP +
+                    Calendar.COLUMN_HABIT_TITLE + COMMA_SEP +
                     Calendar.COLUMN_DATE + COMMA_SEP +
                     Calendar.COLUMN_STATE + COMMA_SEP +
                     " )";

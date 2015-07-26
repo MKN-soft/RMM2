@@ -25,6 +25,9 @@ public class LauncherActivity extends MyActivityTemplate {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //set UI (via super)
+        super.onCreate(savedInstanceState);
+
         //TODO Is user already logged?
         if(isLogged() == true){
             //NOT my first time here!
@@ -35,8 +38,7 @@ public class LauncherActivity extends MyActivityTemplate {
             finish();
         }
         // Else it's  users first time here so user has to sign in or sign up
-        //set UI (via super)
-        super.onCreate(savedInstanceState);
+
 
         //Validation formula
         registerViews();
