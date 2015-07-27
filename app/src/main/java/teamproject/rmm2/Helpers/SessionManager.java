@@ -24,7 +24,6 @@ public class SessionManager {
     //Shared preferences keys
     private final String KEY_IS_LOGGEDIN = "isLoggedIn";
     private final String KEY_IS_SALT = "salt";
-    private final String KEY_PASSWORD = "password";
     private final String KEY_USERNAME = "username";
 
     public SessionManager(Context context) {
@@ -48,13 +47,17 @@ public class SessionManager {
         return sharedPreferences.getString(KEY_USERNAME, "");
     }
 
-    public void setSavedPassword(String pass) {
-        editor.putString(KEY_PASSWORD, pass);
+    public void setUserLoggedIn(boolean isLogin) {
+        editor.putBoolean(KEY_IS_LOGGEDIN, isLogin);
         editor.commit();
     }
 
-    public void setUserLoggedIn(boolean isLogin) {
-        editor.putBoolean(KEY_IS_LOGGEDIN, isLogin);
+    public void setLogin(boolean isLoggedIn, String salt, String username) {
+        this.editor.putBoolean(KEY_IS_LOGGEDIN, isLoggedIn);
+        this.editor.putString(KEY_IS_SALT, salt);
+        this.editor.putString(KEY_USERNAME, username);
+
+        // commit changes
         editor.commit();
     }
 

@@ -2,20 +2,23 @@ package teamproject.rmm2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInstaller;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import teamproject.rmm2.Helpers.SessionManager;
-import teamproject.rmm2.login_registration.ConnectionTask;
-import teamproject.rmm2.login_registration.Validate;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import teamproject.rmm2.Helpers.AppConfig;
+import teamproject.rmm2.Helpers.ConnectionTask;
+import teamproject.rmm2.Helpers.Validate;
 
 public class LauncherActivity extends MyActivityTemplate {
 
@@ -64,13 +67,14 @@ public class LauncherActivity extends MyActivityTemplate {
      * submits form to phone memory (in SharedPreferences)
      */
     private void submitForm() {
-        // Set variables
-        sessionManager.setSavedPassword(editTextLogin.getText().toString());
-        sessionManager.setSavedPassword(editTextPassword.getText().toString());
+        // Build list params
+        List<NameValuePair> list = new ArrayList<>();
+        list.add(new BasicNameValuePair("tag", AppConfig.TAG_LOGIN));
+        list.add(new BasicNameValuePair("username", editTextLogin.getText().toString()));
+        list.add(new BasicNameValuePair("password", editTextPassword.getText().toString()));
 
-        //TODO It won't work until ConnectionTask class is completed
-        /*ConnectionTask connectionTask = new ConnectionTask(this, ConnectionTask.WhichSide.LOGIN);
-        connectionTask.execute();*/
+        ConnectionTask connectionTask = new ConnectionTask(getContext(), list);
+        connectionTask.execute();
     }
 
     /**

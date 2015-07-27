@@ -1,4 +1,4 @@
-package teamproject.rmm2.login_registration;
+package teamproject.rmm2.Helpers;
 
 import android.widget.EditText;
 
