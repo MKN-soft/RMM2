@@ -18,7 +18,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "RMM2.db";
 
     public DbHelper(Context context){
@@ -29,6 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
         //TODO schema, it's still just an example/ foundation
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_CALENDAR);
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_HABITS);
+        sqLiteDatabase.execSQL(Contract.SQL_CREATE_STATES);
     }
 
     @Override
@@ -38,6 +39,7 @@ public class DbHelper extends SQLiteOpenHelper {
         // to simply to discard the data and start over
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_CALENDAR);
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_HABITS);
+        sqLiteDatabase.execSQL(Contract.SQL_DELETE_STATES);
         onCreate(sqLiteDatabase);
     }
 
@@ -54,6 +56,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param frequency
      */
     private void insertHabit(int id, String title, String description, int frequency){
+        //TODO insert into HABITS
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -76,6 +79,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
+    //TODO delete from HABITS
+
 
     /**
      * insert into CALENDAR table in database
@@ -84,7 +89,8 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param date
      * @param state
      */
-    private void insertCalendar(int id, int habittitle, String date, int state){
+    private void insertDate(int id, int habittitle, String date, int state){
+        //TODO insert into DATES, dates are held as TEXT, REAL, INTEGER using built-in date and time functions
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -106,6 +112,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 null,
                 values);
     }
+
+
+    //TODO insert into STATES (only on create and on upgrade)
 
 
 
