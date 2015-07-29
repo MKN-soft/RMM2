@@ -7,6 +7,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -46,6 +48,17 @@ public class LauncherActivity extends MyActivityTemplate {
         //Validation formula
         registerViews();
 
+
+        // Set action to button
+        Button loginBtn = (Button) findViewById(R.id.button_login);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickSignIn();
+            }
+        });
+
+
     }
 
     /**
@@ -73,7 +86,7 @@ public class LauncherActivity extends MyActivityTemplate {
         list.add(new BasicNameValuePair("username", editTextLogin.getText().toString()));
         list.add(new BasicNameValuePair("password", editTextPassword.getText().toString()));
 
-        ConnectionTask connectionTask = new ConnectionTask(getContext(), list);
+        ConnectionTask connectionTask = new ConnectionTask(this, list);
         connectionTask.execute();
     }
 

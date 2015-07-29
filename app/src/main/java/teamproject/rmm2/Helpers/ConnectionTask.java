@@ -31,8 +31,8 @@ public class ConnectionTask extends AsyncTask<Void, Void, Void> {
         this.context = context;
         this.list = list;
         this.jParser = new JSONParser();
-        this.sessionManager = new SessionManager(this.context);
-        this.progressDialog = new ProgressDialog(this.context);
+        this.sessionManager = new SessionManager(context);
+        this.progressDialog = new ProgressDialog(context);
         this.list = list;
     }
 
