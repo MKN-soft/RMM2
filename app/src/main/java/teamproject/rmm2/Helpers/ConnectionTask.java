@@ -56,6 +56,7 @@ public class ConnectionTask extends AsyncTask<Void, Void, Void> {
         else {
             jParser.setError("No internet connection!");
         }
+        //TODO show error to user!
         return null;
     }
 
