@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Marcin on 2015-07-21.
  *
@@ -34,7 +37,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        //TODO
+        //TODO think about upgrading policy and how to do it (I think it's ok as it is though) (MR)
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_CALENDAR);
@@ -50,13 +53,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /**
      * insert into HABITS table in database
-     * @param id
      * @param title
      * @param description
      * @param frequency
      */
-    private void insertHabit(int id, String title, String description, int frequency){
-        //TODO insert into HABITS
+    public void insertHabit(String title, String description, int frequency){
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -83,21 +84,23 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     /**
-     * insert into CALENDAR table in database
-     * @param id
+     * insert into CALENDAR table in database. Takes CURRENT DATE in YYYY-MM-DD
      * @param habittitle
-     * @param date
      * @param state
      */
-    private void insertDate(int id, int habittitle, String date, int state){
-        //TODO insert into DATES, dates are held as TEXT, REAL, INTEGER using built-in date and time functions
+    public void insertDate(int habittitle, int state){
+        //We insert dates as TEXT
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
+
+        //getting date and formatting date to yyyy-mm-dd
+        Date date = new Date(); //constructor gets current date
+        String formattedDate = new SimpleDateFormat("yyy-MM-dd").format(date);
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(Contract.Calendar.COLUMN_HABIT_TITLE, habittitle);
-        values.put(Contract.Calendar.COLUMN_DATE, date);
+        values.put(Contract.Calendar.COLUMN_DATE, formattedDate);   // uses CURRENT date
         values.put(Contract.Calendar.COLUMN_STATE, state);
 
         // Insert the new row, returning the primary key value of the new row
@@ -113,8 +116,26 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
+    private void insertState(String state){
+        // Gets the data repository in write mode
+        SQLiteDatabase database = this.getWritableDatabase();
 
-    //TODO insert into STATES (only on create and on upgrade)
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(Contract.States.COLUMN_STATE, state);
+
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId;
+        /*
+        The first argument for insert() is simply the table name. The second argument provides the name of a column in which
+        the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
+        the framework will not insert a row when there are no values).
+         */
+        newRowId = database.insert(
+                Contract.States.TABLE_NAME,
+                null,
+                values);
+    }
 
 
 

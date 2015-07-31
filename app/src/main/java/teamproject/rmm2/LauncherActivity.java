@@ -111,7 +111,6 @@ public class LauncherActivity extends MyActivityTemplate {
      * Validates (on the run) if password and username are correct (not too short, not too long, correct symbols etc.)
      */
     private void registerViews() {
-        //TODO MR doesn't know what the fuck exactly this is supposed to do
         editTextLogin = (EditText) findViewById(R.id.editText_username);
         editTextLogin.addTextChangedListener(new TextWatcher() {
             // after every change has been made to this editText, we would like to check validity
