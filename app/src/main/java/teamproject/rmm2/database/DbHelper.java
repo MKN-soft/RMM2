@@ -38,8 +38,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         //TODO think about upgrading policy and how to do it (I think it's ok as it is though) (MR)
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
+        //Current upgrade policy is to simply to discard the data and start over
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_CALENDAR);
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_HABITS);
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_STATES);
@@ -74,13 +73,18 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        newRowId = database.insert(
+        database.insert(
                 Contract.Habits.TABLE_NAME,
                 null,
                 values);
     }
 
-    //TODO delete from HABITS
+    public void deletHabit(String habit){
+        // Gets the data repository in write mode
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " = " + habit, null);
+    }
 
 
     /**
@@ -88,8 +92,8 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param habittitle
      * @param state
      */
-    public void insertDate(int habittitle, int state){
-        //We insert dates as TEXT
+    public void insertDate(String habittitle, int state){
+        //We insert dates as TEXT   yyyy-MM-dd
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -103,17 +107,30 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(Contract.Calendar.COLUMN_DATE, formattedDate);   // uses CURRENT date
         values.put(Contract.Calendar.COLUMN_STATE, state);
 
-        // Insert the new row, returning the primary key value of the new row
-        long newRowId;
+
         /*
         The first argument for insert() is simply the table name. The second argument provides the name of a column in which
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        newRowId = database.insert(
+        database.insert(
                 Contract.Habits.TABLE_NAME,
                 null,
                 values);
+    }
+
+    public void updateCalendar(int state, String date, String habit){
+        // Gets the data repository in write mode
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues cValues = new ContentValues();
+        cValues.put(Contract.Calendar.COLUMN_HABIT_TITLE, habit);
+        cValues.put(Contract.Calendar.COLUMN_DATE, date);
+        cValues.put(Contract.Calendar.COLUMN_STATE, state);
+
+        database.update(Contract.Calendar.TABLE_NAME, cValues,
+                Contract.Calendar.COLUMN_HABIT_TITLE + " = " + habit  + " AND " + Contract.Calendar.COLUMN_DATE + " = " + date,
+                null);
     }
 
     private void insertState(String state){
@@ -124,14 +141,13 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Contract.States.COLUMN_STATE, state);
 
-        // Insert the new row, returning the primary key value of the new row
-        long newRowId;
+
         /*
         The first argument for insert() is simply the table name. The second argument provides the name of a column in which
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        newRowId = database.insert(
+        database.insert(
                 Contract.States.TABLE_NAME,
                 null,
                 values);

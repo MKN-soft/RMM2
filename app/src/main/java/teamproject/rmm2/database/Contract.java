@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
  * Contract class for SQLite. Contract class explicitly specifies the layout of schema in a systematic and self-documenting way.
  */
  final class Contract {
-    //TODO schema and stuff with databases, these are just foundations and example (MR)
+    //TODO schema and stuff with databases, it MIGHT not yet be finished (MR)
     /*
      an empty constructor to prevent someone from accidentally instantiating the contract class
      */
