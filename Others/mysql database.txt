@@ -1,0 +1,4 @@
+adres do phpmyadmin: sql.serwer1538500.home.pl
+login: 18076730_lubiekokosy
+has³o: K@K.,jFpR%a3
+baza danych: 18076730_lubiekokosy

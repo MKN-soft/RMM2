@@ -1,5 +1,6 @@
 package teamproject.rmm2;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,14 +8,12 @@ import android.view.MenuItem;
 
 //TODO Main Activity - menu and stuff
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends MyActivityTemplate {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -36,5 +35,17 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_main;
+    }
+
+
+    @Override
+    protected Context getContext() {
+        return getApplicationContext();
     }
 }
