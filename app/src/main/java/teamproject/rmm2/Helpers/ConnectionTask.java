@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONException;
@@ -26,6 +27,7 @@ public class ConnectionTask extends AsyncTask<Void, Void, Void> {
     private JSONParser jParser;
     private SessionManager sessionManager;
     private ProgressDialog progressDialog;
+    private String successMsg = "Success!";
 
     public ConnectionTask(Context context, List<NameValuePair> list) {
         this.context = context;
@@ -79,19 +81,29 @@ public class ConnectionTask extends AsyncTask<Void, Void, Void> {
                 if (!tag.toString().equals(AppConfig.TAG_SYNCHRO.toString())) {
                     salt = json.getString("salt");
                     username = json.getString("username");
-                }
-                // Create login session
-                sessionManager.setLogin(true, salt, username);
 
-                // Launch User Activity
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                    // Create login session
+                    sessionManager.setLogin(true, salt, username);
+
+                    // Launch User Activity
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+                else {
+                    // Toast success
+                    Toast.makeText(context, successMsg, Toast.LENGTH_LONG).show();
+                }
             }
             catch (JSONException e) {
                 e.printStackTrace();
             }
 
+        }
+        else {
+            // error in login. Get the error message
+            String errorMsg = jParser.getErrorMsg();
+            Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
         }
     }
 
