@@ -57,8 +57,22 @@ public class LauncherActivity extends MyActivityTemplate {
                 onClickSignIn();
             }
         });
+        
+        Button registerBtn = (Button) findViewById(R.id.button_register);
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRegister();
+            }
+        });
 
 
+    }
+
+    private void onClickRegister() {
+        Intent intent = new Intent(LauncherActivity.this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**

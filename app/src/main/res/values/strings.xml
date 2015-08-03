@@ -9,4 +9,11 @@
     <string name="editText_password">password</string>
     <string name="button_login">Signin\\</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="btn_link_to_register">Sign up now.</string>
+    <string name="title_activity_register">RegisterActivity</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="btn_link_to_login">Login Me.</string>
 </resources>
