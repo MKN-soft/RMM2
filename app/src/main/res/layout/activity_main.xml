@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Framelayout to display Fragments -->
+        <!-- Framelayout to display Fragments (main content view) -->
         <FrameLayout
             android:id="@+id/frame_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <!-- Listview to display slider menu -->
+        <!-- Listview to display slider menu (navigation drawer)-->
         <ListView
             android:id="@+id/list_slidermenu"
             android:layout_width="240dp"

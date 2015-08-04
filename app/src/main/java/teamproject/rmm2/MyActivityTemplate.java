@@ -10,7 +10,8 @@ import teamproject.rmm2.database.DbHelper;
 
 /**
  * Created by Marcin on 2015-07-12.
- * Activity template, all activities inherit after this one.
+ * Activity template, activities inherit after this one.
+ * DatabaseHelper and SessionManager are instatiated here for use in child activities
  */
 public abstract class MyActivityTemplate extends Activity {
 
