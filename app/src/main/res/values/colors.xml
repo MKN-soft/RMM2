@@ -17,5 +17,6 @@
 
     <color name="btn_register">#ff02a4c2</color>
     <color name="btn_register_bg">#ffffff</color>
+    <color name="black">#ff02a4c2</color>
 
 </resources>
