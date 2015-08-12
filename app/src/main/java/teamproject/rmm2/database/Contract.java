@@ -29,7 +29,7 @@ but this can help your database work harmoniously with the Android framework.*/
     }
 
     static abstract class Calendar{
-        public static final String TABLE_NAME = "dates";
+        public static final String TABLE_NAME = "calendar";
         public static final String COLUMN_HABIT_TITLE = "habitid";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_STATE = "state";
@@ -78,8 +78,8 @@ but this can help your database work harmoniously with the Android framework.*/
     static final String SQL_CREATE_CALENDAR =
             "CREATE TABLE " + Calendar.TABLE_NAME +
                     " (" +
-                    Calendar.COLUMN_HABIT_TITLE + TEXT_TYPE + FOREIGN_KEY + REFERENCES + " " +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ")" + COMMA_SEP +
                     Calendar.COLUMN_DATE + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
+                    Calendar.COLUMN_HABIT_TITLE + TEXT_TYPE + FOREIGN_KEY + REFERENCES + " " +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ")" + COMMA_SEP +
                     Calendar.COLUMN_STATE + TEXT_TYPE  + FOREIGN_KEY + REFERENCES + " " +  States.TABLE_NAME + "(" + States.COLUMN_STATE + ")" +
                     " )";
 

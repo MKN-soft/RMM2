@@ -30,15 +30,17 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //TODO schema, it's still just an example/ foundation
-        sqLiteDatabase.execSQL(Contract.SQL_CREATE_CALENDAR);
+        sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON;");
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_HABITS);
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_STATES);
+        sqLiteDatabase.execSQL(Contract.SQL_CREATE_CALENDAR);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         //TODO think about upgrading policy and how to do it (I think it's ok as it is though) (MR)
         //Current upgrade policy is to simply to discard the data and start over
+        sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON;");
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_CALENDAR);
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_HABITS);
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_STATES);
@@ -58,7 +60,7 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     public void insertHabit(String title, String description, int frequency){
         // Gets the data repository in write mode
-        SQLiteDatabase database = this.getWritableDatabase();   //TODO: CRASH!!!
+        SQLiteDatabase database = this.getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
