@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import teamproject.rmm2.R;
 
 /**
@@ -22,5 +24,7 @@ public class GoProFragment extends Fragment {
 
         return rootView;
     }
+
+
 
 }

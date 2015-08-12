@@ -20,5 +20,40 @@
         android:layout_marginTop="10dp"
         android:src="@mipmap/ic_whats_hot" />
 
+    <Button
+        android:id="@+id/test_db_get"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Test get"
+        android:onClick="dbget"
+        android:layout_above="@+id/test_db_textview"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/test_db_put"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Test put"
+        android:onClick="dbput"
+        android:layout_above="@+id/test_db_get"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/test_db_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="NOTHING"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+
+
+
+
+
 
 </RelativeLayout>

@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
  * Created by Marcin on 2015-07-21.
  * Contract class for SQLite. Contract class explicitly specifies the layout of schema in a systematic and self-documenting way.
  */
- final class Contract {
+ final public class Contract {
     //TODO schema and stuff with databases, it MIGHT not yet be finished (MR)
     /*
      an empty constructor to prevent someone from accidentally instantiating the contract class
@@ -36,7 +36,7 @@ but this can help your database work harmoniously with the Android framework.*/
     }
 
     static abstract class States{
-        public static final String TABLE_NAME = "state";
+        public static final String TABLE_NAME = "states";
         public static final String COLUMN_STATE = "habitstate";
     }
 
@@ -78,9 +78,9 @@ but this can help your database work harmoniously with the Android framework.*/
     static final String SQL_CREATE_CALENDAR =
             "CREATE TABLE " + Calendar.TABLE_NAME +
                     " (" +
-                    Calendar.COLUMN_HABIT_TITLE + TEXT_TYPE + FOREIGN_KEY + REFERENCES +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ")" + COMMA_SEP +
+                    Calendar.COLUMN_HABIT_TITLE + TEXT_TYPE + FOREIGN_KEY + REFERENCES + " " +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ")" + COMMA_SEP +
                     Calendar.COLUMN_DATE + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
-                    Calendar.COLUMN_STATE + TEXT_TYPE  + FOREIGN_KEY + REFERENCES +  States.TABLE_NAME + "(" + States.COLUMN_STATE + ")" +
+                    Calendar.COLUMN_STATE + TEXT_TYPE  + FOREIGN_KEY + REFERENCES + " " +  States.TABLE_NAME + "(" + States.COLUMN_STATE + ")" +
                     " )";
 
     static final String SQL_DELETE_CALENDAR =

@@ -21,7 +21,7 @@ import java.util.Date;
  */
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "RMM2.db";
 
     public DbHelper(Context context){
@@ -58,7 +58,7 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     public void insertHabit(String title, String description, int frequency){
         // Gets the data repository in write mode
-        SQLiteDatabase database = this.getWritableDatabase();
+        SQLiteDatabase database = this.getWritableDatabase();   //TODO: CRASH!!!
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
@@ -79,12 +79,21 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
-    public void deletHabit(String habit){
+
+    public void getHabit(String habit){
+        //TODO
+        // Gets the data repository in read mode
+        SQLiteDatabase database = this.getReadableDatabase();
+    }
+
+    public void deleteHabit(String habit){
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
         database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " = " + habit, null);
     }
+
+
 
 
     /**

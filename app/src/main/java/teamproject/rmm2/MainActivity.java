@@ -2,6 +2,7 @@ package teamproject.rmm2;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.widget.DrawerLayout;
@@ -14,10 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
+import teamproject.rmm2.database.Contract;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
 import teamproject.rmm2.fragments.SettingsFragment;
@@ -157,5 +160,32 @@ public class MainActivity extends MyActivityTemplate {
             // display view for selected nav drawer item
             displayView(position);
         }
+    }
+
+    //TODO delete testers
+    /**
+     * testing purposes, delete when not needed
+     * @param v
+     */
+    public void dbput(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("Processing...");
+        //ok until here
+
+        dbHelper.insertHabit("title","desc",1);
+
+        textView.setText("Processing... finished");
+
+    }
+
+    /**
+     * testing purposes, delete when not needed
+     * @param v
+     */
+    public void dbget(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("getting text from db");
+        //ok until here
+
     }
 }
