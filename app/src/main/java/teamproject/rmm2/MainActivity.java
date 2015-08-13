@@ -172,7 +172,7 @@ public class MainActivity extends MyActivityTemplate {
         textView.setText("Processing...");
         //ok until here
 
-        dbHelper.insertHabit("title","desc",1);
+        dbHelper.insertHabit("test","desc",1);
 
         textView.setText("Processing... finished");
 
