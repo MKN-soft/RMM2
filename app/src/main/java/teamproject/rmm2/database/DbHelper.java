@@ -125,12 +125,13 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework will not insert a row when there are no values).
          */
         database.insert(
-                Contract.Habits.TABLE_NAME,
+                Contract.Calendar.TABLE_NAME,
                 null,
                 values);
     }
 
     public void updateCalendar(int state, String date, String habit){
+        //TODO check dat shieeeeet. I have no idea if it works at all.
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -144,7 +145,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 null);
     }
 
-    private void insertState(String state){
+    public void insertState(String state){
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 

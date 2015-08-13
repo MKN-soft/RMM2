@@ -167,12 +167,12 @@ public class MainActivity extends MyActivityTemplate {
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbput(View v){
+    public void dbputhabit(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("Processing...");
         //ok until here
 
-        dbHelper.insertHabit("test","desc",1);
+        dbHelper.insertHabit("test_habit","desc",1);
 
         textView.setText("Processing... finished");
 
@@ -182,7 +182,54 @@ public class MainActivity extends MyActivityTemplate {
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbget(View v){
+    public void dbgethabit(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("getting text from db");
+
+    }
+
+    /**
+     * testing purposes, delete when not needed
+     * @param v
+     */
+    public void dbputstate(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("Processing...");
+        //ok until here
+
+        dbHelper.insertState("test_state");
+
+        textView.setText("Processing... finished");
+
+    }
+
+    /**
+     * testing purposes, delete when not needed
+     * @param v
+     */
+    public void dbgetstate(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("getting text from db");
+        //ok until here
+
+    }
+
+    /**
+     * testing purposes, delete when not needed
+     * @param v
+     */
+    public void dbputdate(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("Processing...");
+        //ok until here
+
+        dbHelper.insertDate("test_habit", 0);   //TODO foreign key not working properly!
+
+        textView.setText("Processing... finished");
+
+    }
+
+    public void dbgetdate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
         //ok until here
