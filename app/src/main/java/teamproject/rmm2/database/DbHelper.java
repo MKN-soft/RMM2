@@ -2,11 +2,16 @@ package teamproject.rmm2.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import teamproject.rmm2.models.Habit;
 
 /**
  * Created by Marcin on 2015-07-21.
@@ -52,6 +57,82 @@ public class DbHelper extends SQLiteOpenHelper {
         super.onOpen(db);
     }
 
+    //auxiliary classes for GETTING data from DB
+
+
+
+
+
+    public Habit getHabit(String title){
+        //TODO: check & test
+        // Gets the data repository in read mode
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Preparing query (only for convenience purposes)
+        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME + " " + "WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + " = \"" + title + "\"";
+        //Preparing cursor for getting rows
+        Cursor cursor = database.rawQuery(query, null);
+
+        //TODO: error: for some reason it doesn't find habit by title
+
+        // looping through all rows and selecting
+        if(cursor.moveToFirst()){
+            do{
+                Habit habit = new Habit();
+                habit.setTitle(cursor.getString(0));
+
+                if (habit.getTitle() == title) {
+                    habit.setDescription(cursor.getString(1));
+                    habit.setFrequency(cursor.getInt(2));
+
+                    //returns found row
+                    return habit;
+                }
+
+            }while(cursor.moveToNext());
+        }
+
+        //TODO exception handling. Returns null if nothing is found.
+        return null;
+    }
+
+    public List<Habit> getAllHabits() {
+        //TODO: check & test
+        // Gets the data repository in read mode
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Preparing query (only for convenience purposes)
+        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME;
+        //Preparing cursor for getting rows
+        Cursor cursor = database.rawQuery(query, null);
+        //Creating list
+        List<Habit> habitList = new ArrayList<Habit>();
+
+        // looping through all rows and selecting
+        if (cursor.moveToFirst()) {
+            do {
+                Habit habit = new Habit();
+                habit.setTitle(cursor.getString(0));
+                habit.setDescription(cursor.getString(1));
+                habit.setFrequency(cursor.getInt(2));
+                //adding to list
+                habitList.add(habit);
+
+            } while (cursor.moveToNext());
+
+            return habitList;
+        }
+        else return null;
+    }
+
+    public Date  getDate(String day){
+        //TODO
+        // Gets the data repository in read mode
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Date date = new Date();
+        return date;
+    }
+
+
     /**
      * insert into HABITS table in database
      * @param title
@@ -80,23 +161,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 null,
                 values);
     }
-
-
-    public void getHabit(String habit){
-        //TODO
-        // Gets the data repository in read mode
-        SQLiteDatabase database = this.getReadableDatabase();
-    }
-
-    public void deleteHabit(String habit){
-        // Gets the data repository in write mode
-        SQLiteDatabase database = this.getWritableDatabase();
-
-        database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " = " + habit, null);
-    }
-
-
-
 
     /**
      * insert into CALENDAR table in database. Takes CURRENT DATE in YYYY-MM-DD
@@ -130,21 +194,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
-    public void updateCalendar(int state, String date, String habit){
-        //TODO check dat shieeeeet. I have no idea if it works at all.
-        // Gets the data repository in write mode
-        SQLiteDatabase database = this.getWritableDatabase();
-
-        ContentValues cValues = new ContentValues();
-        cValues.put(Contract.Calendar.COLUMN_HABIT_TITLE, habit);
-        cValues.put(Contract.Calendar.COLUMN_DATE, date);
-        cValues.put(Contract.Calendar.COLUMN_STATE, state);
-
-        database.update(Contract.Calendar.TABLE_NAME, cValues,
-                Contract.Calendar.COLUMN_HABIT_TITLE + " = " + habit  + " AND " + Contract.Calendar.COLUMN_DATE + " = " + date,
-                null);
-    }
-
     public void insertState(String state){
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
@@ -166,5 +215,31 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
 
+    public void updateCalendar(int state, String date, String habit){
+        //TODO check dat shieeeeet. I have no idea if it works at all.
+        // Gets the data repository in write mode
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues cValues = new ContentValues();
+        cValues.put(Contract.Calendar.COLUMN_HABIT_TITLE, habit);
+        cValues.put(Contract.Calendar.COLUMN_DATE, date);
+        cValues.put(Contract.Calendar.COLUMN_STATE, state);
+
+        database.update(Contract.Calendar.TABLE_NAME, cValues,
+                Contract.Calendar.COLUMN_HABIT_TITLE + " = " + habit + " AND " + Contract.Calendar.COLUMN_DATE + " = " + date,
+                null);
+    }
+
+
+
+
+
+
+    public void deleteHabit(String habit){
+        // Gets the data repository in write mode
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " = " + habit, null);
+    }
 
 }

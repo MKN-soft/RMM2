@@ -21,9 +21,11 @@ import java.util.ArrayList;
 
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
 import teamproject.rmm2.database.Contract;
+import teamproject.rmm2.database.DbHelper;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
 import teamproject.rmm2.fragments.SettingsFragment;
+import teamproject.rmm2.models.Habit;
 import teamproject.rmm2.models.NavDrawerItem;
 
 //TODO Main Activity - menu and stuff
@@ -186,6 +188,14 @@ public class MainActivity extends MyActivityTemplate {
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
 
+        Habit habit = dbHelper.getHabit("test_habit");
+
+        if (habit!= null) {
+            textView.setText(habit.getTitle() + "," + habit.getDescription() + "," + String.valueOf(habit.getFrequency()));
+        }
+        else {
+            textView.setText("No such habit!");
+        }
     }
 
     /**

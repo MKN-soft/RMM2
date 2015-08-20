@@ -33,7 +33,8 @@ public class LauncherActivity extends MyActivityTemplate {
         //set UI (via super)
         super.onCreate(savedInstanceState);
 
-        if(isLogged() == true){
+        //TODO uncomment this shit below! I'ts just for testing purposes
+        if(/*isLogged() ==*/ true){
             //NOT my first time here!
 
             //Hooking activity
