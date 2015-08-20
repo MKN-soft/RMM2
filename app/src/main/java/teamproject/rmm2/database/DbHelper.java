@@ -64,11 +64,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     public Habit getHabit(String title){
-        //TODO: check & test
+        //TODO: SHIT WORKS! Good example for other stuff
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
         //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME + " " + "WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + " = \"" + title + "\"";
+        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME + " " + "WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + " LIKE \'" + title + "\'";
         //Preparing cursor for getting rows
         Cursor cursor = database.rawQuery(query, null);
 
@@ -80,7 +80,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 Habit habit = new Habit();
                 habit.setTitle(cursor.getString(0));
 
-                if (habit.getTitle() == title) {
+                if (habit.getTitle().equals(title)) {
                     habit.setDescription(cursor.getString(1));
                     habit.setFrequency(cursor.getInt(2));
 
@@ -156,7 +156,7 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insert(
+        database.insertOrThrow(
                 Contract.Habits.TABLE_NAME,
                 null,
                 values);

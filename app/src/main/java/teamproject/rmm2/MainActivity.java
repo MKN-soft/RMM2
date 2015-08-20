@@ -2,13 +2,11 @@ package teamproject.rmm2;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,8 +18,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
-import teamproject.rmm2.database.Contract;
-import teamproject.rmm2.database.DbHelper;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
 import teamproject.rmm2.fragments.SettingsFragment;
@@ -174,9 +170,19 @@ public class MainActivity extends MyActivityTemplate {
         textView.setText("Processing...");
         //ok until here
 
-        dbHelper.insertHabit("test_habit","desc",1);
+        //TODO: think about throwing and handling exception so it's convenient for others using this method
+        try {
+            dbHelper.insertHabit("test_habit", "desc", 1);
+        } catch (SQLiteConstraintException e) {
+            textView.setText("Duplicate record!");
+            return;
+        }
+        catch(Exception e){
+            textView.setText("Unexpected exception!");
+            return;
+        }
 
-        textView.setText("Processing... finished");
+       textView.setText("Processing... finished");
 
     }
 
