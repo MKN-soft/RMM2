@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import teamproject.rmm2.models.Habit;
+import teamproject.rmm2.models.CalendarRow;
+import teamproject.rmm2.models.HabitRow;
 
 /**
  * Created by Marcin on 2015-07-21.
@@ -63,7 +64,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
 
-    public Habit getHabit(String title){
+    public HabitRow getHabit(String title){
         //TODO: SHIT WORKS! Good example for other stuff
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
@@ -72,20 +73,18 @@ public class DbHelper extends SQLiteOpenHelper {
         //Preparing cursor for getting rows
         Cursor cursor = database.rawQuery(query, null);
 
-        //TODO: error: for some reason it doesn't find habit by title
-
         // looping through all rows and selecting
         if(cursor.moveToFirst()){
             do{
-                Habit habit = new Habit();
-                habit.setTitle(cursor.getString(0));
+                HabitRow habitRow = new HabitRow();
+                habitRow.setTitle(cursor.getString(0));
 
-                if (habit.getTitle().equals(title)) {
-                    habit.setDescription(cursor.getString(1));
-                    habit.setFrequency(cursor.getInt(2));
+                if (habitRow.getTitle().equals(title)) {
+                    habitRow.setDescription(cursor.getString(1));
+                    habitRow.setFrequency(cursor.getInt(2));
 
                     //returns found row
-                    return habit;
+                    return habitRow;
                 }
 
             }while(cursor.moveToNext());
@@ -95,7 +94,11 @@ public class DbHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public List<Habit> getAllHabits() {
+    /**
+     * returns list of ALL rows in table HABITS. Return null if table is empty.
+     * @return
+     */
+    public List<HabitRow> getAllHabits() {
         //TODO: check & test
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
@@ -104,33 +107,59 @@ public class DbHelper extends SQLiteOpenHelper {
         //Preparing cursor for getting rows
         Cursor cursor = database.rawQuery(query, null);
         //Creating list
-        List<Habit> habitList = new ArrayList<Habit>();
+        List<HabitRow> habitRowList = new ArrayList<HabitRow>();
 
         // looping through all rows and selecting
         if (cursor.moveToFirst()) {
             do {
-                Habit habit = new Habit();
-                habit.setTitle(cursor.getString(0));
-                habit.setDescription(cursor.getString(1));
-                habit.setFrequency(cursor.getInt(2));
+                HabitRow habitRow = new HabitRow();
+                habitRow.setTitle(cursor.getString(0));
+                habitRow.setDescription(cursor.getString(1));
+                habitRow.setFrequency(cursor.getInt(2));
                 //adding to list
-                habitList.add(habit);
+                habitRowList.add(habitRow);
 
             } while (cursor.moveToNext());
 
-            return habitList;
+            return habitRowList;
         }
         else return null;
     }
 
-    public Date  getDate(String day){
-        //TODO
+    /**
+     * returns list of rows from DATES table - searches by date (column [1]), returns null if nothing is found
+     * @param day
+     * @return
+     */
+    public CalendarRow  getDate(String day) {
+        //TODO it should return LIST of rows
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
 
-        Date date = new Date();
-        return date;
+        //Preparing query (only for convenience purposes)
+        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME + " " + "WHERE " + Contract.Calendar.COLUMN_DATE + " LIKE \'" + day + "\'";
+        //Preparing cursor for getting rows
+        Cursor cursor = database.rawQuery(query, null);
+
+        // looping through all rows and selecting
+        if (cursor.moveToFirst()) {
+            do {
+                CalendarRow calendarRow = new CalendarRow();
+                calendarRow.setTime(cursor.getString(1));
+
+                if (calendarRow.getTime().equals(day)) {
+                    calendarRow.setHabit(cursor.getString(0));
+                    calendarRow.setState(cursor.getString(2));
+
+                    //returns found row
+                    return calendarRow;
+                }
+
+            } while (cursor.moveToNext());
+        }
+        return null;
     }
+
 
 
     /**
@@ -236,6 +265,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     public void deleteHabit(String habit){
+        //TODO
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 

@@ -15,13 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
 import teamproject.rmm2.fragments.SettingsFragment;
-import teamproject.rmm2.models.Habit;
+import teamproject.rmm2.models.CalendarRow;
+import teamproject.rmm2.models.HabitRow;
 import teamproject.rmm2.models.NavDrawerItem;
 
 //TODO Main Activity - menu and stuff
@@ -194,10 +197,10 @@ public class MainActivity extends MyActivityTemplate {
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
 
-        Habit habit = dbHelper.getHabit("test_habit");
+        HabitRow habitRow = dbHelper.getHabit("test_habit");
 
-        if (habit!= null) {
-            textView.setText(habit.getTitle() + "," + habit.getDescription() + "," + String.valueOf(habit.getFrequency()));
+        if (habitRow != null) {
+            textView.setText(habitRow.getTitle() + "," + habitRow.getDescription() + "," + String.valueOf(habitRow.getFrequency()));
         }
         else {
             textView.setText("No such habit!");
@@ -246,9 +249,23 @@ public class MainActivity extends MyActivityTemplate {
     }
 
     public void dbgetdate(View v){
+        //TODO method getDate will return LIST of CalendarRows in future
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
-        //ok until here
 
+        //getting date and formatting date to yyyy-mm-dd
+        Date date = new Date(); //constructor gets current date
+        String formattedDate = new SimpleDateFormat("yyy-MM-dd").format(date);
+
+        CalendarRow calendarRow = dbHelper.getDate(formattedDate);
+
+        if (calendarRow != null) {
+            textView.setText(calendarRow.getTime() + "," + calendarRow.getHabit() + "," + String.valueOf(calendarRow.getState()));
+        }
+        else {
+
+            //TODO: NO SUCH HABIT when there should be.
+            textView.setText("No such habit!");
+        }
     }
 }

@@ -3,7 +3,7 @@ package teamproject.rmm2.models;
 /**
  * Created by Marcin on 2015-08-20.
  */
-public class Habit {
+public class HabitRow {
     private String title;
     private String description;
     private int frequency;

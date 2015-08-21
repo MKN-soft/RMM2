@@ -3,7 +3,7 @@ package teamproject.rmm2.models;
 /**
  * Created by Marcin on 2015-08-20.
  */
-public class Date{
+public class CalendarRow {
     private String habit;
     private String time;
     private String state;
