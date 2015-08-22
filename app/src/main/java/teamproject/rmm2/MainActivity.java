@@ -2,13 +2,11 @@ package teamproject.rmm2;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,13 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
-import teamproject.rmm2.database.Contract;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
 import teamproject.rmm2.fragments.SettingsFragment;
+import teamproject.rmm2.models.CalendarRow;
+import teamproject.rmm2.models.HabitRow;
 import teamproject.rmm2.models.NavDrawerItem;
 
 //TODO Main Activity - menu and stuff
@@ -167,12 +168,55 @@ public class MainActivity extends MyActivityTemplate {
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbput(View v){
+    public void dbputhabit(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("Processing...");
         //ok until here
 
-        dbHelper.insertHabit("title","desc",1);
+        //TODO: think about throwing and handling exception so it's convenient for others using this method
+        try {
+            dbHelper.insertHabit("test_habit", "desc", 1);
+        } catch (SQLiteConstraintException e) {
+            textView.setText("Duplicate record!");
+            return;
+        }
+        catch(Exception e){
+            textView.setText("Unexpected exception!");
+            return;
+        }
+
+       textView.setText("Processing... finished");
+
+    }
+
+    /**
+     * testing purposes, delete when not needed
+     * @param v
+     */
+    public void dbgethabit(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("getting text from db");
+
+        HabitRow habitRow = dbHelper.getHabit("test_habit");
+
+        if (habitRow != null) {
+            textView.setText(habitRow.getTitle() + "," + habitRow.getDescription() + "," + String.valueOf(habitRow.getFrequency()));
+        }
+        else {
+            textView.setText("No such habit!");
+        }
+    }
+
+    /**
+     * testing purposes, delete when not needed
+     * @param v
+     */
+    public void dbputstate(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("Processing...");
+        //ok until here
+
+        dbHelper.insertState("test_state");
 
         textView.setText("Processing... finished");
 
@@ -182,10 +226,46 @@ public class MainActivity extends MyActivityTemplate {
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbget(View v){
+    public void dbgetstate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
         //ok until here
 
+    }
+
+    /**
+     * testing purposes, delete when not needed
+     * @param v
+     */
+    public void dbputdate(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("Processing...");
+        //ok until here
+
+        dbHelper.insertDate("test_habit", 0);   //TODO foreign key not working properly!
+
+        textView.setText("Processing... finished");
+
+    }
+
+    public void dbgetdate(View v){
+        //TODO method getDate will return LIST of CalendarRows in future
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("getting text from db");
+
+        //getting date and formatting date to yyyy-mm-dd
+        Date date = new Date(); //constructor gets current date
+        String formattedDate = new SimpleDateFormat("yyy-MM-dd").format(date);
+
+        CalendarRow calendarRow = dbHelper.getDate(formattedDate);
+
+        if (calendarRow != null) {
+            textView.setText(calendarRow.getTime() + "," + calendarRow.getHabit() + "," + String.valueOf(calendarRow.getState()));
+        }
+        else {
+
+            //TODO: NO SUCH HABIT when there should be.
+            textView.setText("No such habit!");
+        }
     }
 }

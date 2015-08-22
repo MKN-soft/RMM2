@@ -21,22 +21,62 @@
         android:src="@mipmap/ic_whats_hot" />
 
     <Button
-        android:id="@+id/test_db_get"
+        android:id="@+id/test_db_gethabit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Test get"
-        android:onClick="dbget"
+        android:text="Test get habit"
+        android:onClick="dbgethabit"
         android:layout_above="@+id/test_db_textview"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:id="@+id/test_db_put"
+        android:id="@+id/test_db_puthabit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Test put"
-        android:onClick="dbput"
-        android:layout_above="@+id/test_db_get"
+        android:text="Test put habit"
+        android:onClick="dbputhabit"
+        android:layout_above="@+id/test_db_gethabit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/test_db_getstate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Test get state"
+        android:onClick="dbputstate"
+        android:layout_above="@+id/test_db_puthabit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/test_db_putstate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Test put state"
+        android:onClick="dbgetstate"
+        android:layout_above="@+id/test_db_getstate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/test_db_getdate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Test get date"
+        android:onClick="dbgetdate"
+        android:layout_above="@+id/test_db_putstate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/test_db_putdate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Test put date"
+        android:onClick="dbputdate"
+        android:layout_above="@+id/test_db_getdate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
