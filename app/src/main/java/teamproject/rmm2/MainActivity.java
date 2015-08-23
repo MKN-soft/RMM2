@@ -168,7 +168,7 @@ public class MainActivity extends MyActivityTemplate {
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbputhabit(View v){
+    /*public void dbputhabit(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("Processing...");
         //ok until here
@@ -187,13 +187,13 @@ public class MainActivity extends MyActivityTemplate {
 
        textView.setText("Processing... finished");
 
-    }
+    }*/
 
     /**
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbgethabit(View v){
+    /*public void dbgethabit(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
 
@@ -205,33 +205,43 @@ public class MainActivity extends MyActivityTemplate {
         else {
             textView.setText("No such habit!");
         }
-    }
+    }*/
 
     /**
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbputstate(View v){
+    /*public void dbputstate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
-        textView.setText("Processing...");
+        textView.setText("Inserting state...");
         //ok until here
 
         dbHelper.insertState("test_state");
 
         textView.setText("Processing... finished");
 
-    }
+    }*/
 
     /**
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbgetstate(View v){
+
+/*    public void dbgetstate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
         //ok until here
 
-    }
+        String aux = dbHelper.getState("test_state");
+
+        if (aux != null) {
+            textView.setText(aux);
+        }
+        else {
+            textView.setText("No such state!");
+        }
+
+    }*/
 
     /**
      * testing purposes, delete when not needed
