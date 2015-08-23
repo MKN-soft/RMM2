@@ -27,7 +27,7 @@ import teamproject.rmm2.models.HabitRow;
  */
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "RMM2.db";
 
     public DbHelper(Context context){
@@ -196,14 +196,14 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param habittitle
      * @param state
      */
-    public void insertDate(String habittitle, int state){
-        //We insert dates as TEXT   yyyy-MM-dd
+    public void insertDate(String habittitle, String state, int time){
+        //We insert dates as UNIX
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
-        //getting date and formatting date to yyyy-mm-dd
+        //getting date and formatting to UNIX
         Date date = new Date(); //constructor gets current date
-        String formattedDate = new SimpleDateFormat("yyy-MM-dd").format(date);
+        long formattedDate = date.getTime()/1000L; //dividing by primitive Long
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
