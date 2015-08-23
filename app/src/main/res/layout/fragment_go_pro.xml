@@ -45,7 +45,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Test get state"
-        android:onClick="dbputstate"
+        android:onClick="dbgetstate"
         android:layout_above="@+id/test_db_puthabit"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -55,7 +55,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Test put state"
-        android:onClick="dbgetstate"
+        android:onClick="dbputstate"
         android:layout_above="@+id/test_db_getstate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

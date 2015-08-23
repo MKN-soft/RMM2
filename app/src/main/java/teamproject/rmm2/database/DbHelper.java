@@ -160,6 +160,31 @@ public class DbHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * Returns list of all rows from table STATES
+     * @return List<String> of STATES (null if empty)
+     */
+    public List<String>  getAllStates() {
+        //TODO it should return LIST of Strings
+        // Gets the data repository in read mode
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        //Preparing query (only for convenience purposes)
+        String query = "SELECT * FROM " + Contract.States.TABLE_NAME;
+        //Preparing cursor for getting rows
+        Cursor cursor = database.rawQuery(query, null);
+
+        // looping through all rows and adding to list
+        if(cursor.moveToFirst()){
+            List<String> statesList = new ArrayList<String>();
+            do{
+                statesList.add(cursor.getString(0));
+            }while(cursor.moveToNext());
+        }
+
+        return null;
+    }
+
 
 
     /**
