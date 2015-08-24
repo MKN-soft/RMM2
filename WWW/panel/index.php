@@ -17,7 +17,7 @@ $page = new Page();
 <body>
 <div id="doc" class="yui-t2">
   <div id="hd">
-    <div id="header"><h1>HEADER</h1></div>
+    <div id="header"><h1>Hello User <?=$_SESSION['username']?>!</h1></div>
   </div>
   <div id="bd">
     <div id="yui-main">
@@ -31,13 +31,30 @@ $page = new Page();
       <div id="secondary">
       	<a href="?page=">Home</a>
       </br>
-      	<a href="?page=statistics">Statistics</a>
+      	<!--<a href="?page=habits">Habits</a>-->
+      	Habits
+  		</br>
+      		
+      		<?php
+      			$habits = $page->getHabits();
+      		
+				while($row = mysql_fetch_object($habits)){
+					echo "&emsp; <a href=\"?page=habits&habit=$row->id\">Nawyk id: '$row->id'</a> ";
+				}
+      		?>		
+      		
+      </br>
+      	<a href="?page=logout">Log out</a>
   	  </div>
     </div>
   </div>
   <div id="ft">
-    <div id="footer">FOOTER</div>
+    <div id="footer">RMM - all rights reserved</div>
   </div>
 </div>
 </body>
 </html>
+
+<?php 
+unset($page);
+?>

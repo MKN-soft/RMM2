@@ -53,10 +53,10 @@ class Android {
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 		
-		
 		// check for user
 		$user = $this->db->getUserByUsernameAndPassword($username, $password);
-		if ($user != false) {
+
+		if ($user != 1 && $user != 2) {
 			// user exists
 			$this->response['error'] = FALSE;
 			$this->response['username'] = $user['login'];
@@ -67,9 +67,15 @@ class Android {
 			echo json_encode($this->response);
 		}
 		else {
-			// user not found
 			$this->response['error'] = TRUE;
-			$this->response['errorMsg'] = "Incorrect username or password!";
+			
+			if ($user == 1)
+				// user not found
+				$this->response['errorMsg'] = "Username not found!";
+			if ($user == 2)	
+				// wrong password
+				$this->response['errorMsg'] = "Wrong password!";
+			
 			
 			echo json_encode($this->response);
 		}
@@ -116,25 +122,44 @@ class Android {
 	private function synchro() {
 		$tag = $_POST['tag'];
 		$salt = $_POST['salt'];
-		$time = $_POST['average_time'];
-		$size = $_POST['average_board_size'];
-		$movements = $_POST['average_movements'];
+		
+		$czy_sie_udalo = $_POST['czy_sie_udalo'];
+		$data_wprowadzenia = $_POST['data_wprowadzenia'];
+		$czestotliwosc = $_POST['czestotliwosc'];
+		$kiedy_ostatnio_aktualizowano_nawyk = $_POST['kiedy_ostatnio_aktualizowano_nawyk'];
+		
 		
 		$user = $this->db->getUserBySalt($salt);
 		// check if user exists
 		if ($user) {
-			if ($this->db->storeStatistics($user['id'], $time, $size, $movements)) {
-				// success
-				$this->response['error'] = FALSE;
-				$this->response['tag'] = $tag;
-				$this->response['errorMsg'] = "Success!";
+			if ($this->db->storeHabits($user['id'], $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk)) {
+
+				$ilosc_nawykow = '';
+				$najlepsza_passa = '';
+				$srednia_dlugosc_ciagu = '';
+				$procent_powodzen = '';
+				$nawyki_id = '';
 				
-				echo json_encode($this->response);
+				if ($this->db->storeStatistics($ilosc_nawykow, $najlepsza_passa, $srednia_dlugosc_ciagu, $procent_powodzen, $nawyki_id)) {
+					// success
+					$this->response['error'] = FALSE;
+					$this->response['tag'] = $tag;
+					$this->response['errorMsg'] = "Success!";
+					
+					echo json_encode($this->response);
+				}
+				else {
+					// fail - cannot add statistics
+					$this->response['error'] = TRUE;
+					$this->response['errorMsg'] = "Cannot add statistics!";	
+					
+					echo json_encode($this->response);
+				}
 			}
 			else {
-				// fail
+				// fail - cannot add habits
 				$this->response['error'] = TRUE;
-				$this->response['errorMsg'] = "Cannot add statistics!";
+				$this->response['errorMsg'] = "Cannot add habits!";
 				
 				echo json_encode($this->response);
 			}
