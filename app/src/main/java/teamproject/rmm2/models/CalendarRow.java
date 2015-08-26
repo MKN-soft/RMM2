@@ -5,7 +5,7 @@ package teamproject.rmm2.models;
  */
 public class CalendarRow {
     private String habit;
-    private String time;
+    private long time;
     private String state;
 
     public void setHabit(String habit) {
@@ -16,7 +16,7 @@ public class CalendarRow {
         this.state = state;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -24,7 +24,7 @@ public class CalendarRow {
         return habit;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 

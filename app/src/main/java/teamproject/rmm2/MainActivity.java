@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
@@ -168,7 +169,7 @@ public class MainActivity extends MyActivityTemplate {
      * testing purposes, delete when not needed
      * @param v
      */
-    /*public void dbputhabit(View v){
+    public void dbputhabit(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("Processing...");
         //ok until here
@@ -187,13 +188,13 @@ public class MainActivity extends MyActivityTemplate {
 
        textView.setText("Processing... finished");
 
-    }*/
+    }
 
     /**
      * testing purposes, delete when not needed
      * @param v
      */
-    /*public void dbgethabit(View v){
+    public void dbgethabit(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
 
@@ -205,13 +206,13 @@ public class MainActivity extends MyActivityTemplate {
         else {
             textView.setText("No such habit!");
         }
-    }*/
+    }
 
     /**
      * testing purposes, delete when not needed
      * @param v
      */
-    /*public void dbputstate(View v){
+    public void dbputstate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("Inserting state...");
         //ok until here
@@ -220,14 +221,14 @@ public class MainActivity extends MyActivityTemplate {
 
         textView.setText("Processing... finished");
 
-    }*/
+    }
 
     /**
      * testing purposes, delete when not needed
      * @param v
      */
 
-/*    public void dbgetstate(View v){
+   /* public void dbgetstate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
         //ok until here
@@ -252,7 +253,17 @@ public class MainActivity extends MyActivityTemplate {
         textView.setText("Processing...");
         //ok until here
 
-        dbHelper.insertDate("test_habit", 0);   //TODO foreign key not working properly!
+        //Creating unix timesstamp for the BEGINING of the day
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        //long time = calendar.getTimeInMillis();
+
+        //inserting with current time
+        dbHelper.insertDate(calendar.getTimeInMillis(),"test_habit", 0);   //TODO foreign key not working properly!
 
         textView.setText("Processing... finished");
 
@@ -263,14 +274,17 @@ public class MainActivity extends MyActivityTemplate {
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
 
-        //getting date and formatting date to yyyy-mm-dd
-        Date date = new Date(); //constructor gets current date
-        String formattedDate = new SimpleDateFormat("yyy-MM-dd").format(date);
+        //gets current date and time 00:00:00
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
-        CalendarRow calendarRow = dbHelper.getDate(formattedDate);
+        CalendarRow calendarRow = dbHelper.getDate(calendar.getTimeInMillis());
 
         if (calendarRow != null) {
-            textView.setText(calendarRow.getTime() + "," + calendarRow.getHabit() + "," + String.valueOf(calendarRow.getState()));
+            textView.setText(String.valueOf(calendarRow.getTime()) + "," + calendarRow.getHabit() + "," + String.valueOf(calendarRow.getState()));
         }
         else {
 

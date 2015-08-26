@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -128,16 +129,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /**
      * returns list of rows from DATES table - searches by date (column [1]), returns null if nothing is found
-     * @param day
-     * @return
+     * @param unixTimestamp
+     * @return row from DATES table
      */
-    public CalendarRow  getDate(String day) {
+    public CalendarRow  getDate(long unixTimestamp) {
         //TODO it should return LIST of rows
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
 
         //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME + " " + "WHERE " + Contract.Calendar.COLUMN_DATE + " LIKE \'" + day + "\'";
+        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME + " " + "WHERE " + Contract.Calendar.COLUMN_DATE + " = " + unixTimestamp;
         //Preparing cursor for getting rows
         Cursor cursor = database.rawQuery(query, null);
 
@@ -145,9 +146,9 @@ public class DbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 CalendarRow calendarRow = new CalendarRow();
-                calendarRow.setTime(cursor.getString(1));
 
-                if (calendarRow.getTime().equals(day)) {
+                if (cursor.getLong(1) == unixTimestamp) {
+                    calendarRow.setTime(cursor.getLong(1));
                     calendarRow.setHabit(cursor.getString(0));
                     calendarRow.setState(cursor.getString(2));
 
@@ -165,7 +166,6 @@ public class DbHelper extends SQLiteOpenHelper {
      * @return List<String> of STATES (null if empty)
      */
     public List<String>  getAllStates() {
-        //TODO it should return LIST of Strings
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -217,23 +217,22 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * insert into CALENDAR table in database. Takes CURRENT DATE in YYYY-MM-DD
+     * insert into CALENDAR table in database. Takes CURRENT DATE
      * @param habittitle
      * @param state
      */
-    public void insertDate(String habittitle, int state){
+    public void insertDate(long unixTimestamp, String habittitle, int state){
         //We insert dates as TEXT   yyyy-MM-dd
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
-        //getting date and formatting date to yyyy-mm-dd
-        Date date = new Date(); //constructor gets current date
-        String formattedDate = new SimpleDateFormat("yyy-MM-dd").format(date);
 
-        // Create a new map of values, where column names are the keys
+
+
+
         ContentValues values = new ContentValues();
         values.put(Contract.Calendar.COLUMN_HABIT_TITLE, habittitle);
-        values.put(Contract.Calendar.COLUMN_DATE, formattedDate);   // uses CURRENT date
+        values.put(Contract.Calendar.COLUMN_DATE, unixTimestamp);   // uses  date in unix time - only hours 00:00:00
         values.put(Contract.Calendar.COLUMN_STATE, state);
 
 
