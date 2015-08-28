@@ -132,31 +132,28 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param unixTimestamp
      * @return row from DATES table
      */
-    public CalendarRow  getDate(long unixTimestamp) {
+    public CalendarRow  getDate(long unixTimestamp, String habitTitle) {
         //TODO it should return LIST of rows
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
 
         //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME + " " + "WHERE " + Contract.Calendar.COLUMN_DATE + " = " + unixTimestamp;
+        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
+                " WHERE " + Contract.Calendar.COLUMN_DATE + " = " + unixTimestamp +
+                " AND " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" +  habitTitle + "\'";
+
         //Preparing cursor for getting rows
         Cursor cursor = database.rawQuery(query, null);
 
         // looping through all rows and selecting
         if (cursor.moveToFirst()) {
-            do {
-                CalendarRow calendarRow = new CalendarRow();
+            CalendarRow calendarRow = new CalendarRow();
+            calendarRow.setTime(unixTimestamp);
+            calendarRow.setHabit(cursor.getString(1));
+            calendarRow.setState(cursor.getInt(2));
 
-                if (cursor.getLong(1) == unixTimestamp) {
-                    calendarRow.setTime(cursor.getLong(1));
-                    calendarRow.setHabit(cursor.getString(0));
-                    calendarRow.setState(cursor.getString(2));
-
-                    //returns found row
-                    return calendarRow;
-                }
-
-            } while (cursor.moveToNext());
+            //returns found row
+            return calendarRow;
         }
         return null;
     }
@@ -242,8 +239,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
         ContentValues values = new ContentValues();
-        values.put(Contract.Calendar.COLUMN_HABIT_TITLE, habittitle);
         values.put(Contract.Calendar.COLUMN_DATE, unixTimestamp);   // uses  date in unix time - only hours 00:00:00
+        values.put(Contract.Calendar.COLUMN_HABIT_TITLE, habittitle);
         values.put(Contract.Calendar.COLUMN_STATE, state);
 
 

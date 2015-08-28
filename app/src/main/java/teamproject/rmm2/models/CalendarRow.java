@@ -7,13 +7,13 @@ public class CalendarRow {
     private int id;
     private String habit;
     private long time;
-    private String state;
+    private int state;
 
     public void setHabit(String habit) {
         this.habit = habit;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 
@@ -33,7 +33,7 @@ public class CalendarRow {
         return time;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
