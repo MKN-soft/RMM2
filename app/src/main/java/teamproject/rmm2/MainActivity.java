@@ -262,8 +262,10 @@ public class MainActivity extends MyActivityTemplate {
         calendar.set(Calendar.MILLISECOND, 0);
         //long time = calendar.getTimeInMillis();
 
+        long time = calendar.getTimeInMillis();
+
         //inserting with current time
-        dbHelper.insertDate(calendar.getTimeInMillis(),"test_habit", 0);   //TODO foreign key not working properly!
+        dbHelper.insertDate(time,"test_habit", 0);   //TODO foreign key not working properly!
 
         textView.setText("Processing... finished");
 
@@ -281,7 +283,9 @@ public class MainActivity extends MyActivityTemplate {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-        CalendarRow calendarRow = dbHelper.getDate(calendar.getTimeInMillis());
+       long time = calendar.getTimeInMillis();
+
+        CalendarRow calendarRow = dbHelper.getDate(time, "test_habit");
 
         if (calendarRow != null) {
             textView.setText(String.valueOf(calendarRow.getTime()) + "," + calendarRow.getHabit() + "," + String.valueOf(calendarRow.getState()));
