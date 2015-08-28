@@ -30,9 +30,10 @@ but this can help your database work harmoniously with the Android framework.*/
 
     static abstract class Calendar{
         public static final String TABLE_NAME = "calendar";
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_HABIT_TITLE = "habitid";
         public static final String COLUMN_DATE = "date";
-        public static final String COLUMN_STATE = "state";
+        public static final String COLUMN_STATE = "state"; //UNIX TIME
     }
 
     static abstract class States{
@@ -78,12 +79,22 @@ but this can help your database work harmoniously with the Android framework.*/
     static final String SQL_CREATE_CALENDAR =
             "CREATE TABLE IF NOT EXISTS " + Calendar.TABLE_NAME +
                     " (" +
+<<<<<<< HEAD
                     Calendar.COLUMN_DATE + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+=======
+                    Calendar.COLUMN_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                    Calendar.COLUMN_DATE + INTEGER_TYPE + COMMA_SEP + //UNIX time
+>>>>>>> master
                     Calendar.COLUMN_HABIT_TITLE + TEXT_TYPE + COMMA_SEP +
                     Calendar.COLUMN_STATE + INTEGER_TYPE  +  COMMA_SEP +
                     FOREIGN_KEY + "(" + Calendar.COLUMN_STATE + ")" + REFERENCES +   States.TABLE_NAME + "(" + States.COLUMN_STATE + ")" + COMMA_SEP +
+<<<<<<< HEAD
                     FOREIGN_KEY + "(" + Calendar.COLUMN_HABIT_TITLE + ")" + REFERENCES +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ")" + COMMA_SEP +
                     "UNIQUE(" + Calendar.COLUMN_DATE + COMMA_SEP + Calendar.COLUMN_HABIT_TITLE + ")" +
+=======
+                    FOREIGN_KEY + "(" + Calendar.COLUMN_HABIT_TITLE + ")" + REFERENCES +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ")" +
+                    "UNIQUE(" + Calendar.COLUMN_DATE + COMMA_SEP + Calendar.COLUMN_HABIT_TITLE+") ON CONFLICT REPLACE" +
+>>>>>>> master
             " )";
 
     static final String SQL_DELETE_CALENDAR =
