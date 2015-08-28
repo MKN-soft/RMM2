@@ -82,11 +82,15 @@ but this can help your database work harmoniously with the Android framework.*/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     Calendar.COLUMN_DATE + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
 =======
                     Calendar.COLUMN_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
                     Calendar.COLUMN_DATE + INTEGER_TYPE + COMMA_SEP + //UNIX time
 >>>>>>> master
+=======
+                    Calendar.COLUMN_DATE + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
+>>>>>>> parent of 52c66d8... Database works!
 =======
                     Calendar.COLUMN_DATE + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
 >>>>>>> parent of 52c66d8... Database works!

@@ -152,11 +152,19 @@ public class DbHelper extends SQLiteOpenHelper {
                     calendarRow.setHabit(cursor.getString(0));
                     calendarRow.setState(cursor.getString(2));
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                     //returns found row
                     return calendarRow;
                 }
 
+=======
+
+                    //returns found row
+                    return calendarRow;
+                }
+
+>>>>>>> parent of 52c66d8... Database works!
 =======
 
                     //returns found row
