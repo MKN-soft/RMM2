@@ -250,22 +250,6 @@ public class MainActivity extends MyActivityTemplate {
      * @param v
      */
 
-   /* public void dbgetstate(View v){
-        TextView textView = (TextView) findViewById(R.id.test_db_textview);
-        textView.setText("getting text from db");
-        //ok until here
-
-        String aux = dbHelper.getState("test_state");
-
-        if (aux != null) {
-            textView.setText(aux);
-        }
-        else {
-            textView.setText("No such state!");
-        }
-
-    }*/
-
     /**
      * testing purposes, delete when not needed
      * @param v
@@ -277,17 +261,8 @@ public class MainActivity extends MyActivityTemplate {
 
         //Creating unix timesstamp for the BEGINING of the day
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        //long time = calendar.getTimeInMillis();
-
-        long time = calendar.getTimeInMillis();
-
         //inserting with current time
-        dbHelper.insertDate(time,"test_habit", 0);   //TODO foreign key not working properly!
+        dbHelper.insertDate(System.currentTimeMillis()/1000L,"test_habit", 0);   //TODO foreign key not working properly!
 
         textView.setText("Processing... finished");
 
