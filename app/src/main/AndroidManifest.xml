@@ -29,6 +29,35 @@
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register" >
         </activity>
+        <activity
+            android:name=".activity.HabitDetailActivity"
+            android:label="@string/title_activity_habit_detail"></activity>
+        <activity
+            android:name=".activity.AddHabitActivity"
+            android:label="@string/title_activity_add_habit"></activity>
+        <activity
+            android:name=".activity.DeleteHabitActivity"
+            android:label="@string/title_activity_delete_habit"></activity>
+        <activity
+            android:name=".activity.EditHabitActivity"
+            android:label="@string/title_activity_edit_habit"></activity>
+        <activity
+            android:name=".activity.EditImageActivity"
+            android:label="@string/title_activity_edit_image"
+            android:theme="@android:style/Theme.Dialog"></activity>
+        <activity
+            android:name=".activity.AddImageActivity"
+            android:label="Choose Image"
+            android:theme="@android:style/Theme.Dialog"></activity>
+        <activity
+            android:name=".activity.ScheduleActivity"
+            android:label="Schedule"
+            android:theme="@android:style/Theme.Dialog"></activity>
+        <activity
+            android:name=".activity.CalendarActivity"
+            android:label="Calendar"></activity>
+
+
     </application>
 
 </manifest>
