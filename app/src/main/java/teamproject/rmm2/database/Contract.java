@@ -78,11 +78,12 @@ but this can help your database work harmoniously with the Android framework.*/
     static final String SQL_CREATE_CALENDAR =
             "CREATE TABLE IF NOT EXISTS " + Calendar.TABLE_NAME +
                     " (" +
-                    Calendar.COLUMN_DATE + TEXT_TYPE + PRIMARY_KEY + COMMA_SEP +
+                    Calendar.COLUMN_DATE + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
                     Calendar.COLUMN_HABIT_TITLE + TEXT_TYPE + COMMA_SEP +
-                    Calendar.COLUMN_STATE + TEXT_TYPE  +  COMMA_SEP +
+                    Calendar.COLUMN_STATE + INTEGER_TYPE  +  COMMA_SEP +
                     FOREIGN_KEY + "(" + Calendar.COLUMN_STATE + ")" + REFERENCES +   States.TABLE_NAME + "(" + States.COLUMN_STATE + ")" + COMMA_SEP +
-                    FOREIGN_KEY + "(" + Calendar.COLUMN_HABIT_TITLE + ")" + REFERENCES +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ")" +
+                    FOREIGN_KEY + "(" + Calendar.COLUMN_HABIT_TITLE + ")" + REFERENCES +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ")" + COMMA_SEP +
+                    "UNIQUE(" + Calendar.COLUMN_DATE + COMMA_SEP + Calendar.COLUMN_HABIT_TITLE + ")" +
             " )";
 
     static final String SQL_DELETE_CALENDAR =

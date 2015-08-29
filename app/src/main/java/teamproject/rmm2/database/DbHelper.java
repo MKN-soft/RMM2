@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -128,35 +129,56 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /**
      * returns list of rows from DATES table - searches by date (column [1]), returns null if nothing is found
-     * @param day
-     * @return
+     * @param unixTimestamp
+     * @return row from DATES table
      */
-    public CalendarRow  getDate(String day) {
+    public CalendarRow  getDate(long unixTimestamp, String habitTitle) {
         //TODO it should return LIST of rows
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
 
         //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME + " " + "WHERE " + Contract.Calendar.COLUMN_DATE + " LIKE \'" + day + "\'";
+        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
+                " WHERE " + Contract.Calendar.COLUMN_DATE + " = " + unixTimestamp +
+                " AND " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" +  habitTitle + "\'";
+
         //Preparing cursor for getting rows
         Cursor cursor = database.rawQuery(query, null);
 
         // looping through all rows and selecting
         if (cursor.moveToFirst()) {
-            do {
-                CalendarRow calendarRow = new CalendarRow();
-                calendarRow.setTime(cursor.getString(1));
+            CalendarRow calendarRow = new CalendarRow();
+            calendarRow.setTime(unixTimestamp);
+            calendarRow.setHabit(cursor.getString(1));
+            calendarRow.setState(cursor.getInt(2));
 
-                if (calendarRow.getTime().equals(day)) {
-                    calendarRow.setHabit(cursor.getString(0));
-                    calendarRow.setState(cursor.getString(2));
-
-                    //returns found row
-                    return calendarRow;
-                }
-
-            } while (cursor.moveToNext());
+            //returns found row
+            return calendarRow;
         }
+        return null;
+    }
+
+    /**
+     * Returns list of all rows from table STATES
+     * @return List<String> of STATES (null if empty)
+     */
+    public List<String>  getAllStates() {
+        // Gets the data repository in read mode
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        //Preparing query (only for convenience purposes)
+        String query = "SELECT * FROM " + Contract.States.TABLE_NAME;
+        //Preparing cursor for getting rows
+        Cursor cursor = database.rawQuery(query, null);
+
+        // looping through all rows and adding to list
+        if(cursor.moveToFirst()){
+            List<String> statesList = new ArrayList<String>();
+            do{
+                statesList.add(cursor.getString(0));
+            }while(cursor.moveToNext());
+        }
+
         return null;
     }
 
@@ -192,23 +214,22 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * insert into CALENDAR table in database. Takes CURRENT DATE in YYYY-MM-DD
+     * insert into CALENDAR table in database. Takes CURRENT DATE
      * @param habittitle
      * @param state
      */
-    public void insertDate(String habittitle, int state){
+    public void insertDate(long unixTimestamp, String habittitle, int state){
         //We insert dates as TEXT   yyyy-MM-dd
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
-        //getting date and formatting date to yyyy-mm-dd
-        Date date = new Date(); //constructor gets current date
-        String formattedDate = new SimpleDateFormat("yyy-MM-dd").format(date);
 
-        // Create a new map of values, where column names are the keys
+
+
+
         ContentValues values = new ContentValues();
+        values.put(Contract.Calendar.COLUMN_DATE, unixTimestamp);   // uses  date in unix time - only hours 00:00:00
         values.put(Contract.Calendar.COLUMN_HABIT_TITLE, habittitle);
-        values.put(Contract.Calendar.COLUMN_DATE, formattedDate);   // uses CURRENT date
         values.put(Contract.Calendar.COLUMN_STATE, state);
 
 

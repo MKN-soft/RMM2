@@ -5,18 +5,18 @@ package teamproject.rmm2.models;
  */
 public class CalendarRow {
     private String habit;
-    private String time;
-    private String state;
+    private long time;
+    private int state;
 
     public void setHabit(String habit) {
         this.habit = habit;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -24,11 +24,11 @@ public class CalendarRow {
         return habit;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 }
