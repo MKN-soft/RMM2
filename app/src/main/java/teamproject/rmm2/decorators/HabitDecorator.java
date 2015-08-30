@@ -44,7 +44,7 @@ public class HabitDecorator implements DayViewDecorator {
 
     private boolean compare(HabitDay hd, CalendarDay cDay) {
         if (hd.getDay() == cDay.getDay()) {
-            if (hd.getMonth() == cDay.getMonth()) {
+            if ((hd.getMonth()-1) == cDay.getMonth()) {
                 if (hd.getYear() == cDay.getYear()) {
                     return true;
                 }

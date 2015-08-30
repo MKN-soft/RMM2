@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CalendarView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -53,6 +54,7 @@ public class CalendarActivity extends Activity {
         calendar.addDecorator(doneHabDecor);
         calendar.addDecorator(habDecor);
 
+
         calendar.setOnDateChangedListener(new OnDateChangedListener() {
             @Override
             public void onDateChanged(MaterialCalendarView materialCalendarView, final CalendarDay calendarDay) {
@@ -65,9 +67,11 @@ public class CalendarActivity extends Activity {
                             case DialogInterface.BUTTON_POSITIVE:
                                 boolean found = false;
                                 for (HabitDay hab : currentHabit.getHabitDefinitions()) {
-                                    if (hab.getYear() == calendarDay.getYear() && hab.getMonth() == calendarDay.getMonth() && hab.getDay() == calendarDay.getDay()) {
+                                    if (hab.getYear() == calendarDay.getYear() && (hab.getMonth()-1) == calendarDay.getMonth() && hab.getDay() == calendarDay.getDay()) {
                                         hab.setDone(true);
                                         found = true;
+
+                                        Log.v("CalendarActivity", " " + (hab.getMonth()-1));
                                     }
                                 }
 
@@ -76,7 +80,9 @@ public class CalendarActivity extends Activity {
                                     HabitDay HabitDef = new HabitDay(calendarDay.getYear(), calendarDay.getMonth(), calendarDay.getDay());
                                     HabitDef.setDone(true);
                                     definedHabits.add(HabitDef);
-                                }
+
+                                    Log.v("CalendarActivity", " " + calendarDay.getMonth());
+                                    }
 
                                 onResume();
                                 break;
@@ -85,6 +91,8 @@ public class CalendarActivity extends Activity {
                                 HabitDay HabitDef = new HabitDay(calendarDay.getYear(), calendarDay.getMonth(), calendarDay.getDay());
                                 HabitDef.setDone(false);
                                 definedHabits.add(HabitDef);
+
+                                System.out.println(calendarDay.getYear() +" "+ calendarDay.getMonth() + " "+ calendarDay.getDay());
 
                                 onResume();
                                 break;

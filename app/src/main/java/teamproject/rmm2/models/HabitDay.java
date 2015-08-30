@@ -6,13 +6,13 @@ package teamproject.rmm2.models;
  */
 public class HabitDay {
     private int year;
-    private int monthOfYear; // 0 - 11
+    private int monthOfYear; // 1 - 12
     private int dayOfMonth; // 1 - 31
     private boolean done;
 
     public HabitDay(int y, int m, int d) {
         year = y;
-        monthOfYear = m;
+        monthOfYear = m + 1;
         dayOfMonth = d;
     }
 
