@@ -13,6 +13,9 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import teamproject.rmm2.LogicBase;
@@ -47,12 +50,28 @@ public class CalendarActivity extends Activity {
         currentHabit = LogicBase.getHabitAt(position);
 
         final List<HabitDay> definedHabits = currentHabit.getHabitDefinitions();
-        //definedHabits.add(new HabitDefinition(2015, 4, 5)); // 4 - may
+        //definedHabits.add(new HabitDefinition(2015, 4, 5)); // 
 
         HabitDecorator habDecor = new HabitDecorator(definedHabits);
         DoneHabitDecorator doneHabDecor = new DoneHabitDecorator(definedHabits);
         calendar.addDecorator(doneHabDecor);
         calendar.addDecorator(habDecor);
+
+
+        Date today = Calendar.getInstance().getTime();
+        //int y = Integer.parseInt(str);
+        //check future or past
+        SimpleDateFormat todayDay = new SimpleDateFormat("dd");
+        String tD = todayDay.format(today);
+        final int tDay = Integer.parseInt(tD);
+
+        SimpleDateFormat todayMonth = new SimpleDateFormat("MM");
+        String tM = todayMonth.format(today);
+        final int tMonth = Integer.parseInt(tM) - 1;
+
+        SimpleDateFormat todayYear = new SimpleDateFormat("yyyy");
+        String tY = todayYear.format(today);
+        final int tYear = Integer.parseInt(tY);
 
 
         calendar.setOnDateChangedListener(new OnDateChangedListener() {
@@ -77,12 +96,26 @@ public class CalendarActivity extends Activity {
 
 
                                 if (found == false) {
-                                    HabitDay HabitDef = new HabitDay(calendarDay.getYear(), calendarDay.getMonth(), calendarDay.getDay());
-                                    HabitDef.setDone(true);
-                                    definedHabits.add(HabitDef);
+                                    if(tYear > calendarDay.getYear()){
+                                        HabitDay HabitDef = new HabitDay(calendarDay.getYear(), calendarDay.getMonth(), calendarDay.getDay());
+                                        HabitDef.setDone(true);
+                                        definedHabits.add(HabitDef);
+                                    }else if(tYear == calendarDay.getYear()) {
+                                        if (tMonth > calendarDay.getMonth()){
+                                            HabitDay HabitDef = new HabitDay(calendarDay.getYear(), calendarDay.getMonth(), calendarDay.getDay());
+                                            HabitDef.setDone(true);
+                                            definedHabits.add(HabitDef);
+                                        }else if( tMonth == calendarDay.getMonth()) {
+                                            if (tDay > calendarDay.getDay() || tDay == calendarDay.getDay()) {
+                                                HabitDay HabitDef = new HabitDay(calendarDay.getYear(), calendarDay.getMonth(), calendarDay.getDay());
+                                                HabitDef.setDone(true);
+                                                definedHabits.add(HabitDef);
 
-                                    Log.v("CalendarActivity", " " + calendarDay.getMonth());
+                                                Log.v("CalendarActivity", " " + calendarDay.getMonth());
+                                            }
+                                        }
                                     }
+                                }
 
                                 onResume();
                                 break;
