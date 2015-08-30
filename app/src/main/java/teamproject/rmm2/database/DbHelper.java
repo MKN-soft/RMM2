@@ -128,6 +128,39 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * returns list of ALL rows in table HABITS of ONE habit. Return null if table is empty (query is wrong etc.)
+     * @return
+     */
+    public List<HabitRow> getAllHabitsLike(String habitTitle) {
+        //TODO: check & test
+        // Gets the data repository in read mode
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Preparing query (only for convenience purposes)
+        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME +
+                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE " + habitTitle;
+        //Preparing cursor for getting rows
+        Cursor cursor = database.rawQuery(query, null);
+        //Creating list
+        List<HabitRow> habitRowList = new ArrayList<HabitRow>();
+
+        // looping through all rows and selecting
+        if (cursor.moveToFirst()) {
+            do {
+                HabitRow habitRow = new HabitRow();
+                habitRow.setTitle(cursor.getString(0));
+                habitRow.setDescription(cursor.getString(1));
+                habitRow.setFrequency(cursor.getInt(2));
+                //adding to list
+                habitRowList.add(habitRow);
+
+            } while (cursor.moveToNext());
+
+            return habitRowList;
+        }
+        else return null;
+    }
+
+    /**
      * returns list of rows from DATES table - searches by date (column [1]), returns null if nothing is found
      * @param unixTimestamp
      * @return row from DATES table
