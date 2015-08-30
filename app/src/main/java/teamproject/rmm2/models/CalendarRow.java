@@ -6,7 +6,7 @@ package teamproject.rmm2.models;
 public class CalendarRow {
     private String habit;
     private long time;
-    private int state;
+    private int state;  // 1 == success, 0 == neutral, -1 == failure
 
     public void setHabit(String habit) {
         this.habit = habit;
