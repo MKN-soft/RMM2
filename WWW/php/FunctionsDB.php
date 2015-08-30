@@ -30,18 +30,22 @@ class FunctionsDB {
 			return false;
 		}
 	}
-	// TODO poprawa query!!
-	public function storeStatistics($id, $time, $size, $movements) {
-		$result = mysql_query("INSERT INTO Statystyki (user_id, time, size, movements, updated_at) 
-			VALUES('$id', '$time', '$size', '$movements', NOW())");
+	
+	public function storeHabits($id, $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk) {
+		$result = mysql_query("INSERT INTO Nawyki (uzytkownik_id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk) 
+			VALUES('$id', '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk'");
 		
 		// check for success
 		if ($result) {
 			return true;
 		}
 		else {
-			return false;
+            return false;
 		}
+	}
+	
+	public function storeStatistics($ilosc_nawykow, $najlepsza_passa, $srednia_dlugosc_ciagu, $procent_powodzen, $nawyki_id) {
+		
 	}
 	
 	public function getUserBySalt($salt) {
@@ -71,12 +75,17 @@ class FunctionsDB {
                 // user authentication details are correct
                 return $result;
             }
+			else {
+				// wrong password
+				return 2;
+			}
         } else {
             // user not found
-            return false;
+            return 1;
         }
 	}
 	
+	// TODO
 	public function getStatistics($email) {
 		$result = mysql_query("SELECT * FROM Statystyki JOIN users ON users.id = statistics.user_id WHERE users.email = '$email'");
 		// check for result
@@ -84,7 +93,6 @@ class FunctionsDB {
 			return $result;
 		}
 		else {
-			die(mysql_error());
 			return false;
 		}
 	}
@@ -100,5 +108,16 @@ class FunctionsDB {
             return false;
         }
     }
+	
+	public function getHabitsByUser($username) {
+		$result = mysql_query("SELECT Nawyki.id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk FROM Nawyki JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id WHERE Uzytkownicy.login = '$username'");
+		// check for result
+		if (isset($result)) {
+			return $result;
+		}
+		else {
+			return false;
+		}
+	}
 	
 }

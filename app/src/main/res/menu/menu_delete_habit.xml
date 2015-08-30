@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="pz2015.habits.rmm.activity.DeleteHabitActivity">
+    tools:context="teamproject.rmm2.activity.DeleteHabitActivity">
     <item
         android:id="@+id/action_addHabit"
         android:orderInCategory="100"

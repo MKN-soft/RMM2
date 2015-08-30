@@ -8,7 +8,7 @@
 <body>
 <div id="doc" class="yui-t7">
   <div id="hd">
-    <div id="header"><h1>HEADER</h1></div>
+    <div id="header"><h1>Hi</h1></div>
   </div>
   <div id="bd">
     <div id="yui-main">
@@ -31,7 +31,7 @@
 			<tr>
 			<td>Password</td>
 			<td>:</td>
-			<td><input name="mypassword" type="text" id="mypassword"></td>
+			<td><input name="mypassword" type="password" id="mypassword"></td>
 			</tr>
 			<tr>
 			<td>&nbsp;</td>
@@ -49,7 +49,7 @@
     </div>
   </div>
   <div id="ft">
-    <div id="footer">Footer</div>
+    <div id="footer">RMM - all rights reserved</div>
   </div>
 </div>
 </body>
