@@ -19,6 +19,7 @@ import java.util.Date;
 
 import teamproject.rmm2.LogicBase;
 import teamproject.rmm2.R;
+import teamproject.rmm2.database.DbHelper;
 import teamproject.rmm2.models.Habit;
 
 
@@ -30,6 +31,7 @@ public class AddHabitActivity extends ActionBarActivity {
 
     //TODO: adding habit to list
 
+    protected DbHelper dbHelper;
     public ImageView habitImage;
     public int position = LogicBase.getLastPosition();
     public int position2 = LogicBase.getLastPosition();
@@ -40,6 +42,9 @@ public class AddHabitActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
 
+        //database access
+        this.dbHelper = new DbHelper(this);
+
         Button addHabitButton = (Button) findViewById(R.id.addHabitButton);
         Button chooseImage = (Button) findViewById(R.id.chooseImage);
 
@@ -48,15 +53,21 @@ public class AddHabitActivity extends ActionBarActivity {
         final EditText habitFrequency = (EditText) findViewById(R.id.addHabitFrequency);
         final EditText habitNotes = (EditText) findViewById(R.id.addHabitNotes);
 
+        //TODO delete following 4 lines - testing purposes
+        habitName.setText("a");
+        habitDescription.setText("a");
+        habitFrequency.setText("1");
+
         final Drawable image = getResources().getDrawable(R.mipmap.ic_question_mark);
         habitImage = (ImageView) findViewById(R.id.addHabitImage);
 
         //final int position = LogicBase.getLastPosition();
-        position = LogicBase.getLastPosition();
+//        position = LogicBase.getLastPosition();
 
-        habitImage.setImageDrawable(image);
+//        habitImage.setImageDrawable(image);
 
         String[] elements = {"Day", "Week", "Month"};
+
         final Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> series = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, elements);
 
@@ -105,7 +116,17 @@ public class AddHabitActivity extends ActionBarActivity {
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //int position2 = LogicBase.getLastPosition();
+
+                if(dbHelper.getHabit(habitName.getText().toString()) == null){
+                    dbHelper.insertHabit(habitName.getText().toString(), habitDescription.getText().toString(),
+                            Integer.parseInt(habitFrequency.getText().toString()), 0, System.currentTimeMillis());
+                }
+                else{
+                    //TODO what happens if there is such habit already?
+                }
+
+
+                /*//int position2 = LogicBase.getLastPosition();
                 position2 = LogicBase.getLastPosition();
                 // check that habit exist  by image add
                 if (position == position2) {// habit does not exist
@@ -145,13 +166,13 @@ public class AddHabitActivity extends ActionBarActivity {
 
                 }
 
-
+*/
             }
         });
 
     }
 
-    protected void onResume() {
+    /*protected void onResume() {
         super.onResume();
         int position4 = LogicBase.getLastPosition();
         if (position != position4) {
@@ -170,7 +191,7 @@ public class AddHabitActivity extends ActionBarActivity {
             LogicBase.removeHabitItemAt(position + 1);
             position3++;
         }
-    }
+    }*/
 
 
     @Override

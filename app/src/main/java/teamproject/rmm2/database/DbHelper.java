@@ -117,39 +117,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 habitRow.setTitle(cursor.getString(0));
                 habitRow.setDescription(cursor.getString(1));
                 habitRow.setFrequency(cursor.getInt(2));
-                //adding to list
-                habitRowList.add(habitRow);
-
-            } while (cursor.moveToNext());
-
-            return habitRowList;
-        }
-        else return null;
-    }
-
-    /**
-     * returns list of ALL rows in table HABITS of ONE habit. Return null if table is empty (query is wrong etc.)
-     * @return
-     */
-    public List<HabitRow> getAllHabitsLike(String habitTitle) {
-        //TODO: check & test
-        // Gets the data repository in read mode
-        SQLiteDatabase database = this.getReadableDatabase();
-        //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME +
-                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE " + habitTitle;
-        //Preparing cursor for getting rows
-        Cursor cursor = database.rawQuery(query, null);
-        //Creating list
-        List<HabitRow> habitRowList = new ArrayList<HabitRow>();
-
-        // looping through all rows and selecting
-        if (cursor.moveToFirst()) {
-            do {
-                HabitRow habitRow = new HabitRow();
-                habitRow.setTitle(cursor.getString(0));
-                habitRow.setDescription(cursor.getString(1));
-                habitRow.setFrequency(cursor.getInt(2));
+                habitRow.setImageid(cursor.getInt(3));
+                habitRow.setCreationDate(cursor.getLong(4));
+                
                 //adding to list
                 habitRowList.add(habitRow);
 
@@ -223,15 +193,20 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param description
      * @param frequency
      */
-    public void insertHabit(String title, String description, int frequency){
+    public void insertHabit(String title, String description, int frequency, int imageid, long creation_date){
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
+
+        //We insert dates as UNIX time
+        creation_date = formatDateToUnixTime(creation_date);
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(Contract.Habits.COLUMN_HABIT_TITLE, title);
         values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
         values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
+        values.put(Contract.Habits.COLUMN_IMAGE_ID, imageid);
+        values.put(Contract.Habits.COLUMN_CREATION_DATE, creation_date);
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -339,12 +314,12 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /**
      * formats date to Unix time, day on hour 00:00:00
-     * @param arg - unix timestamp in long
+     * @param timeInMillis - unix timestamp as long
      * @return
      */
-    public long formatDateToUnixTime(long arg){
+    public long formatDateToUnixTime(long timeInMillis){
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(arg);
+        calendar.setTimeInMillis(timeInMillis);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
