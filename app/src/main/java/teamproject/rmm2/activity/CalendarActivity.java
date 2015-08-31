@@ -50,7 +50,7 @@ public class CalendarActivity extends Activity {
         currentHabit = LogicBase.getHabitAt(position);
 
         final List<HabitDay> definedHabits = currentHabit.getHabitDefinitions();
-        //definedHabits.add(new HabitDefinition(2015, 4, 5)); // 
+        //definedHabits.add(new HabitDefinition(2015, 4, 5)); //
 
         HabitDecorator habDecor = new HabitDecorator(definedHabits);
         DoneHabitDecorator doneHabDecor = new DoneHabitDecorator(definedHabits);
@@ -85,12 +85,37 @@ public class CalendarActivity extends Activity {
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
                                 boolean found = false;
-                                for (HabitDay hab : currentHabit.getHabitDefinitions()) {
-                                    if (hab.getYear() == calendarDay.getYear() && (hab.getMonth()-1) == calendarDay.getMonth() && hab.getDay() == calendarDay.getDay()) {
-                                        hab.setDone(true);
-                                        found = true;
+                                if(tYear > calendarDay.getYear()){
+                                    for (HabitDay hab : currentHabit.getHabitDefinitions()) {
+                                        if (hab.getYear() == calendarDay.getYear() && (hab.getMonth()-1) == calendarDay.getMonth() && hab.getDay() == calendarDay.getDay()) {
+                                            hab.setDone(true);
+                                            found = true;
 
-                                        Log.v("CalendarActivity", " " + (hab.getMonth()-1));
+
+                                        }
+                                    }
+                                }else if(tYear == calendarDay.getYear()) {
+                                    if (tMonth > calendarDay.getMonth()){
+                                        for (HabitDay hab : currentHabit.getHabitDefinitions()) {
+                                            if (hab.getYear() == calendarDay.getYear() && (hab.getMonth()-1) == calendarDay.getMonth() && hab.getDay() == calendarDay.getDay()) {
+                                                hab.setDone(true);
+                                                found = true;
+
+
+                                            }
+                                        }
+                                    }else if( tMonth == calendarDay.getMonth()) {
+                                        if (tDay > calendarDay.getDay() || tDay == calendarDay.getDay()) {
+                                            for (HabitDay hab : currentHabit.getHabitDefinitions()) {
+                                                if (hab.getYear() == calendarDay.getYear() && (hab.getMonth()-1) == calendarDay.getMonth() && hab.getDay() == calendarDay.getDay()) {
+                                                    hab.setDone(true);
+                                                    found = true;
+
+
+                                                }
+                                            }
+
+                                        }
                                     }
                                 }
 
