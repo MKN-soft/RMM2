@@ -26,6 +26,7 @@ but this can help your database work harmoniously with the Android framework.*/
         public static final String COLUMN_HABIT_TITLE = "title";
         public static final String COLUMN_HABIT_DESCRIPTION = "description";
         public static final String COLUMN_HABIT_FREQUENCY = "frequency";
+        public static final String COLUMN_IMAGE_ID = "image_number";
     }
 
     static abstract class Calendar{
@@ -57,7 +58,9 @@ but this can help your database work harmoniously with the Android framework.*/
                     Habits.COLUMN_HABIT_TITLE + TEXT_TYPE+ PRIMARY_KEY + COMMA_SEP +
                     Habits.COLUMN_HABIT_DESCRIPTION + TEXT_TYPE  + COMMA_SEP +
                     Habits.COLUMN_HABIT_FREQUENCY + INTEGER_TYPE +
+                    Habits.COLUMN_IMAGE_ID + INTEGER_TYPE +
                     " )";
+
     static final String SQL_DELETE_HABITS =
             "DROP TABLE IF EXISTS " + Habits.TABLE_NAME;
 
