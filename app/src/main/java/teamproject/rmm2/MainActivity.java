@@ -54,6 +54,12 @@ public class MainActivity extends MyActivityTemplate {
         super.onCreate(savedInstanceState);
 
         this.db = new DbHelper(this);
+
+//        adding some habits for testing purposes
+        db.insertHabit("a","a",1,0,System.currentTimeMillis());
+        db.insertHabit("b","a",2,0,System.currentTimeMillis());
+        db.insertHabit("c","a",3,0,System.currentTimeMillis());
+
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
@@ -154,8 +160,8 @@ public class MainActivity extends MyActivityTemplate {
                 HomeFragment hF = new HomeFragment();
                 List<Habit> habits = new ArrayList<Habit>();
                 //habits = db.getAllHabits2();
+
                 hF.setHabits(db.getAllHabits2());
-                //fragment = new HomeFragment();
                 fragment = hF;
                 break;
             case 1:

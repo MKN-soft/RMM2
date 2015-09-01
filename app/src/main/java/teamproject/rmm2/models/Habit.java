@@ -20,7 +20,7 @@ public class Habit implements Serializable {
     String id;
     String title;
     String description;
-    String date;
+//    String date;
     String frequency;
     Drawable image; //image change to int?
     String notes;
@@ -35,9 +35,9 @@ public class Habit implements Serializable {
         this.title = title;
         this.description = description;
         this.frequency = frequency;
-        this.image = image;
+//        this.image = image;
         this.notes = notes;
-        this.date = date;
+        //this.date = date;
         this.series = series;
     }
 
@@ -73,13 +73,13 @@ public class Habit implements Serializable {
         this.frequency = frequency;
     }
 
-    public String getDate() {
+    /*public String getDate() {
         return date;
-    }
+    }*/
 
-    public void setDate(String date) {
+    /*public void setDate(String date) {
         this.date = date;
-    }
+    }*/
 
     public Drawable getImage() {
         return this.image;

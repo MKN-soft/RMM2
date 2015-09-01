@@ -7,8 +7,9 @@ public class HabitRow {
     private String title;
     private String description;
     private int frequency;
-    private int imageid;
+    private int imageId;
     private long creationDate;
+    private int series;
 
     public void setTitle(String title) {
         this.title = title;
@@ -26,8 +27,12 @@ public class HabitRow {
         this.creationDate = creationDate;
     }
 
-    public void setImageid(int imageid) {
-        this.imageid = imageid;
+    public void setImageId(int imageid) {
+        this.imageId = imageid;
+    }
+
+    public void setSeries(int series) {
+        this.series = series;
     }
 
     public String getTitle() {
@@ -43,10 +48,18 @@ public class HabitRow {
     }
 
     public int getImageid() {
-        return imageid;
+        return imageId;
     }
 
     public long getCreationDate() {
         return creationDate;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public int getSeries() {
+        return series;
     }
 }
