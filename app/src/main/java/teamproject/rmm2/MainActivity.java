@@ -186,11 +186,11 @@ public class MainActivity extends MyActivityTemplate {
         }
     }
 
-    /*//TODO delete testers
-    *//**
+    //TODO delete testers
+    /**
      * testing purposes, delete when not needed
      * @param v
-     *//*
+     */
     public void dbputhabit(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("Processing...");
@@ -212,10 +212,10 @@ public class MainActivity extends MyActivityTemplate {
 
     }
 
-    *//**
+    /**
      * testing purposes, delete when not needed
      * @param v
-     *//*
+     */
     public void dbgethabit(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
@@ -230,10 +230,10 @@ public class MainActivity extends MyActivityTemplate {
         }
     }
 
-    *//**
+    /**
      * testing purposes, delete when not needed
      * @param v
-     *//*
+     */
     public void dbputstate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("Inserting state...");
@@ -245,15 +245,15 @@ public class MainActivity extends MyActivityTemplate {
 
     }
 
-    *//**
+    /**
      * testing purposes, delete when not needed
      * @param v
-     *//*
+     */
 
-    *//**
+    /**
      * testing purposes, delete when not needed
      * @param v
-     *//*
+     */
     public void dbputdate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("Processing...");
@@ -292,5 +292,5 @@ public class MainActivity extends MyActivityTemplate {
             //TODO: NO SUCH HABIT when there should be.
             textView.setText("No such habit!");
         }
-    }*/
+    }
 }
