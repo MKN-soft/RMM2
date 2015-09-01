@@ -120,7 +120,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 habitRow.setTitle(cursor.getString(0));
                 habitRow.setDescription(cursor.getString(1));
                 habitRow.setFrequency(cursor.getInt(2));
-//                habitRow.setImageid(cursor.getInt(3));
+                habitRow.setImageid(cursor.getInt(3));
                 habitRow.setCreationDate(cursor.getLong(4));
                 
                 //adding to list
@@ -143,47 +143,31 @@ public class DbHelper extends SQLiteOpenHelper {
         //Preparing cursor for getting rows
         Cursor cursor = database.rawQuery(query, null);
         //Creating list
-       List<HabitRow> habitRowList = new ArrayList<HabitRow>();
+       List<Habit> habitRowList = new ArrayList<Habit>();
 
         // looping through all rows and selecting
         if (cursor.moveToFirst()) {
             do {
-                HabitRow habitRow = new HabitRow();
+                Habit habitRow = new Habit();
                 habitRow.setTitle(cursor.getString(0));
                 habitRow.setDescription(cursor.getString(1));
-                habitRow.setFrequency(cursor.getInt(2));
-                habitRow.setImageId(cursor.getInt(3));
-                habitRow.setCreationDate(cursor.getLong(4));
+                habitRow.setFrequency(cursor.getString(2));
 
-                //Drawable image = getImageResource().getDrawable(R.mipmap.ic_communities);
+               // Drawable image = getImageResource().getDrawable(R.mipmap.ic_communities);
                 //final Drawable image = getResources().getDrawable(R.mipmap.ic_question_mark);
                 //habitRow.setImage(setImageResource().getDrawable(R.mipmap.ic_question_mark));
+                //habitRow.setImageId(cursor.getInt(3));
+                habitRow.setDate(cursor.getString(4));
 
                 //adding to list
                 habitRowList.add(habitRow);
 
             } while (cursor.moveToNext());
+
+            return habitRowList;
         }
-        else {
-            return null;
-        }
-
-        //creating list for conversion and returning purposes
-        List<Habit> habitList = new ArrayList<Habit>();
-
-        for(HabitRow row : habitRowList){
-            Habit habit = new Habit();
-            habit.setTitle(row.getTitle());
-            habit.setDescription(row.getDescription());
-//            habit.setDate(row.getCreationDate());
-            habit.setSeries(row.getSeries());
-
-            habitList.add(habit);
-        }
-
-        return habitList;
+        else return null;
     }
-
     /**
      * returns list of rows from DATES table - searches by date (column [1]), returns null if nothing is found
      * @param unixTimestamp

@@ -65,7 +65,7 @@ public class HabitDetailActivity extends Activity {
 
 
         frequency.setText("Your frequency: " + habit.getFrequency() + " " + additional);
-//        date.setText("Created: " + habit.getDate());
+        date.setText("Created: " + habit.getDate());
 
         habitImage.setImageDrawable(habit.getImage());
 
