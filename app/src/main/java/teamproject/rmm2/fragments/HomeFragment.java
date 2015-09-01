@@ -7,6 +7,7 @@ package teamproject.rmm2.fragments;
 
 import android.app.ListFragment;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,28 +25,34 @@ import teamproject.rmm2.LogicBase;
 import teamproject.rmm2.R;
 import teamproject.rmm2.activity.HabitDetailActivity;
 import teamproject.rmm2.adapters.HabitAdapter;
+import teamproject.rmm2.database.DbHelper;
 import teamproject.rmm2.models.Habit;
 
 public class HomeFragment extends ListFragment {
 
     private ListView habitListView;
     private ArrayAdapter habitItemArrayAdapter;
-    private List<Habit> habits = new ArrayList();
+    public List<Habit> habits = new ArrayList();
     private View view;
+    //protected  DbHelper dbHelper;
+
 
     public HomeFragment() {
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+ 
+
+
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         habits = randomHabits();
 
-        // Write habits to file
-        //writeHabitsToFile(habits, rootView);
 
         //create array adapter for homeFragment with given random habits
         habitItemArrayAdapter = new HabitAdapter(rootView.getContext(), habits);
@@ -89,4 +96,9 @@ public class HomeFragment extends ListFragment {
         return habits;
     }
 
+
+    public void setHabits(List<Habit> habits) {
+        this.habits = habits;
+    }
 }
+
