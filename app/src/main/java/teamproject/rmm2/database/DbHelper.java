@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.drawable.Drawable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,9 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import teamproject.rmm2.R;
 import teamproject.rmm2.models.CalendarRow;
-import teamproject.rmm2.models.Habit;
 import teamproject.rmm2.models.HabitRow;
 
 /**
@@ -133,41 +130,6 @@ public class DbHelper extends SQLiteOpenHelper {
         else return null;
     }
 
-
-    public List<Habit> getAllHabits2() {
-        //TODO: check & test
-        // Gets the data repository in read mode
-        SQLiteDatabase database = this.getReadableDatabase();
-        //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME;
-        //Preparing cursor for getting rows
-        Cursor cursor = database.rawQuery(query, null);
-        //Creating list
-       List<Habit> habitRowList = new ArrayList<Habit>();
-
-        // looping through all rows and selecting
-        if (cursor.moveToFirst()) {
-            do {
-                Habit habitRow = new Habit();
-                habitRow.setTitle(cursor.getString(0));
-                habitRow.setDescription(cursor.getString(1));
-                habitRow.setFrequency(cursor.getString(2));
-
-               // Drawable image = getImageResource().getDrawable(R.mipmap.ic_communities);
-                //final Drawable image = getResources().getDrawable(R.mipmap.ic_question_mark);
-                //habitRow.setImage(setImageResource().getDrawable(R.mipmap.ic_question_mark));
-                //habitRow.setImageId(cursor.getInt(3));
-                habitRow.setDate(cursor.getString(4));
-
-                //adding to list
-                habitRowList.add(habitRow);
-
-            } while (cursor.moveToNext());
-
-            return habitRowList;
-        }
-        else return null;
-    }
     /**
      * returns list of rows from DATES table - searches by date (column [1]), returns null if nothing is found
      * @param unixTimestamp
@@ -198,8 +160,6 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         return null;
     }
-
-
 
     /**
      * Returns list of all rows from table STATES

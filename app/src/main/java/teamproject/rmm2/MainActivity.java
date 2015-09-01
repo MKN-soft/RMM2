@@ -20,16 +20,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import teamproject.rmm2.activity.AddHabitActivity;
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
-import teamproject.rmm2.database.DbHelper;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
 import teamproject.rmm2.fragments.SettingsFragment;
 import teamproject.rmm2.models.CalendarRow;
-import teamproject.rmm2.models.Habit;
 import teamproject.rmm2.models.HabitRow;
 import teamproject.rmm2.models.NavDrawerItem;
 
@@ -47,13 +44,10 @@ public class MainActivity extends MyActivityTemplate {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
-    protected DbHelper db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.db = new DbHelper(this);
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
@@ -84,7 +78,6 @@ public class MainActivity extends MyActivityTemplate {
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-
             displayView(0);
         }
     }
@@ -151,12 +144,7 @@ public class MainActivity extends MyActivityTemplate {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                HomeFragment hF = new HomeFragment();
-                List<Habit> habits = new ArrayList<Habit>();
-                //habits = db.getAllHabits2();
-                hF.setHabits(db.getAllHabits2());
-                //fragment = new HomeFragment();
-                fragment = hF;
+                fragment = new HomeFragment();
                 break;
             case 1:
                 fragment = new SettingsFragment();
