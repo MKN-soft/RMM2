@@ -3,7 +3,6 @@ package teamproject.rmm2;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import teamproject.rmm2.activity.AddHabitActivity;
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
@@ -94,34 +92,14 @@ public class MainActivity extends MyActivityTemplate {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        //if (id == R.id.action_settings) {
-       //     return true;
-       // }
-
-        switch (item.getItemId()) {
-            case R.id.action_addHabit:
-                //click addhabit
-                Intent intent = new Intent(MainActivity.this, AddHabitActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (id == R.id.action_settings) {
+            return true;
         }
 
-
-        //return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // if nav drawer is opened, hide the action items
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.action_addHabit).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -250,6 +228,22 @@ public class MainActivity extends MyActivityTemplate {
      * @param v
      */
 
+   /* public void dbgetstate(View v){
+        TextView textView = (TextView) findViewById(R.id.test_db_textview);
+        textView.setText("getting text from db");
+        //ok until here
+
+        String aux = dbHelper.getState("test_state");
+
+        if (aux != null) {
+            textView.setText(aux);
+        }
+        else {
+            textView.setText("No such state!");
+        }
+
+    }*/
+
     /**
      * testing purposes, delete when not needed
      * @param v
@@ -261,8 +255,17 @@ public class MainActivity extends MyActivityTemplate {
 
         //Creating unix timesstamp for the BEGINING of the day
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        //long time = calendar.getTimeInMillis();
+
+        long time = calendar.getTimeInMillis();
+
         //inserting with current time
-        dbHelper.insertDate(System.currentTimeMillis()/1000L,"test_habit", 0);   //TODO foreign key not working properly!
+        dbHelper.insertDate(time,"test_habit", 0);   //TODO foreign key not working properly!
 
         textView.setText("Processing... finished");
 

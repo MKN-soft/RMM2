@@ -35,16 +35,4 @@
         <item>@mipmap/ic_pages</item>
         <item>@mipmap/ic_whats_hot</item>
     </array>
-
-    <string name="addHabit">addHabit</string>
-    <string name="deleteHabit">DELETE HABIT</string>
-    <string name="title_activity_add_habit">AddHabitActivity</string>
-    <string name="title_activity_delete_habit">DeleteHabitActivity</string>
-    <string name="title_activity_edit_habit">EditHabitActivity</string>
-    <string name="editHabit">EDIT HABIT</string>
-    <string name="addHabitNameFieldSubtitle">Habit name</string>
-    <string name="setFrequency">Set frequency of your habit</string>
-    <string name="title_activity_edit_image">Change Image</string>
-    <string name="title_activity_habit_detail">Habit Detail</string>
-    <string name="action_addHabit">Add Habit</string>
 </resources>

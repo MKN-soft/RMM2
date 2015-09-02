@@ -28,7 +28,7 @@ import teamproject.rmm2.models.HabitRow;
  */
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "RMM2.db";
 
     public DbHelper(Context context){
@@ -105,39 +105,6 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
         //Preparing query (only for convenience purposes)
         String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME;
-        //Preparing cursor for getting rows
-        Cursor cursor = database.rawQuery(query, null);
-        //Creating list
-        List<HabitRow> habitRowList = new ArrayList<HabitRow>();
-
-        // looping through all rows and selecting
-        if (cursor.moveToFirst()) {
-            do {
-                HabitRow habitRow = new HabitRow();
-                habitRow.setTitle(cursor.getString(0));
-                habitRow.setDescription(cursor.getString(1));
-                habitRow.setFrequency(cursor.getInt(2));
-                //adding to list
-                habitRowList.add(habitRow);
-
-            } while (cursor.moveToNext());
-
-            return habitRowList;
-        }
-        else return null;
-    }
-
-    /**
-     * returns list of ALL rows in table HABITS of ONE habit. Return null if table is empty (query is wrong etc.)
-     * @return
-     */
-    public List<HabitRow> getAllHabitsLike(String habitTitle) {
-        //TODO: check & test
-        // Gets the data repository in read mode
-        SQLiteDatabase database = this.getReadableDatabase();
-        //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME +
-                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE " + habitTitle;
         //Preparing cursor for getting rows
         Cursor cursor = database.rawQuery(query, null);
         //Creating list
@@ -252,8 +219,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param state
      */
     public void insertDate(long unixTimestamp, String habittitle, int state){
-        //We insert dates as UNIX time
-        unixTimestamp = formatDateToUnixTime(unixTimestamp);
+        //We insert dates as TEXT   yyyy-MM-dd
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -298,35 +264,25 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
-    public HabitRow getState(String title){
-        //TODO: SHIT WORKS! Good example for other stuff
-        // Gets the data repository in read mode
-        SQLiteDatabase database = this.getReadableDatabase();
-        //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME + " " + "WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + " LIKE \'" + title + "\'";
-        //Preparing cursor for getting rows
-        Cursor cursor = database.rawQuery(query, null);
 
-        // looping through all rows and selecting
-        if(cursor.moveToFirst()){
-            do{
-                HabitRow habitRow = new HabitRow();
-                habitRow.setTitle(cursor.getString(0));
+    public void updateCalendar(int state, String date, String habit){
+        //TODO check dat shieeeeet. I have no idea if it works at all.
+        // Gets the data repository in write mode
+        SQLiteDatabase database = this.getWritableDatabase();
 
-                if (habitRow.getTitle().equals(title)) {
-                    habitRow.setDescription(cursor.getString(1));
-                    habitRow.setFrequency(cursor.getInt(2));
+        ContentValues cValues = new ContentValues();
+        cValues.put(Contract.Calendar.COLUMN_HABIT_TITLE, habit);
+        cValues.put(Contract.Calendar.COLUMN_DATE, date);
+        cValues.put(Contract.Calendar.COLUMN_STATE, state);
 
-                    //returns found row
-                    return habitRow;
-                }
-
-            }while(cursor.moveToNext());
-        }
-
-        //TODO exception handling. Returns null if nothing is found.
-        return null;
+        database.update(Contract.Calendar.TABLE_NAME, cValues,
+                Contract.Calendar.COLUMN_HABIT_TITLE + " = " + habit + " AND " + Contract.Calendar.COLUMN_DATE + " = " + date,
+                null);
     }
+
+
+
+
 
 
     public void deleteHabit(String habit){
@@ -337,83 +293,4 @@ public class DbHelper extends SQLiteOpenHelper {
         database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " = " + habit, null);
     }
 
-    /**
-     * formats date to Unix time, day on hour 00:00:00
-     * @param arg - unix timestamp in long
-     * @return
-     */
-    public long formatDateToUnixTime(long arg){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(arg);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        return calendar.getTimeInMillis();
-    }
-
-
-    /**
-     * computes percentage of successes to failures
-     * @param habittitle
-     * @return
-     */
-    public float computeStats(String habittitle){
-        int success=0, failure =0;
-        SQLiteDatabase database = this.getReadableDatabase();
-
-        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME +
-                "WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + " LIKE " + habittitle;
-        Cursor cursor = database.rawQuery(query, null);
-
-
-
-        if (cursor.moveToFirst()) {
-            do {
-                int state = cursor.getInt(2);
-
-                if(state ==1){
-                    success++;
-                }
-                if(state== -1 || state== 0){
-                    failure++;
-                }
-            } while (cursor.moveToNext());
-        }
-        else {
-            return -1; //error! No records!
-        }
-
-        float stat = (success)/(success+failure);
-        return stat;
-    }
-
-    public List<CalendarRow> getAllDates() {
-        //TODO: check & test
-        // Gets the data repository in read mode
-        SQLiteDatabase database = this.getReadableDatabase();
-        //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME;
-        //Preparing cursor for getting rows
-        Cursor cursor = database.rawQuery(query, null);
-        //Creating list
-        List<CalendarRow> calendarRowList = new ArrayList<CalendarRow>();
-
-        // looping through all rows and selecting
-        if (cursor.moveToFirst()) {
-            do {
-                CalendarRow calendarRow = new CalendarRow();
-                calendarRow.setTime(cursor.getLong(0));
-                calendarRow.setHabit(cursor.getString(1));
-                calendarRow.setState(cursor.getInt(2));
-                //adding to list
-                calendarRowList.add(calendarRow);
-
-            } while (cursor.moveToNext());
-
-            return calendarRowList;
-        }
-        else return null;
-    }
 }
