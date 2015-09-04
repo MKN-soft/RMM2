@@ -3,6 +3,7 @@ package teamproject.rmm2;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
@@ -101,13 +102,10 @@ public class MainActivity extends MyActivityTemplate {
         }
         if (id == R.id.action_addHabit) {
             // Add Habit
-            Random random = new Random();
-            String title = Integer.toString(random.nextInt());
-            String description = Integer.toString(random.nextInt());
-            dbHelper.insertHabit(title, description, random.nextInt());
 
-            finish();
-            startActivity(getIntent());
+            Intent intent = new Intent(MainActivity.this, AddHabitActivity.class);
+            startActivity(intent);
+
             return true;
         }
 

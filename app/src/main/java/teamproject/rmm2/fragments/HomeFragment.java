@@ -6,12 +6,9 @@ package teamproject.rmm2.fragments;
  */
 
 import android.app.ListFragment;
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,7 +18,6 @@ import java.util.List;
 import teamproject.rmm2.R;
 import teamproject.rmm2.adapters.HabitAdapter;
 import teamproject.rmm2.database.DbHelper;
-import teamproject.rmm2.items.Habit;
 import teamproject.rmm2.models.HabitRow;
 
 public class HomeFragment extends ListFragment {
@@ -54,11 +50,6 @@ public class HomeFragment extends ListFragment {
         if (habitRowList != null)
             for(int i = 0; i < habitRowList.size(); i++)
                 habitList.add(new HabitRow(resources.getDrawable(R.mipmap.ic_home), habitRowList.get(i).getTitle(), habitRowList.get(i).getDescription()));
-
-
-        //habitList.add(new HabitRow(resources.getDrawable(R.mipmap.ic_home), getString(R.string.test_title), getString(R.string.test_description)));
-        //habitList.add(new HabitRow(resources.getDrawable(R.mipmap.ic_home), getString(R.string.test_title), getString(R.string.test_description)));
-        //habitList.add(new HabitRow(resources.getDrawable(R.mipmap.ic_home), getString(R.string.test_title), getString(R.string.test_description)));
 
         // Initialize and set the list adapter
         setListAdapter(new HabitAdapter(getActivity(), habitList));

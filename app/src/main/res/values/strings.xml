@@ -39,4 +39,8 @@
         <item>@mipmap/ic_pages</item>
         <item>@mipmap/ic_whats_hot</item>
     </array>
+    <string name="title_activity_add_habit">AddHabitActivity</string>
+    <string name="addHabit">Add Habit</string>
+    <string name="addHabitNameFieldSubtitle">Habit name</string>
+    <string name="setFrequency">Set frequency of your habit</string>
 </resources>
