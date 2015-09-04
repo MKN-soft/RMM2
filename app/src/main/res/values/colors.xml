@@ -8,7 +8,7 @@
     <color name="counter_text_color">#c5c4c4</color>
     <color name="white">#ffffff</color>
 
-    <!-- Register Colors-->
+    <!-- Register Colors -->
     <color name="bg_register">#ff02a4c2</color>
 
     <color name="input_register">#222222</color>
@@ -18,5 +18,10 @@
     <color name="btn_register">#ff02a4c2</color>
     <color name="btn_register_bg">#ffffff</color>
     <color name="black">#ff02a4c2</color>
+
+    <!-- Habit List Colors -->
+    <color name="frame">#b4b4b4</color>
+    <color name="frame_solid">#eee</color>
+    <color name="frame_background">#bcbcbc</color>
 
 </resources>
