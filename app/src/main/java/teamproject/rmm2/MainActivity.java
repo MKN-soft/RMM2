@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
 import teamproject.rmm2.fragments.GoProFragment;
@@ -96,6 +97,17 @@ public class MainActivity extends MyActivityTemplate {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_addHabit) {
+            // Add Habit
+            Random random = new Random();
+            String title = Integer.toString(random.nextInt());
+            String description = Integer.toString(random.nextInt());
+            dbHelper.insertHabit(title, description, random.nextInt());
+
+            finish();
+            startActivity(getIntent());
             return true;
         }
 

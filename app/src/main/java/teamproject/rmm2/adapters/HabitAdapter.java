@@ -1,6 +1,7 @@
 package teamproject.rmm2.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,14 @@ import java.util.List;
 
 import teamproject.rmm2.R;
 import teamproject.rmm2.items.Habit;
+import teamproject.rmm2.models.HabitRow;
 
 /**
  * Created by MSI on 2015-09-03.
  */
-public class HabitAdapter extends ArrayAdapter<Habit> {
+public class HabitAdapter extends ArrayAdapter<HabitRow> {
 
-    public HabitAdapter(Context context, List<Habit> habitList) {
+    public HabitAdapter(Context context, List<HabitRow> habitList) {
         super(context, R.layout.listview_item, habitList);
     }
 
@@ -43,11 +45,14 @@ public class HabitAdapter extends ArrayAdapter<Habit> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+
+        Resources resources = getContext().getResources();
+
         // Update the item view
-        Habit item = getItem(position);
-        viewHolder.ivIcon.setImageDrawable(item.icon);
-        viewHolder.tvTitle.setText(item.title);
-        viewHolder.tvDescription.setText(item.description);
+        HabitRow item = getItem(position);
+        viewHolder.ivIcon.setImageDrawable(resources.getDrawable(R.mipmap.ic_home));
+        viewHolder.tvTitle.setText(item.getTitle());
+        viewHolder.tvDescription.setText(item.getDescription());
 
         return convertView;
     }

@@ -1,12 +1,26 @@
 package teamproject.rmm2.models;
 
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 /**
  * Created by Marcin on 2015-08-20.
  */
 public class HabitRow {
+    private Drawable icon;
     private String title;
     private String description;
     private int frequency;
+
+    public HabitRow() {
+
+    }
+
+    public HabitRow(Drawable icon, String title, String description) {
+        this.icon = icon;
+        this.title = title;
+        this.description = description;
+    }
 
     public void setTitle(String title) {
         this.title = title;
