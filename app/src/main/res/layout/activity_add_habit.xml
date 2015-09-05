@@ -44,8 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Choose Image"
-                android:textColor="@color/input_register"
-                android:background="@color/white"
+                android:textColor="@color/bg_addHabit"
+                android:background="@color/btn_register_bg"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -104,25 +104,14 @@
             android:textColor="@color/input_register"
             android:background="@color/white" />
 
-        <EditText
-            android:id="@+id/addHabitNotes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:hint="Notes"
-            android:textColor="@color/input_register"
-            android:background="@color/white" />
-
         <Button
             android:id="@+id/addHabitButton"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Add" />
-
+            android:background="@color/btn_register_bg"
+            android:text="@string/addHabit"
+            android:textColor="@color/bg_addHabit"
+            android:layout_marginTop="20dip" />
 
     </LinearLayout>
 </LinearLayout>
