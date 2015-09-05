@@ -2,9 +2,11 @@ package teamproject.rmm2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,9 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class AddHabitActivity extends MyActivityTemplate {
 
+    private EditText habitName, habitDescription, habitFrequency;
     private int additional;
 
     @Override
@@ -26,10 +30,9 @@ public class AddHabitActivity extends MyActivityTemplate {
         Button addHabitButton = (Button) findViewById(R.id.addHabitButton);
         Button chooseImage = (Button) findViewById(R.id.chooseImage);
 
-        final EditText habitName = (EditText) findViewById(R.id.addHabitName);
-        final EditText habitDescription = (EditText) findViewById(R.id.addHabitDescription);
-        final EditText habitFrequency = (EditText) findViewById(R.id.addHabitFrequency);
-        final EditText habitNotes = (EditText) findViewById(R.id.addHabitNotes);
+        habitName = (EditText) findViewById(R.id.addHabitName);
+        habitDescription = (EditText) findViewById(R.id.addHabitDescription);
+        habitFrequency = (EditText) findViewById(R.id.addHabitFrequency);
 
         final Drawable image = getResources().getDrawable(R.mipmap.ic_question_mark);
         ImageView habitImage = (ImageView) findViewById(R.id.addHabitImage);
@@ -74,7 +77,19 @@ public class AddHabitActivity extends MyActivityTemplate {
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbHelper.insertHabit(habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()));
+
+                try {
+                    dbHelper.insertHabit(habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()));
+                }
+                catch (SQLiteConstraintException e) {
+                    Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                catch(Exception e){
+                    Toast.makeText(getContext(), "Unexpected exception!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 Intent intent = new Intent(AddHabitActivity.this, MainActivity.class);
                 startActivity(intent);

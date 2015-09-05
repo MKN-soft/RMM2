@@ -11,6 +11,7 @@ public class HabitRow {
     private String title;
     private String description;
     private int frequency;
+    private String notes;
 
     public HabitRow() {
 

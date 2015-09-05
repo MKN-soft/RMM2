@@ -12,7 +12,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import teamproject.rmm2.R;
-import teamproject.rmm2.items.Habit;
 import teamproject.rmm2.models.HabitRow;
 
 /**

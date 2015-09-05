@@ -6,6 +6,7 @@ package teamproject.rmm2.fragments;
  */
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import teamproject.rmm2.HabitDetailActivity;
+import teamproject.rmm2.Helpers.SessionManager;
+import teamproject.rmm2.MainActivity;
 import teamproject.rmm2.R;
 import teamproject.rmm2.adapters.HabitAdapter;
 import teamproject.rmm2.database.DbHelper;
@@ -68,8 +72,12 @@ public class HomeFragment extends ListFragment {
         // Retrieve the ListView item
         HabitRow item = habitList.get(position);
 
-        //TODO Do something
-        Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
+        SessionManager sessionManager = new SessionManager(getActivity().getApplicationContext());
+
+        sessionManager.setHabitTitle(item.getTitle());
+
+        Intent intent = new Intent(getActivity(), HabitDetailActivity.class);
+        startActivity(intent);
     }
 
 }

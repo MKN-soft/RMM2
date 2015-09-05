@@ -1,47 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- the parent view - provides the gray listfragment background color -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:padding="2dp" >-->
+
+    <!--&lt;!&ndash; the innner view - provides the white rectangle &ndash;&gt;-->
+    <!--<RelativeLayout android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/frame" >-->
+
+        <!--&lt;!&ndash; the icon view &ndash;&gt;-->
+        <!--<ImageView android:id="@+id/ivIcon"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="5dp"-->
+            <!--android:contentDescription="@string/icon_content_description"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:layout_alignParentLeft="true" />-->
+
+        <!--&lt;!&ndash; the container view for the title and description &ndash;&gt;-->
+        <!--<RelativeLayout android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toRightOf="@id/ivIcon"-->
+            <!--android:layout_centerVertical="true" >-->
+
+            <!--&lt;!&ndash; the title view &ndash;&gt;-->
+            <!--<TextView android:id="@+id/tvTitle"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="@android:style/TextAppearance.Medium" />-->
+
+            <!--&lt;!&ndash; the description view &ndash;&gt;-->
+            <!--<TextView android:id="@+id/tvDescription"-->
+                <!--android:layout_below="@id/tvTitle"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="@android:style/TextAppearance.Small" />-->
+        <!--</RelativeLayout>-->
+
+    <!--</RelativeLayout>-->
+
+<!--</RelativeLayout>-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:gravity="center_vertical"
-    android:background="@color/frame_background"
-    android:padding="5dp" >
+    android:orientation="horizontal"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp">
 
-    <!-- the innner view - provides the white rectangle -->
-    <RelativeLayout android:layout_width="fill_parent"
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/frame" >
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:src="@mipmap/ic_running" />
 
-        <!-- the icon view -->
-        <ImageView android:id="@+id/ivIcon"
-            android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:gravity="left"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:contentDescription="@string/icon_content_description"
-            android:scaleType="fitXY"
-            android:layout_alignParentLeft="true" />
+            android:text="Header Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#222222"
+            android:textSize="19sp"
+            android:textStyle="bold" />
 
-        <!-- the container view for the title and description -->
-        <RelativeLayout android:layout_width="wrap_content"
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/ivIcon"
-            android:layout_centerVertical="true" >
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:lines="3"
+            android:text="Habit description text here"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#666666"
+            android:textSize="14sp" />
 
-            <!-- the title view -->
-            <TextView android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.Medium" />
 
-            <!-- the description view -->
-            <TextView android:id="@+id/tvDescription"
-                android:layout_below="@id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@android:style/TextAppearance.Small" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="20 Nov 2013"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#999999"
+            android:textSize="12sp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

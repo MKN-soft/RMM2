@@ -43,4 +43,7 @@
     <string name="addHabit">Add Habit</string>
     <string name="addHabitNameFieldSubtitle">Habit name</string>
     <string name="setFrequency">Set frequency of your habit</string>
+    <string name="title_activity_habit_detail">HabitDetailActivity</string>
+    <string name="editHabit">Edit Habit</string>
+    <string name="deleteHabit">Delete Habit</string>
 </resources>

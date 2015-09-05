@@ -25,6 +25,7 @@ public class SessionManager {
     private final String KEY_IS_LOGGEDIN = "isLoggedIn";
     private final String KEY_IS_SALT = "salt";
     private final String KEY_USERNAME = "username";
+    private final String KEY_IS_HABIT_TITLE = "habitTitle";
 
     public SessionManager(Context context) {
         this.context = context;
@@ -34,6 +35,10 @@ public class SessionManager {
 
     public boolean getKEY_IS_LOGGEDIN(){
         return this.sharedPreferences.getBoolean(KEY_IS_LOGGEDIN, false);
+    }
+
+    public String getHabitTitle() {
+        return this.sharedPreferences.getString(KEY_IS_HABIT_TITLE, "");
     }
 
     //save user name to SharedPref
@@ -58,6 +63,12 @@ public class SessionManager {
         this.editor.putString(KEY_USERNAME, username);
 
         // commit changes
+        editor.commit();
+    }
+
+    public void setHabitTitle(String habitTitle) {
+        this.editor.putString(KEY_IS_HABIT_TITLE, habitTitle);
+
         editor.commit();
     }
 
