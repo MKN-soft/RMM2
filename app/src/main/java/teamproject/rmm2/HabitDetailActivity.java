@@ -1,10 +1,12 @@
 package teamproject.rmm2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +39,32 @@ public class HabitDetailActivity extends MyActivityTemplate {
         title.setText(item.getTitle());
         description.setText(item.getDescription());
         frequency.setText(Integer.toString(item.getFrequency()));
+
+        deleteHabit = (Button) findViewById(R.id.deleteHabit);
+        editHabit = (Button) findViewById(R.id.editHabit);
+
+        deleteHabit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Delete habit from database
+                dbHelper.deleteHabit(sessionManager.getHabitTitle());
+
+                // Back to Main Activity
+                Intent intent = new Intent(HabitDetailActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        editHabit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Go to edit habit activity
+                Intent intent = new Intent(HabitDetailActivity.this, EditHabitActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override

@@ -46,4 +46,5 @@
     <string name="title_activity_habit_detail">HabitDetailActivity</string>
     <string name="editHabit">Edit Habit</string>
     <string name="deleteHabit">Delete Habit</string>
+    <string name="title_activity_edit_habit">EditHabitActivity</string>
 </resources>

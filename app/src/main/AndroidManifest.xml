@@ -37,6 +37,10 @@
             android:name=".HabitDetailActivity"
             android:label="@string/title_activity_habit_detail" >
         </activity>
+        <activity
+            android:name=".EditHabitActivity"
+            android:label="@string/title_activity_edit_habit" >
+        </activity>
     </application>
 
 </manifest>
