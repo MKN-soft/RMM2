@@ -42,7 +42,8 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON;");
+//        this didn't work anyway - see onConfigure method
+//        sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON;");
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_HABITS);
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_STATES);
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_CALENDAR);
@@ -51,7 +52,8 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         //Current upgrade policy is to simply to discard the data and start over
-        sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON;");
+//        this didn't work anyway - see onConfigure method
+//        sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON;");
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_CALENDAR);
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_HABITS);
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_STATES);
@@ -61,6 +63,14 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onOpen(SQLiteDatabase db) {
         super.onOpen(db);
+    }
+
+    /**
+     * This makes constraints work
+     * @param db - SQLiteDatabase
+     */
+    public void onConfigure(SQLiteDatabase db){
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     //auxiliary classes for GETTING data from DB

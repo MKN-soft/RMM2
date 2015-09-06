@@ -295,7 +295,7 @@ public class MainActivity extends MyActivityTemplate {
             dbHelper.insertDate(time, "test_habit", 0);   //TODO foreign key not working properly!
         }
         catch(SQLiteConstraintException e){
-            textView.setText("Duplicate record!");
+            textView.setText("Constraint exception!");
             return;
         }
         catch(Exception e){
