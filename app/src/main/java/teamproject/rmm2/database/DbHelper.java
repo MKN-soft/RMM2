@@ -30,7 +30,7 @@ import teamproject.rmm2.models.HabitRow;
  */
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 8;
     public static final String DATABASE_NAME = "RMM2.db";
 
     /**
@@ -144,9 +144,9 @@ public class DbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 HabitRow habitRow = new HabitRow();
-                habitRow.setTitle(cursor.getString(0));
-                habitRow.setDescription(cursor.getString(1));
-                habitRow.setFrequency(cursor.getInt(2));
+                habitRow.setTitle(cursor.getString(1));
+                habitRow.setDescription(cursor.getString(2));
+                habitRow.setFrequency(cursor.getInt(3));
                 //adding to list
                 habitRowList.add(habitRow);
 
@@ -205,7 +205,7 @@ public class DbHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             List<String> statesList = new ArrayList<String>();
             do{
-                statesList.add(cursor.getString(0));
+                statesList.add(cursor.getString(1));
             }while(cursor.moveToNext());
         }
 
@@ -299,12 +299,12 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
 
-    public void deleteHabit(String habit){
+    public void deleteHabit(String habitTitle){
         //TODO habit deletion
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
-        database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " = " + habit, null);
+        database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle +"\'", null);
     }
 
 }
