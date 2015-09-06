@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
  * Validates device with token, password and login
  */
 public class Validate {
-    //TODO check whole Validate class. I just copied it (MR)
     // Regular Expression
     private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String PASSWORD_REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$";

@@ -31,12 +31,15 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "RMM2.db";
 
+    /**
+     * "constructor" for database
+     * @param context
+     */
     public DbHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        //TODO schema, it's still just an example/ foundation
         sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON;");
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_HABITS);
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_STATES);
@@ -45,7 +48,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        //TODO think about upgrading policy and how to do it (I think it's ok as it is though) (MR)
         //Current upgrade policy is to simply to discard the data and start over
         sqLiteDatabase.execSQL("PRAGMA foreign_keys = ON;");
         sqLiteDatabase.execSQL(Contract.SQL_DELETE_CALENDAR);
@@ -66,7 +68,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     public HabitRow getHabit(String title){
-        //TODO: SHIT WORKS! Good example for other stuff
+        //SHIT WORKS! Good example for other stuff
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
         //Preparing query (only for convenience purposes)
@@ -91,7 +93,7 @@ public class DbHelper extends SQLiteOpenHelper {
             }while(cursor.moveToNext());
         }
 
-        //TODO exception handling. Returns null if nothing is found.
+        //Returns null if nothing is found.
         return null;
     }
 
@@ -100,7 +102,6 @@ public class DbHelper extends SQLiteOpenHelper {
      * @return
      */
     public List<HabitRow> getAllHabits() {
-        //TODO: check & test
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
         //Preparing query (only for convenience purposes)
@@ -265,28 +266,13 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
 
-    public void updateCalendar(int state, String date, String habit){
-        //TODO check dat shieeeeet. I have no idea if it works at all.
-        // Gets the data repository in write mode
-        SQLiteDatabase database = this.getWritableDatabase();
-
-        ContentValues cValues = new ContentValues();
-        cValues.put(Contract.Calendar.COLUMN_HABIT_TITLE, habit);
-        cValues.put(Contract.Calendar.COLUMN_DATE, date);
-        cValues.put(Contract.Calendar.COLUMN_STATE, state);
-
-        database.update(Contract.Calendar.TABLE_NAME, cValues,
-                Contract.Calendar.COLUMN_HABIT_TITLE + " = " + habit + " AND " + Contract.Calendar.COLUMN_DATE + " = " + date,
-                null);
-    }
-
 
 
 
 
 
     public void deleteHabit(String habit){
-        //TODO
+        //TODO habit deletion
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 

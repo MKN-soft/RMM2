@@ -33,7 +33,7 @@ public class LauncherActivity extends MyActivityTemplate {
         //set UI (via super)
         super.onCreate(savedInstanceState);
 
-        //TODO uncomment this shit below! I'ts just for testing purposes
+        //TODO uncomment this shit below before releasing app! I'ts just for testing purposes
         if(/*isLogged() ==*/ true){
             //NOT my first time here!
 
