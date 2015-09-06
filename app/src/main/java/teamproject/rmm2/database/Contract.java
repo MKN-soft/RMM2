@@ -22,13 +22,16 @@ but this can help your database work harmoniously with the Android framework.*/
      */
     static abstract class Habits{
         public static final String TABLE_NAME = "habits";
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_HABIT_TITLE = "title";
         public static final String COLUMN_HABIT_DESCRIPTION = "description";
         public static final String COLUMN_HABIT_FREQUENCY = "frequency";
+        public static final String COLUMN_HABIT_PERIODICITY = "periodicity";
     }
 
     static abstract class Calendar{
         public static final String TABLE_NAME = "calendar";
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_HABIT_TITLE = "habitid";
         public static final String COLUMN_DATE = "date";
         public static final String COLUMN_STATE = "state";
@@ -36,6 +39,7 @@ but this can help your database work harmoniously with the Android framework.*/
 
     static abstract class States{
         public static final String TABLE_NAME = "states";
+        public static final String COLUMN_ID = "id";
         public static final String COLUMN_STATE = "habitstate";
     }
 
@@ -53,9 +57,12 @@ but this can help your database work harmoniously with the Android framework.*/
     static final String SQL_CREATE_HABITS =
             "CREATE TABLE IF NOT EXISTS " + Habits.TABLE_NAME +
                     " (" +
-                    Habits.COLUMN_HABIT_TITLE + TEXT_TYPE+ PRIMARY_KEY + COMMA_SEP +
+                    Habits.COLUMN_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                    Habits.COLUMN_HABIT_TITLE + TEXT_TYPE + COMMA_SEP +
                     Habits.COLUMN_HABIT_DESCRIPTION + TEXT_TYPE  + COMMA_SEP +
-                    Habits.COLUMN_HABIT_FREQUENCY + INTEGER_TYPE +
+                    Habits.COLUMN_HABIT_FREQUENCY + INTEGER_TYPE + COMMA_SEP +
+                    Habits.COLUMN_HABIT_PERIODICITY + INTEGER_TYPE + COMMA_SEP +
+                    "UNIQUE(" + Habits.COLUMN_HABIT_TITLE + ")" +
                     " )";
     static final String SQL_DELETE_HABITS =
             "DROP TABLE IF EXISTS " + Habits.TABLE_NAME;
@@ -66,7 +73,9 @@ but this can help your database work harmoniously with the Android framework.*/
     static final String SQL_CREATE_STATES =
             "CREATE TABLE IF NOT EXISTS " + States.TABLE_NAME +
                     " (" +
-                    States.COLUMN_STATE + TEXT_TYPE + PRIMARY_KEY +
+                    States.COLUMN_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                    States.COLUMN_STATE + INTEGER_TYPE + COMMA_SEP +
+                    "UNIQUE(" + States.COLUMN_STATE+ ")" +
                     " )";
     static final String SQL_DELETE_STATES =
             "DROP TABLE IF EXISTS " + States.TABLE_NAME;
@@ -77,11 +86,12 @@ but this can help your database work harmoniously with the Android framework.*/
     static final String SQL_CREATE_CALENDAR =
             "CREATE TABLE IF NOT EXISTS " + Calendar.TABLE_NAME +
                     " (" +
-                    Calendar.COLUMN_DATE + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                    Calendar.COLUMN_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                    Calendar.COLUMN_DATE + INTEGER_TYPE + COMMA_SEP +
                     Calendar.COLUMN_HABIT_TITLE + TEXT_TYPE + COMMA_SEP +
                     Calendar.COLUMN_STATE + INTEGER_TYPE  +  COMMA_SEP +
                     FOREIGN_KEY + "(" + Calendar.COLUMN_STATE + ")" + REFERENCES +   States.TABLE_NAME + "(" + States.COLUMN_STATE + ")" + COMMA_SEP +
-                    FOREIGN_KEY + "(" + Calendar.COLUMN_HABIT_TITLE + ")" + REFERENCES +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ")" + COMMA_SEP +
+                    FOREIGN_KEY + "(" + Calendar.COLUMN_HABIT_TITLE + ")" + REFERENCES +  Habits.TABLE_NAME + "(" + Habits.COLUMN_HABIT_TITLE + ") ON DELETE CASCADE" + COMMA_SEP +
                     "UNIQUE(" + Calendar.COLUMN_DATE + COMMA_SEP + Calendar.COLUMN_HABIT_TITLE + ")" +
             " )";
 

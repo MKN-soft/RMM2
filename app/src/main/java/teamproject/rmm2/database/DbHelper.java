@@ -3,9 +3,11 @@ package teamproject.rmm2.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.SQLClientInfoException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +30,7 @@ import teamproject.rmm2.models.HabitRow;
  */
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "RMM2.db";
 
     /**
@@ -72,7 +74,8 @@ public class DbHelper extends SQLiteOpenHelper {
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
         //Preparing query (only for convenience purposes)
-        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME + " " + "WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + " LIKE \'" + title + "\'";
+        String query = "SELECT * FROM " + Contract.Habits.TABLE_NAME +
+                " WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + " LIKE \'" + title + "\'";
         //Preparing cursor for getting rows
         Cursor cursor = database.rawQuery(query, null);
 
@@ -80,11 +83,11 @@ public class DbHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do{
                 HabitRow habitRow = new HabitRow();
-                habitRow.setTitle(cursor.getString(0));
+                habitRow.setTitle(cursor.getString(1));
 
                 if (habitRow.getTitle().equals(title)) {
-                    habitRow.setDescription(cursor.getString(1));
-                    habitRow.setFrequency(cursor.getInt(2));
+                    habitRow.setDescription(cursor.getString(2));
+                    habitRow.setFrequency(cursor.getInt(3));
 
                     //returns found row
                     return habitRow;
@@ -95,6 +98,22 @@ public class DbHelper extends SQLiteOpenHelper {
 
         //Returns null if nothing is found.
         return null;
+    }
+
+    public int getState(int state) throws NoSuchFieldException {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "SELECT * FROM " + Contract.States.TABLE_NAME +
+                " WHERE " + Contract.States.COLUMN_STATE  + " = " + state;
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        // looping through all rows and selecting
+        if(cursor.moveToFirst()) {
+            return cursor.getInt(1);
+        }
+        else throw new NoSuchFieldException();
+
+
     }
 
     /**
@@ -149,9 +168,9 @@ public class DbHelper extends SQLiteOpenHelper {
         // looping through all rows and selecting
         if (cursor.moveToFirst()) {
             CalendarRow calendarRow = new CalendarRow();
-            calendarRow.setTime(unixTimestamp);
-            calendarRow.setHabit(cursor.getString(1));
-            calendarRow.setState(cursor.getInt(2));
+            calendarRow.setTime(cursor.getLong(1));
+            calendarRow.setHabit(cursor.getString(2));
+            calendarRow.setState(cursor.getInt(3));
 
             //returns found row
             return calendarRow;
@@ -191,7 +210,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param description
      * @param frequency
      */
-    public void insertHabit(String title, String description, int frequency){
+    public void insertHabit(String title, String description, int frequency) throws SQLiteConstraintException{
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -219,11 +238,10 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param habittitle
      * @param state
      */
-    public void insertDate(long unixTimestamp, String habittitle, int state){
-        //We insert dates as TEXT   yyyy-MM-dd
+    public void insertDate(long unixTimestamp, String habittitle, int state) throws SQLiteConstraintException{
+        //We insert dates as UNIX time on midnight hour 00:00:00
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
-
 
 
 
@@ -239,13 +257,13 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insert(
+        database.insertOrThrow(
                 Contract.Calendar.TABLE_NAME,
                 null,
                 values);
     }
 
-    public void insertState(String state){
+    public void insertState(int state) throws SQLiteConstraintException{
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -259,7 +277,7 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insert(
+        database.insertOrThrow(
                 Contract.States.TABLE_NAME,
                 null,
                 values);

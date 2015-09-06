@@ -5,7 +5,10 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -196,7 +199,7 @@ public class MainActivity extends MyActivityTemplate {
             return;
         }
 
-       textView.setText("Processing... finished");
+       textView.setText("Habit inserted");
 
     }
 
@@ -204,7 +207,7 @@ public class MainActivity extends MyActivityTemplate {
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbgethabit(View v){
+    public void dbgethabit(View v) {
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
 
@@ -227,9 +230,19 @@ public class MainActivity extends MyActivityTemplate {
         textView.setText("Inserting state...");
         //ok until here
 
-        dbHelper.insertState("test_state");
+        try {
+            dbHelper.insertState(0);
+        }
+        catch(SQLiteConstraintException e){
+            textView.setText("Duplicate record!");
+            return;
+        }
+        catch(Exception e){
+            textView.setText("Unexpected exception!");
+            return;
+        }
 
-        textView.setText("Processing... finished");
+        textView.setText("State inserted");
 
     }
 
@@ -238,21 +251,24 @@ public class MainActivity extends MyActivityTemplate {
      * @param v
      */
 
-   /* public void dbgetstate(View v){
+    public void dbgetstate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
-        //ok until here
 
-        String aux = dbHelper.getState("test_state");
+        int aux = 0;
 
-        if (aux != null) {
-            textView.setText(aux);
+        try{
+             aux = dbHelper.getState(0);
         }
-        else {
+        catch(NoSuchFieldException e){
             textView.setText("No such state!");
+            return;
         }
 
-    }*/
+        textView.setText(Integer.toString(aux));
+
+
+    }
 
     /**
      * testing purposes, delete when not needed
@@ -275,9 +291,19 @@ public class MainActivity extends MyActivityTemplate {
         long time = calendar.getTimeInMillis();
 
         //inserting with current time
-        dbHelper.insertDate(time,"test_habit", 0);   //TODO foreign key not working properly!
+        try {
+            dbHelper.insertDate(time, "test_habit", 0);   //TODO foreign key not working properly!
+        }
+        catch(SQLiteConstraintException e){
+            textView.setText("Duplicate record!");
+            return;
+        }
+        catch(Exception e){
+            textView.setText("Unexpected exception!");
+            return;
+        }
 
-        textView.setText("Processing... finished");
+        textView.setText("Date inserted");
 
     }
 
