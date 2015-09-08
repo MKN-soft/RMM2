@@ -298,14 +298,12 @@ public class DbHelper extends SQLiteOpenHelper {
     public void editHabit(Context context, String title, String description, int frequency) throws SQLiteConstraintException {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Contract.Habits.COLUMN_HABIT_TITLE, title);
         values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
         values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
-        values.put(Contract.Habits.COLUMN_HABIT_PERIODICITY, 0);
 
         SessionManager sessionManager = new SessionManager(context);
 
-        database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + sessionManager.getHabitTitle(), null);
+        database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + sessionManager.getHabitTitle() + "\'", null);
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
