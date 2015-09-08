@@ -46,16 +46,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Habit name" />
-
-        <EditText
-            android:id="@+id/habitName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/habitName" />
 
         <TextView
             android:id="@+id/textView4"

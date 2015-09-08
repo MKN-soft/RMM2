@@ -2,6 +2,7 @@ package teamproject.rmm2.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageInstaller;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import teamproject.rmm2.Helpers.SessionManager;
 import teamproject.rmm2.models.CalendarRow;
 import teamproject.rmm2.models.HabitRow;
 
@@ -293,6 +295,28 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
+    public void editHabit(Context context, String description, int frequency) throws SQLiteConstraintException {
+        SQLiteDatabase database = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
+        values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
+
+        SessionManager sessionManager = new SessionManager(context);
+
+        database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + sessionManager.getHabitTitle() + "\'", null);
+
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId;
+        /*
+        The first argument for insert() is simply the table name. The second argument provides the name of a column in which
+        the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
+        the framework will not insert a row when there are no values).
+         */
+        database.insertOrThrow(
+                Contract.Habits.TABLE_NAME,
+                null,
+                values);
+    }
 
 
 
