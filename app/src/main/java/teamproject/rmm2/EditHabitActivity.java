@@ -14,7 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import teamproject.rmm2.models.HabitRow;
 
@@ -23,7 +26,8 @@ public class EditHabitActivity extends MyActivityTemplate {
     private int additional;
     private HabitRow item;
     private Button editHabit;
-    private EditText habitName, habitDescription, habitFrequency;
+    private TextView habitName;
+    private EditText habitDescription, habitFrequency;
     private ImageView habitImage;
 
     @Override
@@ -33,7 +37,7 @@ public class EditHabitActivity extends MyActivityTemplate {
         // Get habit from database
         item = dbHelper.getHabit(sessionManager.getHabitTitle());
 
-        habitName = (EditText) findViewById(R.id.habitName);
+        habitName = (TextView) findViewById(R.id.habitName);
         habitDescription = (EditText) findViewById(R.id.habitDescription);
         habitFrequency = (EditText) findViewById(R.id.habitFrequency);
         habitImage = (ImageView) findViewById(R.id.habitImage);
@@ -76,7 +80,7 @@ public class EditHabitActivity extends MyActivityTemplate {
             @Override
             public void onClick(View v) {
                 //TODO make functionality
-                dbHelper.editHabit(getContext(), habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()));
+                dbHelper.editHabit(getContext(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()));
 
                 Intent intent = new Intent(EditHabitActivity.this, MainActivity.class);
                 startActivity(intent);

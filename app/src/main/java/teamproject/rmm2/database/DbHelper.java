@@ -295,8 +295,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
-    public void editHabit(Context context, String title, String description, int frequency) throws SQLiteConstraintException {
-        SQLiteDatabase database = this.getWritableDatabase();
+    public void editHabit(Context context, String description, int frequency) throws SQLiteConstraintException {
+        SQLiteDatabase database = this.getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
         values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
