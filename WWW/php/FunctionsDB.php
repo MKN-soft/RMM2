@@ -16,8 +16,15 @@ class FunctionsDB {
 	public function storeUser($name, $email, $password) {
 		$salt = uniqid('', true);
 		$encrypted_password = MD5($password);
-		$result = mysql_query("INSERT INTO Uzytkownicy(login, haslo, salt, created_at, updated_at) 
-			VALUES ('$email', '$encrypted_password', '$salt', NOW(), NOW())");
+		//$result = mysql_query("INSERT INTO Uzytkownicy(login, haslo, salt, created_at, updated_at) 
+		//	VALUES ('$email', '$encrypted_password', '$salt', NOW(), NOW())");
+		
+		$sql = "CALL storeUser('$email', '$encrypted_password', '$salt', NOW(), NOW())";
+		
+		$result = mysql_query($sql);
+		
+		echo $sql;
+		
 		// check for success
 		if ($result) {
 			// get user details
@@ -32,8 +39,12 @@ class FunctionsDB {
 	}
 	
 	public function storeHabits($id, $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk) {
-		$result = mysql_query("INSERT INTO Nawyki (uzytkownik_id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk) 
-			VALUES('$id', '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk'");
+		//$result = mysql_query("INSERT INTO Nawyki (uzytkownik_id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk) 
+		//	VALUES('$id', '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk')");
+		
+		$sql = "CALL storeHabits('$id', '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk')";
+		
+		$result = mysql_query($sql);
 		
 		// check for success
 		if ($result) {
@@ -45,11 +56,29 @@ class FunctionsDB {
 	}
 	
 	public function storeStatistics($ilosc_nawykow, $najlepsza_passa, $srednia_dlugosc_ciagu, $procent_powodzen, $nawyki_id) {
+		//$result = mysql_query("INSERT INTO Statystyki (ilosc_nawykow, najlepsza_passa, srednia_dlugosc_ciagu, procent_powodzen, nawyki_id)
+		//	VALUES('$ilosc_nawykow', '$najlepsza_passa', '$srednia_dlugosc_ciagu', '$procent_powodzen', '$nawyki_id')");
 		
+		$sql = "CALL storeStatistics('$ilosc_nawykow', '$najlepsza_passa', '$srednia_dlugosc_ciagu', '$procent_powodzen', '$nawyki_id')";
+		
+		$result = mysql_query($sql);
+			
+		// check for success
+		if ($result) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public function getUserBySalt($salt) {
-		$result = mysql_query("SELECT * FROM users WHERE salt ='$salt'") or die(mysql_error());
+		//$result = mysql_query("SELECT * FROM Uzytkownicy WHERE salt ='$salt'") or die(mysql_error());
+		
+		$sql = "CALL getUserBySalt('$salt')";
+	
+		$result = mysql_query($sql);
+		
 		// check for result
 		$no_of_rows = mysql_num_rows($result);
 		if ($no_of_rows > 0) {
@@ -62,7 +91,11 @@ class FunctionsDB {
 	}
 	
 	public function getUserByUsernameAndPassword($username, $password) {
-		$result = mysql_query("SELECT * FROM Uzytkownicy WHERE login = '$username'") or die(mysql_error());
+		//$result = mysql_query("SELECT * FROM Uzytkownicy WHERE login = '$username'") or die(mysql_error());
+		
+		$sql = "CALL getUserByUsernameAndPassword('$username', '$password')";
+	
+		$result = mysql_query($sql);
 		
         // check for result 
         $no_of_rows = mysql_num_rows($result);
@@ -85,9 +118,16 @@ class FunctionsDB {
         }
 	}
 	
-	// TODO
 	public function getStatistics($email) {
-		$result = mysql_query("SELECT * FROM Statystyki JOIN users ON users.id = statistics.user_id WHERE users.email = '$email'");
+		//$sql = "SELECT Statystyki.id, najlepsza_passa, srednia_dlugosc_ciagu, procent_powodzen, nawyki_id FROM Statystyki 
+		//		JOIN Nawyki ON Nawyki.id = Statystyki.nawyki_id 
+		//		JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id
+		//		WHERE Uzytkownicy.login = '$email' ";
+		
+		$sql = "CALL getStatistics('$email')";
+		
+		$result = mysql_query($sql);
+		
 		// check for result
 		if (isset($result)) {
 			return $result;
@@ -98,7 +138,12 @@ class FunctionsDB {
 	}
 	
 	public function isUserExists($email) {
-        $result = mysql_query("SELECT login from Uzytkownicy WHERE login = '$email'");
+        //$result = mysql_query("SELECT login from Uzytkownicy WHERE login = '$email'");
+        
+		$sql = "CALL isUserExists('$email')";
+		
+		$result = mysql_query($sql);
+        
         $no_of_rows = mysql_num_rows($result);
         if ($no_of_rows > 0) {
             // user existed 
@@ -110,7 +155,12 @@ class FunctionsDB {
     }
 	
 	public function getHabitsByUser($username) {
-		$result = mysql_query("SELECT Nawyki.id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk FROM Nawyki JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id WHERE Uzytkownicy.login = '$username'");
+		//$result = mysql_query("SELECT Nawyki.id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk FROM Nawyki JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id WHERE Uzytkownicy.login = '$username'");
+		
+		$sql = "CALL getHabitsByUser('$username')";
+		
+		$result = mysql_query($sql);
+		
 		// check for result
 		if (isset($result)) {
 			return $result;

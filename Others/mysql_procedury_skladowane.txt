@@ -1,0 +1,26 @@
+CREATE PROCEDURE storeUser (IN l varchar(50), IN h varchar(50), IN s varchar(128), IN c DATE, IN u DATE)
+INSERT INTO Uzytkownicy(login, haslo, salt, created_at, updated_at) VALUES (l, h, s, c, u);
+
+CREATE PROCEDURE storeHabits (IN  id int(11), IN czy varchar(32), IN d date, IN c int(11), IN k varchar(32))
+INSERT INTO Nawyki (uzytkownik_id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk) VALUES (id, czy, d, c, k);
+
+CREATE PROCEDURE storeStatistics (IN _ilosc_nawykow int(11), IN _najlepsza_passa int(11), IN _srednia_dlugosc_ciagu int(11), IN _procent_powodzen int(11), IN _nawyki_id int(11))
+INSERT INTO Statystyki (ilosc_nawykow, najlepsza_passa, srednia_dlugosc_ciagu, procent_powodzen, nawyki_id) VALUES (_ilosc_nawykow, _najlepsza_passa, _srednia_dlugosc_ciagu, _procent_powodzen, _nawyki_id);
+
+CREATE PROCEDURE getUserBySalt(IN _salt varchar(128))
+SELECT * FROM Uzytkownicy WHERE salt = _salt;
+
+CREATE PROCEDURE getUserByUsernameAndPassword(IN _login varchar(50), IN _haslo varchar(50))
+SELECT * FROM Uzytkownicy WHERE login = _login;
+
+CREATE PROCEDURE getStatistics(IN _login varchar(50))
+SELECT Statystyki.id, najlepsza_passa, srednia_dlugosc_ciagu, procent_powodzen, nawyki_id FROM Statystyki 
+				JOIN Nawyki ON Nawyki.id = Statystyki.nawyki_id 
+				JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id
+				WHERE Uzytkownicy.login = _login;
+
+CREATE PROCEDURE isUserExists(IN _login varchar(50))
+SELECT login FROM Uzytkownicy WHERE login = _login;
+
+CREATE PROCEDURE getHabitsByUser(IN _login varchar(50))
+SELECT Nawyki.id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk FROM Nawyki JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id WHERE Uzytkownicy.login = _login;

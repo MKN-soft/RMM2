@@ -43,7 +43,9 @@ $page = new Page();
 				}
       		?>		
       		
-      </br>
+     </br>
+     	<a href="?page=statistics">Statistics</a>
+     </br>
       	<a href="?page=logout">Log out</a>
   	  </div>
     </div>
