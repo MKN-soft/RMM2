@@ -52,20 +52,20 @@ public class RepeatForService {
 //        // Set repeat - per day
 //        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AppConfig.NOTIFICATION_REPEAT, pendingIntent);
 
-//        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-//        Intent intent = new Intent(context, SynchronizationService.class);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, 11);
-//        calendar.set(Calendar.MINUTE, 04);
-//
-//
-//        // With setInexactRepeating(), you have to use one of the AlarmManager interval
-//        // constants--in this case, AlarmManager.INTERVAL_DAY.
-//        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-//                1000 * 60 * 20, pendingIntent);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context.getApplicationContext(), SynchronizationService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(context.getApplicationContext(), 0, intent, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, AppConfig.NOTIFICATION_HOUR);
+        calendar.set(Calendar.MINUTE, AppConfig.NOTIFICATION_MINUTE);
+
+
+        // With setInexactRepeating(), you have to use one of the AlarmManager interval
+        // constants--in this case, AlarmManager.INTERVAL_DAY.
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AppConfig.NOTIFICATION_REPEAT, pendingIntent);
 
 
 

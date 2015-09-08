@@ -1,5 +1,7 @@
 package teamproject.rmm2.Helpers;
 
+import android.app.AlarmManager;
+
 /**
 Class for Application settings.
  */
@@ -13,7 +15,7 @@ public class AppConfig {
     public static final String TAG_SYNCHRO = "synchro";
 
     // Notification settings
-    public static int NOTIFICATION_HOUR = 10;
-    public static int NOTIFICATION_MINUTE = 55;
-    public static int NOTIFICATION_REPEAT = 86400000;
+    public static int NOTIFICATION_HOUR = 23;
+    public static int NOTIFICATION_MINUTE = 45;
+    public static long NOTIFICATION_REPEAT = AlarmManager.INTERVAL_DAY;
 }
