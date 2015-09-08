@@ -11,7 +11,7 @@ class FunctionsDB {
 		$this->db->connect();
 	}
 	
-	function __destruct() { }
+	function __destruct() {	}
 	
 	public function storeUser($name, $email, $password) {
 		$salt = uniqid('', true);
@@ -23,7 +23,7 @@ class FunctionsDB {
 		
 		$result = mysql_query($sql);
 		
-		echo $sql;
+		$this->db->close();
 		
 		// check for success
 		if ($result) {
@@ -46,6 +46,8 @@ class FunctionsDB {
 		
 		$result = mysql_query($sql);
 		
+		$this->db->close();
+		
 		// check for success
 		if ($result) {
 			return true;
@@ -62,6 +64,8 @@ class FunctionsDB {
 		$sql = "CALL storeStatistics('$ilosc_nawykow', '$najlepsza_passa', '$srednia_dlugosc_ciagu', '$procent_powodzen', '$nawyki_id')";
 		
 		$result = mysql_query($sql);
+		
+		$this->db->close();
 			
 		// check for success
 		if ($result) {
@@ -78,6 +82,8 @@ class FunctionsDB {
 		$sql = "CALL getUserBySalt('$salt')";
 	
 		$result = mysql_query($sql);
+		
+		$this->db->close();
 		
 		// check for result
 		$no_of_rows = mysql_num_rows($result);
@@ -96,6 +102,8 @@ class FunctionsDB {
 		$sql = "CALL getUserByUsernameAndPassword('$username', '$password')";
 	
 		$result = mysql_query($sql);
+		
+		$this->db->close();
 		
         // check for result 
         $no_of_rows = mysql_num_rows($result);
@@ -128,6 +136,8 @@ class FunctionsDB {
 		
 		$result = mysql_query($sql);
 		
+		$this->db->close();
+		
 		// check for result
 		if (isset($result)) {
 			return $result;
@@ -143,6 +153,8 @@ class FunctionsDB {
 		$sql = "CALL isUserExists('$email')";
 		
 		$result = mysql_query($sql);
+		
+		$this->db->close();
         
         $no_of_rows = mysql_num_rows($result);
         if ($no_of_rows > 0) {
@@ -160,6 +172,8 @@ class FunctionsDB {
 		$sql = "CALL getHabitsByUser('$username')";
 		
 		$result = mysql_query($sql);
+		
+		$this->db->close();
 		
 		// check for result
 		if (isset($result)) {
