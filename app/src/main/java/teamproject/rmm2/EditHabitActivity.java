@@ -1,6 +1,7 @@
 package teamproject.rmm2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -70,10 +71,16 @@ public class EditHabitActivity extends MyActivityTemplate {
             }
         });
 
+        editHabit = (Button) findViewById(R.id.editHabitButton);
         editHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO make functionality
+                dbHelper.editHabit(getContext(), habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()));
+
+                Intent intent = new Intent(EditHabitActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
