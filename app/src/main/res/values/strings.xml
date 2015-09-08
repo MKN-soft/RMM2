@@ -47,4 +47,6 @@
     <string name="editHabit">Edit Habit</string>
     <string name="deleteHabit">Delete Habit</string>
     <string name="title_activity_edit_habit">EditHabitActivity</string>
+    <string name="notification_habit_title">Habit today</string>
+    <string name="notification_habit_description">Keep your habits in check you miserable maggot!</string>
 </resources>

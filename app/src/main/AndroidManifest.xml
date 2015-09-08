@@ -41,6 +41,8 @@
             android:name=".EditHabitActivity"
             android:label="@string/title_activity_edit_habit" >
         </activity>
+
+        <service android:name=".services.SynchronizationService" />
     </application>
 
 </manifest>

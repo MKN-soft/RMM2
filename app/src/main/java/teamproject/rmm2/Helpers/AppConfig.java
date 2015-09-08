@@ -11,4 +11,9 @@ public class AppConfig {
     public static final String TAG_LOGIN = "login";
     public static final String TAG_REGISTER = "register";
     public static final String TAG_SYNCHRO = "synchro";
+
+    // Notification settings
+    public static int NOTIFICATION_HOUR = 10;
+    public static int NOTIFICATION_MINUTE = 55;
+    public static int NOTIFICATION_REPEAT = 86400000;
 }

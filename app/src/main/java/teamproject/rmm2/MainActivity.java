@@ -5,10 +5,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -19,12 +16,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 
+import teamproject.rmm2.Helpers.RepeatForService;
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
@@ -32,6 +27,7 @@ import teamproject.rmm2.fragments.SettingsFragment;
 import teamproject.rmm2.models.CalendarRow;
 import teamproject.rmm2.models.HabitRow;
 import teamproject.rmm2.models.NavDrawerItem;
+import teamproject.rmm2.services.SynchronizationService;
 
 //TODO Main Activity - menu and stuff
 
@@ -77,7 +73,9 @@ public class MainActivity extends MyActivityTemplate {
                 navDrawerItems);
         mDrawerList.setAdapter(adapter);
 
-
+        // Notification handler - set time etc.
+        RepeatForService repeatForService = new RepeatForService(getContext());
+        repeatForService.NotificationsHandler(SynchronizationService.class);
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
