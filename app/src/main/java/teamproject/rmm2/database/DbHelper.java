@@ -98,6 +98,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 habitRow.setTitle(cursor.getString(1));
 
                 if (habitRow.getTitle().equals(title)) {
+                    habitRow.setId(cursor.getInt(0));
                     habitRow.setDescription(cursor.getString(2));
                     habitRow.setFrequency(cursor.getInt(3));
 
@@ -165,7 +166,6 @@ public class DbHelper extends SQLiteOpenHelper {
      * @return row from DATES table
      */
     public CalendarRow  getDate(long unixTimestamp, String habitTitle) {
-        //TODO it should return LIST of rows
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -180,6 +180,7 @@ public class DbHelper extends SQLiteOpenHelper {
         // looping through all rows and selecting
         if (cursor.moveToFirst()) {
             CalendarRow calendarRow = new CalendarRow();
+            calendarRow.setId(cursor.getInt(0));
             calendarRow.setTime(cursor.getLong(1));
             calendarRow.setHabit(cursor.getString(2));
             calendarRow.setState(cursor.getInt(3));
@@ -189,6 +190,40 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         return null;
     }
+
+    public List<CalendarRow>  getDatesForHabit(String habitTitle) {
+        // Gets the data repository in read mode
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        //Preparing query (only for convenience purposes)
+        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
+                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" +  habitTitle + "\'";
+
+
+
+
+        //Preparing cursor for getting rows
+        Cursor cursor = database.rawQuery(query, null);
+
+        // looping through all rows and selecting
+        if (cursor.moveToFirst()) {
+            //Preparing list
+            List<CalendarRow> calendarRowList = new ArrayList<CalendarRow>();
+            do {
+                CalendarRow calendarRow = new CalendarRow();
+                calendarRow.setTime(cursor.getLong(1));
+                calendarRow.setHabit(cursor.getString(2));
+                calendarRow.setState(cursor.getInt(3));
+
+                calendarRowList.add(calendarRow);
+            }while(cursor.moveToNext());
+            //returns found row
+            return calendarRowList;
+        }
+        return null;
+    }
+
+
 
     /**
      * Returns list of all rows from table STATES
@@ -324,11 +359,18 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     public void deleteHabit(String habitTitle){
-        //TODO habit deletion
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
-        database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle +"\'", null);
+        database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'", null);
+    }
+
+    public int getDateCountForHabit(String habitTitle){
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
+                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'";
+        Cursor cursor = database.rawQuery(query,null);
+        return cursor.getCount();
     }
 
 }

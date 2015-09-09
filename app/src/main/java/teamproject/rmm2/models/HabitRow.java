@@ -8,6 +8,7 @@ import android.widget.ImageView;
  */
 public class HabitRow {
     private Drawable icon;
+    private int id;
     private String title;
     private String description;
     private int frequency;
@@ -21,6 +22,10 @@ public class HabitRow {
         this.icon = icon;
         this.title = title;
         this.description = description;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setTitle(String title) {
@@ -45,5 +50,9 @@ public class HabitRow {
 
     public int getFrequency() {
         return frequency;
+    }
+
+    public int getId() {
+        return id;
     }
 }

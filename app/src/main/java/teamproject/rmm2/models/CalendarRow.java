@@ -4,9 +4,14 @@ package teamproject.rmm2.models;
  * Created by Marcin on 2015-08-20.
  */
 public class CalendarRow {
+    private int id;
     private String habit;
     private long time;
     private int state;
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setHabit(String habit) {
         this.habit = habit;
@@ -26,6 +31,10 @@ public class CalendarRow {
 
     public long getTime() {
         return time;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getState() {
