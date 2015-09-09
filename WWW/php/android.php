@@ -134,11 +134,11 @@ class Android {
 		if ($user) {
 			if ($this->db->storeHabits($user['id'], $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk)) {
 
-				$ilosc_nawykow = '';
-				$najlepsza_passa = '';
-				$srednia_dlugosc_ciagu = '';
-				$procent_powodzen = '';
-				$nawyki_id = '';
+				$ilosc_nawykow = $_POST['ilosc_nawykow'];
+				$najlepsza_passa = $_POST['najlepsza_passa'];
+				$srednia_dlugosc_ciagu = $_POST['srednia_dlugosc_ciagu'];
+				$procent_powodzen = $_POST['procent_powodzen'];
+				$nawyki_id = mysql_insert_id();
 				
 				if ($this->db->storeStatistics($ilosc_nawykow, $najlepsza_passa, $srednia_dlugosc_ciagu, $procent_powodzen, $nawyki_id)) {
 					// success

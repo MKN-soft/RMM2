@@ -37,13 +37,15 @@ $page = new Page();
       		
       		<?php
       			$habits = $page->getHabits();
-      		
+      			
 				while($row = mysql_fetch_object($habits)){
 					echo "&emsp; <a href=\"?page=habits&habit=$row->id\">Nawyk id: '$row->id'</a> ";
 				}
       		?>		
       		
-      </br>
+     </br>
+     	<a href="?page=statistics">Statistics</a>
+     </br>
       	<a href="?page=logout">Log out</a>
   	  </div>
     </div>

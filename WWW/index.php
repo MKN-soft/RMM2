@@ -4,6 +4,10 @@
 <title>RMM - Home Page</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
 <link rel="stylesheet" type="text/css" href="css/index.css" >
+<script src="http://skryptcookies.pl/cookie.js"></script>
+<script type="text/javascript">
+    skryptcookiesPozycja = "bottom"; // top lub bottom
+</script> 
 </head>
 <body>
 <div id="doc" class="yui-t7">

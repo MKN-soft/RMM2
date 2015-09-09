@@ -27,6 +27,9 @@ class Page {
 		if ($_GET['page'] == "logout") {
 			$this->sessionStaph();
 		}
+		if ($_GET['page'] == "statistics") {
+			$this->showStatistics();
+		}
 		
 		return $string;
 	}
@@ -56,6 +59,43 @@ class Page {
 				}
 			}		
 		}
+	}
+	
+	public function showStatistics() {
+		$statistics = $this->getStatistics();
+		
+		
+		if (is_numeric($_GET['stat'])) {
+			while($row = mysql_fetch_object($statistics)){
+				if ($_GET['stat'] == $row->id) {
+					echo "Ilosc nawykow: ".$row->ilosc_nawykow;
+					echo "</br>";
+					echo "Najlepsza passa: ".$row->najlepsza_passa;
+					echo "</br>";
+					echo "Srednia dlugosc ciagu: ".$row->srednia_dlugosc_ciagu;
+					echo "</br>";
+					echo "% Powodzen: ".$row->procent_powodzen;
+					echo "</br>";
+					echo "&emsp; <a href=\"?page=habits&habit=$row->id\">Nawyk id: '$row->nawyki_id'</a> ";
+				}
+			}
+		}
+		else {
+			while($row = mysql_fetch_object($statistics)){
+				echo "&emsp; <a href=\"?page=statistics&stat=$row->id\">Statystyki id: '$row->id'</a> ";
+			}		
+		}
+		 
+	}
+	
+	public function getStatistics() {
+		require_once '../php/FunctionsDB.php';
+		
+
+		$this->db = new FunctionsDB();
+		$result = $this->db->getStatistics($this->username);
+		
+		return $result;
 	}
 	
 	private function sessionStaph() {
