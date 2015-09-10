@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.Calendar;
+import java.util.List;
+
 import teamproject.rmm2.MainActivity;
 import teamproject.rmm2.database.DbHelper;
+import teamproject.rmm2.models.CalendarRow;
 import teamproject.rmm2.models.HabitRow;
 
 /**
@@ -14,12 +18,15 @@ import teamproject.rmm2.models.HabitRow;
  */
 public class Statistics {
     private DbHelper dbHelper;
+    private final long DAY = 24*3600*1000;
+
+    private HabitRow habitRow;
 
     private String tytulNawyku;
     private int iloscNawykow;
     private int najlepszaPassa;
     private int sredniaDlugoscCiagu;
-    private int procent_powodzen;
+    private float procent_powodzen;
     private int nawykID;
 
     //TODO all the neccessary methods
@@ -28,6 +35,8 @@ public class Statistics {
         this.dbHelper = new DbHelper(context);
 
         setTytulNawyku(habitTitle);
+
+        habitRow = dbHelper.getHabit(tytulNawyku);
     }
 
     private void setTytulNawyku(String tytulNawyku) {
@@ -46,7 +55,7 @@ public class Statistics {
         this.nawykID = nawykID;
     }
 
-    private void setProcent_powodzen(int procent_powodzen) {
+    private void setProcent_powodzen(float procent_powodzen) {
         this.procent_powodzen = procent_powodzen;
     }
 
@@ -66,7 +75,7 @@ public class Statistics {
         return nawykID;
     }
 
-    public int getProcent_powodzen() {
+    public float getProcent_powodzen() {
         return procent_powodzen;
     }
 
@@ -86,10 +95,44 @@ public class Statistics {
     }
 
     /**
-     * liczy najlepsza_passa dla nawyku o tytule podanym w konstruktorze
+     * liczy najlepsza_passa oraz srednia_dlugosc_ciagu dla nawyku o tytule z konstruktora
      */
     private void bestStreak(){
-        //TODO
+        //TODO liczenie sredniej dlugosci ciagu
+        //TODO check & test
+        //Get list in ascending order
+        List<CalendarRow> CalendarRowList = dbHelper.getDatesForHabit(tytulNawyku);
+
+        long time=0, aux=0;
+        int streak =0, longestStreak=0;
+
+        for(CalendarRow row: CalendarRowList){
+            //jesli pierwszy rekord
+            if(time == 0){
+                time = row.getTime();
+                streak++;
+            }
+            //jesli kolejny rekord
+            else{
+                aux = time;
+                time = row.getTime();
+                //jesli odstep czasu taki jak powinien byc
+                if(time - aux == DAY * habitRow.getFrequency() * habitRow.getPeriod()){
+                    streak++;
+                }
+                else{
+                    longestStreak = streak;
+                    streak = 0;
+                }
+            }
+        }
+
+        if (streak > longestStreak){
+            longestStreak = streak;
+        }
+
+        setNajlepszaPassa(longestStreak);
+
     }
 
     /**
@@ -108,13 +151,12 @@ public class Statistics {
      */
     private void countPercentage(){
 //        TODO
-    }
 
-    /**
-     * liczy srednia_dlugosc_ciagu dla nawyku o tytule z konstruktora
-     */
-    private void averageStreakLength(){
-//        TODO
+        float percentage=0;
+
+        percentage = dbHelper.getSuccessDateCountForHabit(tytulNawyku) / dbHelper.getDateCountForHabit(tytulNawyku);
+        percentage *= 100;
+        setProcent_powodzen(percentage);
     }
 
 }

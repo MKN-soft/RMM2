@@ -74,7 +74,7 @@ but this can help your database work harmoniously with the Android framework.*/
             "CREATE TABLE IF NOT EXISTS " + States.TABLE_NAME +
                     " (" +
                     States.COLUMN_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
-                    States.COLUMN_STATE + INTEGER_TYPE + COMMA_SEP +
+                    States.COLUMN_STATE + TEXT_TYPE + COMMA_SEP +
                     "UNIQUE(" + States.COLUMN_STATE+ ")" +
                     " )";
     static final String SQL_DELETE_STATES =

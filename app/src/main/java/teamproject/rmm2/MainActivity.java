@@ -223,7 +223,7 @@ public class MainActivity extends MyActivityTemplate {
      * testing purposes, delete when not needed
      * @param v
      */
-    public void dbputstate(View v){
+    /*public void dbputstate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("Inserting state...");
         //ok until here
@@ -242,7 +242,7 @@ public class MainActivity extends MyActivityTemplate {
 
         textView.setText("State inserted");
 
-    }
+    }*/
 
     /**
      * testing purposes, delete when not needed
@@ -277,20 +277,14 @@ public class MainActivity extends MyActivityTemplate {
         textView.setText("Processing...");
         //ok until here
 
-        //Creating unix timesstamp for the BEGINING of the day
-
+        //getting current time in Calendar object
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        //long time = calendar.getTimeInMillis();
 
-        long time = calendar.getTimeInMillis();
+        long time = calendar.getTimeInMillis()/1000L;
 
         //inserting with current time
         try {
-            dbHelper.insertDate(time, "test_habit", 0);   //TODO foreign key not working properly!
+            dbHelper.insertDate(calendar, "test_habit", 0);   //TODO foreign key not working properly!
         }
         catch(SQLiteConstraintException e){
             textView.setText("Constraint exception!");
@@ -310,23 +304,17 @@ public class MainActivity extends MyActivityTemplate {
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
 
-        //gets current date and time 00:00:00
+        //gets current date
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
 
-       long time = calendar.getTimeInMillis();
+        long time = calendar.getTimeInMillis();
 
-        CalendarRow calendarRow = dbHelper.getDate(time, "test_habit");
+        CalendarRow calendarRow = dbHelper.getDate(calendar, "test_habit");
 
         if (calendarRow != null) {
             textView.setText(String.valueOf(calendarRow.getTime()) + "," + calendarRow.getHabit() + "," + String.valueOf(calendarRow.getState()));
         }
         else {
-
-            //TODO: NO SUCH HABIT when there should be.
             textView.setText("No such habit!");
         }
     }

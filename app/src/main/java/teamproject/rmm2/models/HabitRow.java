@@ -12,6 +12,7 @@ public class HabitRow {
     private String title;
     private String description;
     private int frequency;
+    private int period;
     private String notes;
 
     public HabitRow() {
@@ -40,6 +41,10 @@ public class HabitRow {
         this.frequency = frequency;
     }
 
+    public void setPeriod(int period) {
+        this.period = period;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -54,5 +59,9 @@ public class HabitRow {
 
     public int getId() {
         return id;
+    }
+
+    public int getPeriod() {
+        return period;
     }
 }

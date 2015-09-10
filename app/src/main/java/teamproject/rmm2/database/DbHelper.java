@@ -49,6 +49,10 @@ public class DbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_HABITS);
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_STATES);
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_CALENDAR);
+
+        insertState(-1, "FAIL");
+        insertState(0, "NEUTRAL");
+        insertState(1, "DONE");
     }
 
     @Override
@@ -82,6 +86,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     public HabitRow getHabit(String title){
+        //TODO modify to get period
         //SHIT WORKS! Good example for other stuff
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
@@ -134,6 +139,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @return
      */
     public List<HabitRow> getAllHabits() {
+        //TODO modify to get period
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
         //Preparing query (only for convenience purposes)
@@ -162,12 +168,14 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /**
      * returns list of rows from DATES table - searches by date (column [1]), returns null if nothing is found
-     * @param unixTimestamp
+     * @param calendar: Calendar
      * @return row from DATES table
      */
-    public CalendarRow  getDate(long unixTimestamp, String habitTitle) {
+    public CalendarRow  getDate(Calendar calendar, String habitTitle) {
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
+
+        final long unixTimestamp = convertTimeToUnixTimestamp(calendar);
 
         //Preparing query (only for convenience purposes)
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
@@ -191,13 +199,19 @@ public class DbHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * returns list of CALENDAR entries for habitTitle in ASCENDING ORDER
+     * @param habitTitle
+     * @return
+     */
     public List<CalendarRow>  getDatesForHabit(String habitTitle) {
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
 
         //Preparing query (only for convenience purposes)
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
-                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" +  habitTitle + "\'";
+                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" +  habitTitle + "\'" +
+                "ORDER BY " + Contract.Calendar.COLUMN_DATE + " ASC";
 
 
 
@@ -258,6 +272,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param frequency
      */
     public void insertHabit(String title, String description, int frequency) throws SQLiteConstraintException{
+        //TODO add new argument - period
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -282,16 +297,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /**
      * insert into CALENDAR table in database. Takes CURRENT DATE
+     * @param calendar
      * @param habittitle
      * @param state
      */
-    public void insertDate(long unixTimestamp, String habittitle, int state) throws SQLiteConstraintException{
+    public void insertDate(Calendar calendar, String habittitle, int state) throws SQLiteConstraintException{
         //We insert dates as UNIX time on midnight hour 00:00:00
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
-
-
+        final long unixTimestamp = convertTimeToUnixTimestamp(calendar);
 
         ContentValues values = new ContentValues();
         values.put(Contract.Calendar.COLUMN_DATE, unixTimestamp);   // uses  date in unix time - only hours 00:00:00
@@ -310,7 +325,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
-    public void insertState(int state) throws SQLiteConstraintException{
+    public void insertState(int state, String stateName) throws SQLiteConstraintException{
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -369,8 +384,26 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
                 " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'";
-        Cursor cursor = database.rawQuery(query,null);
+        Cursor cursor = database.rawQuery(query, null);
         return cursor.getCount();
+    }
+
+    public int getSuccessDateCountForHabit(String habitTitle){
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
+                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'" +
+                " AND " + Contract.Calendar.COLUMN_STATE + " = 1";
+        Cursor cursor = database.rawQuery(query, null);
+        return cursor.getCount();
+    }
+
+    private long convertTimeToUnixTimestamp(Calendar calendar){
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTimeInMillis()/1000L;
     }
 
 }
