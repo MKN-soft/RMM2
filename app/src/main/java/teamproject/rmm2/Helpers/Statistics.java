@@ -18,14 +18,14 @@ import teamproject.rmm2.models.HabitRow;
  */
 public class Statistics {
     private DbHelper dbHelper;
-    private final long DAY = 24*3600*1000;
+    private final long DAY = 24*3600;
 
     private HabitRow habitRow;
 
     private String tytulNawyku;
     private int iloscNawykow;
     private int najlepszaPassa;
-    private int sredniaDlugoscCiagu;
+    private float sredniaDlugoscCiagu;
     private float procent_powodzen;
     private int nawykID;
 
@@ -35,8 +35,13 @@ public class Statistics {
         this.dbHelper = new DbHelper(context);
 
         setTytulNawyku(habitTitle);
+        habitRow = dbHelper.getHabit(tytulNawyku);  //dane pobrane z bazy na potrzeby liczenia statystyk
 
-        habitRow = dbHelper.getHabit(tytulNawyku);
+        searchForHabitID();
+        countDates();
+        countPercentage();
+        streakStats();
+
     }
 
     private void setTytulNawyku(String tytulNawyku) {
@@ -59,7 +64,7 @@ public class Statistics {
         this.procent_powodzen = procent_powodzen;
     }
 
-    private void setSredniaDlugoscCiagu(int sredniaDlugoscCiagu) {
+    private void setSredniaDlugoscCiagu(float sredniaDlugoscCiagu) {
         this.sredniaDlugoscCiagu = sredniaDlugoscCiagu;
     }
 
@@ -79,7 +84,7 @@ public class Statistics {
         return procent_powodzen;
     }
 
-    public int getSredniaDlugoscCiagu() {
+    public float getSredniaDlugoscCiagu() {
         return sredniaDlugoscCiagu;
     }
 
@@ -97,16 +102,21 @@ public class Statistics {
     /**
      * liczy najlepsza_passa oraz srednia_dlugosc_ciagu dla nawyku o tytule z konstruktora
      */
-    private void bestStreak(){
-        //TODO liczenie sredniej dlugosci ciagu
+    private void streakStats(){
         //TODO check & test
         //Get list in ascending order
-        List<CalendarRow> CalendarRowList = dbHelper.getDatesForHabit(tytulNawyku);
+        List<CalendarRow> calendarRowList = dbHelper.getDatesForHabit(tytulNawyku);
 
         long time=0, aux=0;
         int streak =0, longestStreak=0;
+        int streakCount =0;
 
-        for(CalendarRow row: CalendarRowList){
+        for(CalendarRow row: calendarRowList){
+            //po resecie streak wiadomo ze to kolejna passa (na starcie tez jest 0)
+            if(streak == 0){
+                streakCount++;
+            }
+
             //jesli pierwszy rekord
             if(time == 0){
                 time = row.getTime();
@@ -127,11 +137,13 @@ public class Statistics {
             }
         }
 
+        //sprawdzamy czy ostatnia passa nie jest przypadkiem wieksza od znanej najwiekszej
         if (streak > longestStreak){
             longestStreak = streak;
         }
 
         setNajlepszaPassa(longestStreak);
+        setSredniaDlugoscCiagu(calendarRowList.size()/streakCount);  // ilosc dat/ ilosc pass
 
     }
 
@@ -150,12 +162,10 @@ public class Statistics {
      * wykonane/(wykonane+niewykonane)*100%
      */
     private void countPercentage(){
-//        TODO
-
+//        TODO check & test
         float percentage=0;
 
-        percentage = dbHelper.getSuccessDateCountForHabit(tytulNawyku) / dbHelper.getDateCountForHabit(tytulNawyku);
-        percentage *= 100;
+        percentage = (dbHelper.getSuccessDateCountForHabit(tytulNawyku) / dbHelper.getDateCountForHabit(tytulNawyku)) * 100;
         setProcent_powodzen(percentage);
     }
 

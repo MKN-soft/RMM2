@@ -1,7 +1,5 @@
 package teamproject.rmm2.database;
 
-import android.provider.BaseColumns;
-
 
 /**
  * Created by Marcin on 2015-07-21.
@@ -26,7 +24,7 @@ but this can help your database work harmoniously with the Android framework.*/
         public static final String COLUMN_HABIT_TITLE = "title";
         public static final String COLUMN_HABIT_DESCRIPTION = "description";
         public static final String COLUMN_HABIT_FREQUENCY = "frequency";
-        public static final String COLUMN_HABIT_PERIODICITY = "periodicity";
+        public static final String COLUMN_HABIT_PERIOD = "periodicity";
     }
 
     static abstract class Calendar{
@@ -61,7 +59,7 @@ but this can help your database work harmoniously with the Android framework.*/
                     Habits.COLUMN_HABIT_TITLE + TEXT_TYPE + COMMA_SEP +
                     Habits.COLUMN_HABIT_DESCRIPTION + TEXT_TYPE  + COMMA_SEP +
                     Habits.COLUMN_HABIT_FREQUENCY + INTEGER_TYPE + COMMA_SEP +
-                    Habits.COLUMN_HABIT_PERIODICITY + INTEGER_TYPE + COMMA_SEP +
+                    Habits.COLUMN_HABIT_PERIOD + INTEGER_TYPE + COMMA_SEP +
                     "UNIQUE(" + Habits.COLUMN_HABIT_TITLE + ")" +
                     " )";
     static final String SQL_DELETE_HABITS =

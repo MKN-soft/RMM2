@@ -2,17 +2,13 @@ package teamproject.rmm2.database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.pm.PackageInstaller;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.sql.SQLClientInfoException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import teamproject.rmm2.Helpers.SessionManager;
@@ -86,7 +82,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     public HabitRow getHabit(String title){
-        //TODO modify to get period
         //SHIT WORKS! Good example for other stuff
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
@@ -106,6 +101,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     habitRow.setId(cursor.getInt(0));
                     habitRow.setDescription(cursor.getString(2));
                     habitRow.setFrequency(cursor.getInt(3));
+                    habitRow.setPeriod(cursor.getInt(4));
 
                     //returns found row
                     return habitRow;
@@ -139,7 +135,6 @@ public class DbHelper extends SQLiteOpenHelper {
      * @return
      */
     public List<HabitRow> getAllHabits() {
-        //TODO modify to get period
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
         //Preparing query (only for convenience purposes)
@@ -156,6 +151,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 habitRow.setTitle(cursor.getString(1));
                 habitRow.setDescription(cursor.getString(2));
                 habitRow.setFrequency(cursor.getInt(3));
+                habitRow.setPeriod(cursor.getInt(4));
                 //adding to list
                 habitRowList.add(habitRow);
 
@@ -271,8 +267,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param description
      * @param frequency
      */
-    public void insertHabit(String title, String description, int frequency) throws SQLiteConstraintException{
-        //TODO add new argument - period
+    public void insertHabit(String title, String description, int frequency, int period) throws SQLiteConstraintException{
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -281,6 +276,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(Contract.Habits.COLUMN_HABIT_TITLE, title);
         values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
         values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
+        values.put(Contract.Habits.COLUMN_HABIT_PERIOD, period);
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -289,7 +285,8 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insertOrThrow(
+        database.insert//TODO uncommentOrThrow(
+                (
                 Contract.Habits.TABLE_NAME,
                 null,
                 values);
@@ -319,13 +316,20 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insertOrThrow(
+        database.insert//TODO uncomment OrThrow(
+                (
                 Contract.Calendar.TABLE_NAME,
                 null,
                 values);
     }
 
-    public void insertState(int state, String stateName) throws SQLiteConstraintException{
+    /**
+     * inserts state, only on creation (or update) of database
+     * @param state
+     * @param stateName
+     * @throws SQLiteConstraintException
+     */
+    private void insertState(int state, String stateName) throws SQLiteConstraintException{
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -384,6 +388,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
                 " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'";
+
         Cursor cursor = database.rawQuery(query, null);
         return cursor.getCount();
     }

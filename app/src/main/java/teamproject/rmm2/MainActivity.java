@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import teamproject.rmm2.Helpers.RepeatForService;
+import teamproject.rmm2.Helpers.Statistics;
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
@@ -77,10 +78,64 @@ public class MainActivity extends MyActivityTemplate {
         RepeatForService repeatForService = new RepeatForService(getContext());
         repeatForService.NotificationsHandler(SynchronizationService.class);
 
+        /********************************************************
+        //DATABASE TESTING, insert habits, get statistics etc.
+        ********************************************************/
+
+//        inserting habits
+        dbHelper.insertHabit("a","a",1,1);
+        dbHelper.insertHabit("b","b",1,7);
+        dbHelper.insertHabit("c","c",2,1);
+
+//        inserting dates (CALENDAR table)
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        dbHelper.insertDate(calendar, "a", 1);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 2);
+        dbHelper.insertDate(calendar, "a", 1);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 3);
+        dbHelper.insertDate(calendar, "a", 0);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 4);
+        dbHelper.insertDate(calendar, "a", 1);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 5);
+        dbHelper.insertDate(calendar, "a", 1);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 6);
+        dbHelper.insertDate(calendar, "a", -1);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 7);
+        dbHelper.insertDate(calendar, "a", 1);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 8);
+        dbHelper.insertDate(calendar,"a",1);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 9);
+        dbHelper.insertDate(calendar,"a",1);
+
+        calendar.set(Calendar.DAY_OF_MONTH, 10);
+        dbHelper.insertDate(calendar,"a",1);
+
+//        testing statistics
+
+        Statistics statistics = new Statistics(getContext(), "a");
+
+
+        /********************************************************
+         //END OF DATABASE TESTING
+         ********************************************************/
+
+
         if (savedInstanceState == null) {
             // on first time display view for first nav item
             displayView(0);
         }
+
+
     }
 
     @Override
@@ -185,9 +240,8 @@ public class MainActivity extends MyActivityTemplate {
         textView.setText("Processing...");
         //ok until here
 
-        //TODO: think about throwing and handling exception so it's convenient for others using this method
         try {
-            dbHelper.insertHabit("test_habit", "desc", 1);
+            dbHelper.insertHabit("test_habit", "desc", 1,1);
         } catch (SQLiteConstraintException e) {
             textView.setText("Duplicate record!");
             return;
@@ -248,7 +302,6 @@ public class MainActivity extends MyActivityTemplate {
      * testing purposes, delete when not needed
      * @param v
      */
-
     public void dbgetstate(View v){
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
@@ -300,7 +353,6 @@ public class MainActivity extends MyActivityTemplate {
     }
 
     public void dbgetdate(View v){
-        //TODO method getDate will return LIST of CalendarRows in future
         TextView textView = (TextView) findViewById(R.id.test_db_textview);
         textView.setText("getting text from db");
 
