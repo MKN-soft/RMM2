@@ -296,14 +296,18 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public void editHabit(Context context, String description, int frequency) throws SQLiteConstraintException {
-        SQLiteDatabase database = this.getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
-        values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        //ContentValues values = new ContentValues();
+        //values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
+        //values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
 
         SessionManager sessionManager = new SessionManager(context);
 
-        database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + sessionManager.getHabitTitle() + "\'", null);
+        //database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + sessionManager.getHabitTitle() + "\'", null);
+        database.execSQL("UPDATE " + Contract.Habits.TABLE_NAME +
+                " SET " + Contract.Habits.COLUMN_HABIT_DESCRIPTION + "=" + "\'" + description + "\'" + ", " + Contract.Habits.COLUMN_HABIT_FREQUENCY + "=" + "\'" + frequency + "\'" +
+                " WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + "=" + "\'" + sessionManager.getHabitTitle() + "\'");
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -312,10 +316,12 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
+        /*
         database.insertOrThrow(
                 Contract.Habits.TABLE_NAME,
                 null,
                 values);
+                */
     }
 
 
