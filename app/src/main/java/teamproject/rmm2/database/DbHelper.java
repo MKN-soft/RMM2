@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
@@ -206,8 +207,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
         //Preparing query (only for convenience purposes)
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
-                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" +  habitTitle + "\'" +
-                "ORDER BY " + Contract.Calendar.COLUMN_DATE + " ASC";
+                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \"" +  habitTitle + "\"" +
+                " ORDER BY " + Contract.Calendar.COLUMN_DATE + " ASC";
 
 
 
@@ -230,7 +231,9 @@ public class DbHelper extends SQLiteOpenHelper {
             //returns found row
             return calendarRowList;
         }
-        return null;
+        else {
+            return null;
+        }
     }
 
 

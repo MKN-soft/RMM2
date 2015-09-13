@@ -107,9 +107,19 @@ public class Statistics {
         //Get list in ascending order
         List<CalendarRow> calendarRowList = dbHelper.getDatesForHabit(tytulNawyku);
 
+        if(calendarRowList == null) {
+            setNajlepszaPassa(0);
+            setSredniaDlugoscCiagu(0);
+            return;
+        }
+
         long time=0, aux=0;
         int streak =0, longestStreak=0;
         int streakCount =0;
+
+
+
+
 
         for(CalendarRow row: calendarRowList){
             //po resecie streak wiadomo ze to kolejna passa (na starcie tez jest 0)
@@ -165,7 +175,16 @@ public class Statistics {
 //        TODO check & test
         float percentage=0;
 
-        percentage = (dbHelper.getSuccessDateCountForHabit(tytulNawyku) / dbHelper.getDateCountForHabit(tytulNawyku)) * 100;
+
+        int successCount = dbHelper.getSuccessDateCountForHabit(tytulNawyku);
+        int totalCount = dbHelper.getDateCountForHabit(tytulNawyku);
+
+        if(totalCount == 0){
+            setProcent_powodzen(0);
+            return;
+        }
+
+        percentage = (successCount/totalCount) * 100;
         setProcent_powodzen(percentage);
     }
 

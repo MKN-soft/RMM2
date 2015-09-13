@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import teamproject.rmm2.Helpers.RepeatForService;
 import teamproject.rmm2.Helpers.Statistics;
@@ -122,8 +123,13 @@ public class MainActivity extends MyActivityTemplate {
 
 //        testing statistics
 
-        Statistics statistics = new Statistics(getContext(), "a");
+        Statistics statisticsA = new Statistics(getContext(), "a");
+        Statistics statisticsB = new Statistics(getContext(), "b");
+        Statistics statisticsC = new Statistics(getContext(), "c");
 
+        List<CalendarRow> calendarRowListA = dbHelper.getDatesForHabit("a");
+        List<CalendarRow> calendarRowListB = dbHelper.getDatesForHabit("b");
+        List<CalendarRow> calendarRowListC = dbHelper.getDatesForHabit("c");
 
         /********************************************************
          //END OF DATABASE TESTING
