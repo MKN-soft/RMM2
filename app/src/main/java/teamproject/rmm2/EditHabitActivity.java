@@ -2,11 +2,7 @@ package teamproject.rmm2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,13 +13,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import teamproject.rmm2.models.HabitRow;
 
 public class EditHabitActivity extends MyActivityTemplate {
 
-    private int additional;
+    private int habitPeriodicity;
     private HabitRow item;
     private Button editHabit;
     private TextView habitName;
@@ -45,33 +39,38 @@ public class EditHabitActivity extends MyActivityTemplate {
         habitName.setText(item.getTitle());
         habitDescription.setText(item.getDescription());
         habitFrequency.setText(Integer.toString(item.getFrequency()));
+        habitPeriodicity = item.getPeriod();
         //TODO Set image??
 
-        String[] elements = {"No change", "Day", "Week", "Month"};
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<String> series = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, elements);
-        spinner.setAdapter(series);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.edit_periodicity_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int id, long position) {
-                switch ((int) position) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch(position) {
                     case 0:
-                        Toast.makeText(EditHabitActivity.this, "No change ", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        additional = 1; //Day
+                        habitPeriodicity = 1;
                         break;
                     case 2:
-                        additional = 7;//Week
+                        habitPeriodicity = 7;
                         break;
                     case 3:
-                        additional = 30;//Month
+                        habitPeriodicity = 30;
                         break;
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -80,7 +79,7 @@ public class EditHabitActivity extends MyActivityTemplate {
             @Override
             public void onClick(View v) {
                 //TODO make functionality
-                dbHelper.editHabit(getContext(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()));
+                dbHelper.editHabit(getContext(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()), habitPeriodicity);
 
                 Intent intent = new Intent(EditHabitActivity.this, MainActivity.class);
                 startActivity(intent);

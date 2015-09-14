@@ -18,7 +18,7 @@ import teamproject.rmm2.models.HabitRow;
 public class HabitDetailActivity extends MyActivityTemplate {
 
     private HabitRow item;
-    private TextView title, description, frequency, date;
+    private TextView title, description, frequency, date, periodicity;
     private ImageView image;
     private Button editHabit, deleteHabit, schedule;
 
@@ -35,10 +35,12 @@ public class HabitDetailActivity extends MyActivityTemplate {
         frequency = (TextView) findViewById(R.id.habitFrequency);
         date = (TextView) findViewById(R.id.habitDate);
         image = (ImageView) findViewById(R.id.habitImage);
+        periodicity = (TextView) findViewById(R.id.habitPeriodicity);
 
         title.setText(item.getTitle());
         description.setText(item.getDescription());
         frequency.setText(Integer.toString(item.getFrequency()));
+        periodicity.setText(periodicityToString(item.getPeriod()));
 
         deleteHabit = (Button) findViewById(R.id.deleteHabit);
         editHabit = (Button) findViewById(R.id.editHabit);
@@ -65,6 +67,19 @@ public class HabitDetailActivity extends MyActivityTemplate {
                 finish();
             }
         });
+    }
+
+    public String periodicityToString(int periodicity) {
+        String temp;
+
+        if (periodicity == 1)
+            return "Day";
+        else if (periodicity == 7)
+            return "Week";
+        else if (periodicity == 30)
+            return "Month";
+        else
+            return "Error";
     }
 
     @Override

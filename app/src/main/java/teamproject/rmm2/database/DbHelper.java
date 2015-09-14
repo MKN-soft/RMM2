@@ -354,19 +354,20 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
-    public void editHabit(Context context, String description, int frequency) throws SQLiteConstraintException {
+    public void editHabit(Context context, String description, int frequency, int periodicity) throws SQLiteConstraintException {
         SQLiteDatabase database = this.getWritableDatabase();
 
-        //ContentValues values = new ContentValues();
-        //values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
-        //values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
+        ContentValues values = new ContentValues();
+        values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
+        values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
+        values.put(Contract.Habits.COLUMN_HABIT_PERIOD, periodicity);
 
         SessionManager sessionManager = new SessionManager(context);
 
-        //database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + sessionManager.getHabitTitle() + "\'", null);
-        database.execSQL("UPDATE " + Contract.Habits.TABLE_NAME +
-                " SET " + Contract.Habits.COLUMN_HABIT_DESCRIPTION + "=" + "\'" + description + "\'" + ", " + Contract.Habits.COLUMN_HABIT_FREQUENCY + "=" + "\'" + frequency + "\'" +
-                " WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + "=" + "\'" + sessionManager.getHabitTitle() + "\'");
+        database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + sessionManager.getHabitTitle() + "\'", null);
+        //database.execSQL("UPDATE " + Contract.Habits.TABLE_NAME +
+        //        " SET " + Contract.Habits.COLUMN_HABIT_DESCRIPTION + "=" + "\'" + description + "\'" + ", " + Contract.Habits.COLUMN_HABIT_FREQUENCY + "=" + "\'" + frequency + "\'" +
+        //        " WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + "=" + "\'" + sessionManager.getHabitTitle() + "\'");
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;

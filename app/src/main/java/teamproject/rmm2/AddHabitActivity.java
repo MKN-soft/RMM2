@@ -4,11 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,7 +17,7 @@ import android.widget.Toast;
 public class AddHabitActivity extends MyActivityTemplate {
 
     private EditText habitName, habitDescription, habitFrequency;
-    private int additional;
+    private int habitPeriodicity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,31 +35,33 @@ public class AddHabitActivity extends MyActivityTemplate {
 
         habitImage.setImageDrawable(image);
 
-        String[] elements = {"Day", "Week", "Month"};
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<String> series = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, elements);
-
-        spinner.setAdapter(series);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.periodicity_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int id, long position) {
-                switch ((int) position) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch(position) {
                     case 0:
-                        additional = 1; //Day
+                        habitPeriodicity = 1;
                         break;
                     case 1:
-                        additional = 7;//week
+                        habitPeriodicity = 7;
                         break;
                     case 2:
-                        additional = 30;//month
+                        habitPeriodicity = 30;
                         break;
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -79,8 +77,7 @@ public class AddHabitActivity extends MyActivityTemplate {
             public void onClick(View v) {
 
                 try {
-//                    TODO uncomment when setting periodicity is fixed and add as an argument to the method call below
-//                    dbHelper.insertHabit(habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()), );
+                      dbHelper.insertHabit(habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()), habitPeriodicity);
                 }
                 catch (SQLiteConstraintException e) {
                     Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();
