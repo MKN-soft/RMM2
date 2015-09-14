@@ -29,7 +29,7 @@ import teamproject.rmm2.models.HabitRow;
  */
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 8;
+    public static final int DATABASE_VERSION = 9;
     public static final String DATABASE_NAME = "RMM2.db";
 
     /**
@@ -47,9 +47,9 @@ public class DbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_STATES);
         sqLiteDatabase.execSQL(Contract.SQL_CREATE_CALENDAR);
 
-        insertState(-1, "FAIL");
+        /*insertState(-1, "FAIL");
         insertState(0, "NEUTRAL");
-        insertState(1, "DONE");
+        insertState(1, "DONE");*/
     }
 
     @Override
@@ -222,6 +222,7 @@ public class DbHelper extends SQLiteOpenHelper {
             List<CalendarRow> calendarRowList = new ArrayList<CalendarRow>();
             do {
                 CalendarRow calendarRow = new CalendarRow();
+                calendarRow.setId(cursor.getInt(0));
                 calendarRow.setTime(cursor.getLong(1));
                 calendarRow.setHabit(cursor.getString(2));
                 calendarRow.setState(cursor.getInt(3));
@@ -332,7 +333,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param stateName
      * @throws SQLiteConstraintException
      */
-    private void insertState(int state, String stateName) throws SQLiteConstraintException{
+    public void insertState(int state, String stateName) throws SQLiteConstraintException{
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -346,7 +347,8 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insertOrThrow(
+        database.insert//todo uncomment OrThrow(
+                (
                 Contract.States.TABLE_NAME,
                 null,
                 values);

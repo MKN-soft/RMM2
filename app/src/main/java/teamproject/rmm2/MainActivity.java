@@ -83,6 +83,10 @@ public class MainActivity extends MyActivityTemplate {
         //DATABASE TESTING, insert habits, get statistics etc.
         ********************************************************/
 
+        dbHelper.insertState(-1, "FAIL");
+        dbHelper.insertState(0, "NEUTRAL");
+        dbHelper.insertState(1, "DONE");
+
 //        inserting habits
         dbHelper.insertHabit("a","a",1,1);
         dbHelper.insertHabit("b","b",1,7);
@@ -124,12 +128,12 @@ public class MainActivity extends MyActivityTemplate {
 //        testing statistics
 
         Statistics statisticsA = new Statistics(getContext(), "a");
-        Statistics statisticsB = new Statistics(getContext(), "b");
+/*        Statistics statisticsB = new Statistics(getContext(), "b");
         Statistics statisticsC = new Statistics(getContext(), "c");
 
         List<CalendarRow> calendarRowListA = dbHelper.getDatesForHabit("a");
         List<CalendarRow> calendarRowListB = dbHelper.getDatesForHabit("b");
-        List<CalendarRow> calendarRowListC = dbHelper.getDatesForHabit("c");
+        List<CalendarRow> calendarRowListC = dbHelper.getDatesForHabit("c");*/
 
         /********************************************************
          //END OF DATABASE TESTING

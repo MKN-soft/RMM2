@@ -72,7 +72,7 @@ public class Statistics {
         return iloscNawykow;
     }
 
-    public int getNajlepszaPassa() {
+    public float getNajlepszaPassa() {
         return najlepszaPassa;
     }
 
@@ -122,6 +122,8 @@ public class Statistics {
 
 
         for(CalendarRow row: calendarRowList){
+            //todo delete when finished debugging
+            int id = row.getId();
             //po resecie streak wiadomo ze to kolejna passa (na starcie tez jest 0)
             if(streak == 0){
                 streakCount++;
@@ -136,8 +138,8 @@ public class Statistics {
             else{
                 aux = time;
                 time = row.getTime();
-                //jesli odstep czasu taki jak powinien byc
-                if(time - aux == DAY * habitRow.getFrequency() * habitRow.getPeriod()){
+                //jesli odstep czasu taki jak powinien byc oraz stan == "1"
+                if(row.getState() == 1 && time - aux == DAY * habitRow.getFrequency() * habitRow.getPeriod()){
                     streak++;
                 }
                 else{
@@ -153,7 +155,7 @@ public class Statistics {
         }
 
         setNajlepszaPassa(longestStreak);
-        setSredniaDlugoscCiagu(calendarRowList.size()/streakCount);  // ilosc dat/ ilosc pass
+        setSredniaDlugoscCiagu((float)dbHelper.getSuccessDateCountForHabit(tytulNawyku)/(float)streakCount);  // ilosc dat z sukcesami/ ilosc pass
 
     }
 
@@ -184,7 +186,7 @@ public class Statistics {
             return;
         }
 
-        percentage = (successCount/totalCount) * 100;
+        percentage = ((float)successCount/(float)totalCount) * 100;
         setProcent_powodzen(percentage);
     }
 
