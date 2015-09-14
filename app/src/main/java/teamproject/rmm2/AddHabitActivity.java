@@ -79,7 +79,8 @@ public class AddHabitActivity extends MyActivityTemplate {
             public void onClick(View v) {
 
                 try {
-                    dbHelper.insertHabit(habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()));
+//                    TODO uncomment when setting periodicity is fixed and add as an argument to the method call below
+//                    dbHelper.insertHabit(habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()), );
                 }
                 catch (SQLiteConstraintException e) {
                     Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();
