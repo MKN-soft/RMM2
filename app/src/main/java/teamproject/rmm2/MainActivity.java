@@ -125,6 +125,10 @@ public class MainActivity extends MyActivityTemplate {
         calendar.set(Calendar.DAY_OF_MONTH, 10);
         dbHelper.insertDate(calendar,"a",1);
 
+        //new
+        calendar.set(2015, 9, 2);
+        dbHelper.insertDate(calendar,"b",1);
+
 //        testing statistics
 
         Statistics statisticsA = new Statistics(getContext(), "a");

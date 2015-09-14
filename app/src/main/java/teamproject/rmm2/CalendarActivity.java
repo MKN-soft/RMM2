@@ -57,17 +57,22 @@ public class CalendarActivity extends MyActivityTemplate {
             //definedHabits.add(new HabitDefinition(2015, 4, 5)); // TO NIE
 
             final List<CalendarRow> calDay = dbHelper.getAllDates();
-
+               int i = 0;
              List<CalendarRow> currentDay = new ArrayList<CalendarRow>();
             for(CalendarRow c: calDay){
-                //if(c.getHabit().equals(currentHabit.getTitle()))
-                if(c.getHabit().equals(sessionManager.getHabitTitle()))
+
+                if(c.getHabit().toString().equals(currentHabit.getTitle().toString()))
+                //if(c.getHabit().equals(sessionManager.getHabitTitle()))
                 {
+                    Log.i("RMM2", "jestem!");
                     currentDay.add(c);
                 }
+                i++;
             }
             Log.i("RMM2", "To jest jakis log:"+calDay.size());
             Log.i("RMM2", "To jest jakis log2:"+currentDay.size());
+            Log.i("RMM2", "To jest i: "+ i);
+
             /*HabitDecorator habDecor = new HabitDecorator(definedHabits);
             DoneHabitDecorator doneHabDecor = new DoneHabitDecorator(definedHabits);
             calendar.addDecorator(doneHabDecor);
@@ -178,7 +183,7 @@ public class CalendarActivity extends MyActivityTemplate {
                                     //CalendarRow HabitDay = new CalendarRow();
                                     //HabitDay.setHabit(currentHabit.getTitle());
                                     //HabitDay.setState(0);
-                                    Date d = new Date(calendarDay.getYear(), calendarDay.getMonth(),calendarDay.getDay());
+                                    Date d = new Date(calendarDay.getYear(), calendarDay.getMonth() - 1,calendarDay.getDay());
                                     Calendar calendar = Calendar.getInstance();
                                     calendar.setTime(d);
 
@@ -190,7 +195,7 @@ public class CalendarActivity extends MyActivityTemplate {
 
                                     try {
                                         dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 0);
-                                        dbHelper.close();
+                                        //dbHelper.close();
                                         //dbHelper.insertDate(d.getTime(),currentHabit.getTitle().toString(), 0);
                                         //dbHelper.insertDate(HabitDay.getTime(),HabitDay.getHabit().toString(), HabitDay.getState());
                                     }

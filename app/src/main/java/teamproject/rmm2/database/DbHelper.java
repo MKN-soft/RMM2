@@ -250,8 +250,10 @@ public class DbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 CalendarRow calendarRow = new CalendarRow();
-                calendarRow.setHabit(cursor.getString(1));
-                calendarRow.setTime(cursor.getLong(2));
+                //calendarRow.setHabit(cursor.getString(1));
+                //calendarRow.setTime(cursor.getLong(2));
+                calendarRow.setTime(cursor.getLong(1));
+                calendarRow.setHabit(cursor.getString(2));
                 calendarRow.setState(cursor.getInt(3));
                 //adding to list
                 calendarRowList.add(calendarRow);
