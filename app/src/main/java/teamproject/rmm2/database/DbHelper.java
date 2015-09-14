@@ -237,6 +237,34 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    public List<CalendarRow> getAllDates(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Preparing query (only for convenience purposes)
+        String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME;
+        //Preparing cursor for getting rows
+        Cursor cursor = database.rawQuery(query, null);
+        //Creating list
+        List<CalendarRow> calendarRowList = new ArrayList<CalendarRow>();
+
+        // looping through all rows and selecting
+        if (cursor.moveToFirst()) {
+            do {
+                CalendarRow calendarRow = new CalendarRow();
+                calendarRow.setHabit(cursor.getString(1));
+                calendarRow.setTime(cursor.getLong(2));
+                calendarRow.setState(cursor.getInt(3));
+                //adding to list
+                calendarRowList.add(calendarRow);
+
+            } while (cursor.moveToNext());
+
+            return calendarRowList;
+        }
+        else return new ArrayList<CalendarRow>(); // empty list
+
+
+    }
+
 
 
     /**
@@ -303,6 +331,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param state
      */
     public void insertDate(Calendar calendar, String habittitle, int state) throws SQLiteConstraintException{
+   // public void insertDate(long unixTimestamp, String habittitle, int state) throws SQLiteConstraintException{
         //We insert dates as UNIX time on midnight hour 00:00:00
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();

@@ -41,6 +41,15 @@
             android:name=".EditHabitActivity"
             android:label="@string/title_activity_edit_habit" >
         </activity>
+        <activity
+            android:name=".ScheduleActivity"
+            android:label="Schedule"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".CalendarActivity"
+            android:label="Calendar" >
+        </activity>
 
         <service android:name=".services.SynchronizationService" />
     </application>

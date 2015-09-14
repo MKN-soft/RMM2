@@ -44,6 +44,18 @@ public class HabitDetailActivity extends MyActivityTemplate {
 
         deleteHabit = (Button) findViewById(R.id.deleteHabit);
         editHabit = (Button) findViewById(R.id.editHabit);
+        schedule = (Button) findViewById(R.id.schedule);
+
+        schedule.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(HabitDetailActivity.this, ScheduleActivity.class);
+                startActivity(intent);
+
+                //finish();
+
+
+            }
+        });
 
         deleteHabit.setOnClickListener(new View.OnClickListener() {
             @Override

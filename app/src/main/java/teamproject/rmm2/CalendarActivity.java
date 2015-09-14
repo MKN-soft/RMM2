@@ -67,6 +67,7 @@ public class CalendarActivity extends MyActivityTemplate {
                 }
             }
             Log.i("RMM2", "To jest jakis log:"+calDay.size());
+            Log.i("RMM2", "To jest jakis log2:"+currentDay.size());
             /*HabitDecorator habDecor = new HabitDecorator(definedHabits);
             DoneHabitDecorator doneHabDecor = new DoneHabitDecorator(definedHabits);
             calendar.addDecorator(doneHabDecor);
@@ -178,6 +179,9 @@ public class CalendarActivity extends MyActivityTemplate {
                                     //HabitDay.setHabit(currentHabit.getTitle());
                                     //HabitDay.setState(0);
                                     Date d = new Date(calendarDay.getYear(), calendarDay.getMonth(),calendarDay.getDay());
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.setTime(d);
+
                                    // d.getTime();
                                    // HabitDay.setTime(d.getTime());
                                     //calDay.add(HabitDay);
@@ -185,7 +189,7 @@ public class CalendarActivity extends MyActivityTemplate {
                                     //Log.i("RMM2", "To jest jakis log:"+currentDay.size());
 
                                     try {
-                                        dbHelper.insertDate(d.getTime(),sessionManager.getHabitTitle(), 0);
+                                        dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 0);
                                         dbHelper.close();
                                         //dbHelper.insertDate(d.getTime(),currentHabit.getTitle().toString(), 0);
                                         //dbHelper.insertDate(HabitDay.getTime(),HabitDay.getHabit().toString(), HabitDay.getState());
