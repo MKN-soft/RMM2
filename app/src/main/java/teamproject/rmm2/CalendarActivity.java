@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import teamproject.rmm2.R;
@@ -58,7 +59,7 @@ public class CalendarActivity extends MyActivityTemplate {
 
             final List<CalendarRow> calDay = dbHelper.getAllDates();
                int i = 0;
-             List<CalendarRow> currentDay = new ArrayList<CalendarRow>();
+            final List<CalendarRow> currentDay = new ArrayList<CalendarRow>();
             for(CalendarRow c: calDay){
                // Log.i("RMM2", "tytul habitu tej daty:"+ c.getHabit().toString());
                 //Log.i("RMM2", "Tytul habitu tego kalendarza:"+currentHabit.getTitle().toString());
@@ -68,7 +69,7 @@ public class CalendarActivity extends MyActivityTemplate {
                 {
                     //Log.i("RMM2", "jestem!");
                     currentDay.add(c);
-                    Log.i("RMM2", "To jest tytul nawyku "+ i + "daty: "+c.getHabit());
+                   // Log.i("RMM2", "To jest tytul nawyku "+ i + "daty: "+c.getHabit());
                     long timestamp = c.getTime();
                     //Log.i("RMM2", "Sprawdzam czy to tu2222");
                     //Date d = new Date((long)timestamp*1000);
@@ -78,8 +79,8 @@ public class CalendarActivity extends MyActivityTemplate {
                     int year1 = ca.get(Calendar.YEAR);
                     int month1 = ca.get(Calendar.MONTH); // Note: zero based!
                     int day1 = ca.get(Calendar.DAY_OF_MONTH);
-                    Log.i("RMM2", "To jest data "+ i + "daty: "+day1 + " "+ month1 +" "+ year1);
-                    Log.i("RMM2", "To jest state "+ i + "daty: "+c.getState());
+                    //Log.i("RMM2", "To jest data "+ i + "daty: "+day1 + " "+ month1 +" "+ year1);
+                    //Log.i("RMM2", "To jest state "+ i + "daty: "+c.getState());
                 }
                 i++;
             }
@@ -180,7 +181,128 @@ public class CalendarActivity extends MyActivityTemplate {
                                             }
                                         }
                                     }
-*/
+
+                                    onResume();
+                                    break;*/
+
+                                    boolean found = false;
+                                    if(tYear > calendarDay.getYear()){
+                                        for (CalendarRow hab : currentDay) {
+                                            long timestamp = hab.getTime();
+                                            Date d = new Date((long)timestamp*1000);
+                                            Calendar myCal = new GregorianCalendar();
+                                            myCal.setTime(d);
+                                            int year = myCal.get(Calendar.YEAR);
+                                            int month = myCal.get(Calendar.DAY_OF_MONTH);
+                                            int day = myCal.get(Calendar.DAY_OF_MONTH);
+                                            if (year == calendarDay.getYear() && month == (calendarDay.getMonth() - 1) && day == calendarDay.getDay()) {
+                                                hab.setState(1);
+                                                Log.i("RMM2", "znaleziona ");
+                                                found = true;
+
+
+                                            }
+                                        }
+                                    }else if(tYear == calendarDay.getYear()) {
+                                        if (tMonth > calendarDay.getMonth()){
+                                            for (CalendarRow hab : currentDay) {
+                                                long timestamp = hab.getTime();
+                                                Date d = new Date((long)timestamp*1000);
+                                                Calendar myCal = new GregorianCalendar();
+                                                myCal.setTime(d);
+                                                int year = myCal.get(Calendar.YEAR);
+                                                int month = myCal.get(Calendar.DAY_OF_MONTH);
+                                                int day = myCal.get(Calendar.DAY_OF_MONTH);
+                                                if (year == calendarDay.getYear() && month == (calendarDay.getMonth() - 1) && day == calendarDay.getDay()) {
+                                                    hab.setState(1);
+                                                    Log.i("RMM2", "znaleziona ");
+                                                    found = true;
+
+
+                                                }
+                                            }
+                                        }else if( tMonth == calendarDay.getMonth()) {
+                                            if (tDay > calendarDay.getDay() || tDay == calendarDay.getDay()) {
+                                                for (CalendarRow hab : currentDay) {
+                                                    long timestamp = hab.getTime();
+                                                    Date d = new Date((long)timestamp*1000);
+                                                    Calendar myCal = new GregorianCalendar();
+                                                    myCal.setTime(d);
+                                                    int year = myCal.get(Calendar.YEAR);
+                                                    int month = myCal.get(Calendar.DAY_OF_MONTH);
+                                                    int day = myCal.get(Calendar.DAY_OF_MONTH);
+                                                    if (year == calendarDay.getYear() && month == (calendarDay.getMonth() - 1) && day == calendarDay.getDay()) {
+                                                        hab.setState(1);
+                                                        Log.i("RMM2", "znaleziona ");
+                                                        found = true;
+
+
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
+
+
+                                    if (found == false) {
+                                        if(tYear > calendarDay.getYear()){
+                                            Calendar calendar = Calendar.getInstance();
+                                            calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+
+                                            try {
+                                                dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
+                                                }
+                                            catch (SQLiteConstraintException e) {
+                                                Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();
+                                                Log.d("RMM2",e.getMessage());
+                                                return;
+                                            }
+                                            catch(Exception e){
+                                                Toast.makeText(getContext(), "Unexpected exception!", Toast.LENGTH_SHORT).show();
+                                                return;
+                                            }
+                                        }else if(tYear == calendarDay.getYear()) {
+                                            if (tMonth > calendarDay.getMonth()){
+                                                Calendar calendar = Calendar.getInstance();
+                                                calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+
+                                                try {
+                                                    dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
+                                                }
+                                                catch (SQLiteConstraintException e) {
+                                                    Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();
+                                                    Log.d("RMM2",e.getMessage());
+                                                    return;
+                                                }
+                                                catch(Exception e){
+                                                    Toast.makeText(getContext(), "Unexpected exception!", Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
+                                            }else if( tMonth == calendarDay.getMonth()) {
+                                                if (tDay > calendarDay.getDay() || tDay == calendarDay.getDay()) {
+                                                    Calendar calendar = Calendar.getInstance();
+                                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+
+                                                    try {
+                                                        dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
+                                                    }
+                                                    catch (SQLiteConstraintException e) {
+                                                        Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();
+                                                        Log.d("RMM2",e.getMessage());
+                                                        return;
+                                                    }
+                                                    catch(Exception e){
+                                                        Toast.makeText(getContext(), "Unexpected exception!", Toast.LENGTH_SHORT).show();
+                                                        return;
+                                                    }
+
+                                                    Log.v("CalendarActivity", " " + calendarDay.getMonth());
+                                                }
+                                            }
+                                        }
+                                    }
+
                                     onResume();
                                     break;
 
@@ -200,23 +322,23 @@ public class CalendarActivity extends MyActivityTemplate {
                                     //Date d = new Date(calendarDay.getYear(), (calendarDay.getMonth()+1),calendarDay.getDay()); // -1
                                     Calendar calendar = Calendar.getInstance();
                                     int day2 = calendar.get(Calendar.DAY_OF_MONTH);
-                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth()+1),calendarDay.getDay());
+                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
 
                                    // d.getTime();
                                    // HabitDay.setTime(d.getTime());
                                     //calDay.add(HabitDay);
 
-                                    Log.i("RMM2", "To : "+calendarDay.getYear()+" "+ (calendarDay.getMonth()+1)+" "+calendarDay.getDay());
+                                    //Log.i("RMM2", "To : "+calendarDay.getYear()+" "+ (calendarDay.getMonth()+1)+" "+calendarDay.getDay());
 
                                     try {
                                         dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 0);
                                         int year = calendar.get(Calendar.YEAR);
                                         int month = calendar.get(Calendar.MONTH); // Note: zero based!
                                         int day = calendar.get(Calendar.DAY_OF_MONTH);
-                                        Log.i("RMM2", "To jest tytul nawyku " + "daty: "+sessionManager.getHabitTitle());
-                                        Log.i("RMM2", "To jest data " + "daty: "+calendar.getTime() + " "+ calendar.toString());
+                                       // Log.i("RMM2", "To jest tytul nawyku " + "daty: "+sessionManager.getHabitTitle());
+                                        //Log.i("RMM2", "To jest data " + "daty: "+calendar.getTime() + " "+ calendar.toString());
 
-                                        Log.i("RMM2", "/n To jest data " +year+" "+month+" " +day);
+                                        //Log.i("RMM2", "/n To jest data " +year+" "+month+" " +day);
                                        // Log.i("RMM2", "To jest state " + "daty: "+c.getState());
                                         //dbHelper.close();
                                         //dbHelper.insertDate(d.getTime(),currentHabit.getTitle().toString(), 0);
