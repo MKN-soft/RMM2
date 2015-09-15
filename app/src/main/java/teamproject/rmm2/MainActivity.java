@@ -126,7 +126,7 @@ public class MainActivity extends MyActivityTemplate {
         dbHelper.insertDate(calendar,"a",1);
 
         //new
-        calendar.set(2015, 9, 2);
+        calendar.set(2015, 9, 16);
         dbHelper.insertDate(calendar,"b",1);
 
 //        testing statistics

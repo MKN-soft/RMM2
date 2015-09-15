@@ -1,13 +1,16 @@
 package teamproject.rmm2.decorators;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import teamproject.rmm2.models.CalendarRow;
@@ -28,7 +31,9 @@ public class DoneHabitDecorator implements DayViewDecorator {
     public boolean shouldDecorate(CalendarDay calendarDay) {
         for (CalendarRow habDef : definedCalendarDay) {
             if (compare(habDef, calendarDay) == true) {
-                if (habDef.getState() == 1) {
+               // Log.i("RMM2", "jest ta data zrobiona!!");
+                if (!(habDef.getState() == 0)) {
+                    //Log.i("RMM2", "jest ta data");
                     return true;
                 }
             }
@@ -47,14 +52,31 @@ public class DoneHabitDecorator implements DayViewDecorator {
 
     private boolean compare(CalendarRow hd, CalendarDay cDay) {
         long timestamp = hd.getTime();
-        Date d = new Date(timestamp);
-        if (d.getDay() == cDay.getDay()) {
-            if ((d.getMonth()-1) == cDay.getMonth()) {
-                if (d.getYear() == cDay.getYear()) {
+        //Log.i("RMM2", "Sprawdzam czy to tu");
+        Date d = new Date((long)timestamp*1000);
+        Calendar myCal = new GregorianCalendar();
+        myCal.setTime(d);
+        int year = myCal.get(Calendar.YEAR);
+        int day = myCal.get(Calendar.DAY_OF_MONTH);
+        if (day == cDay.getDay()) {
+            // Log.i("RMM2", "Po dniu!!! zrobiony");
+            // Log.i("RMM2", "d.getDay(!!! : "+ d.getDay());
+            //Log.i("RMM2", "cDay.getDay()!!! : "+ cDay.getDay());
+            //Log.i("RMM2", "d.getMonth()!!! : "+ d.getMonth());
+            // Log.i("RMM2", "cDay.getMonth()!!! : "+ (cDay.getMonth() - 1));
+            // Log.i("RMM2", "year!!! : "+ year);
+            //Log.i("RMM2", "cDay.getYear()!!! : "+ cDay.getYear());
+            // Log.i("RMM2", "Po dniu!!!");
+            if ((d.getMonth() - 1) == cDay.getMonth()) {//month - 1
+                //Log.i("RMM2", "Po miesiącu!!!");
+                if (year == cDay.getYear()) {// if (d.getYear() == cDay.getYear()) {
+                    //Log.i("RMM2", "Jest niezrobiony!!!");
+
                     return true;
                 }
             }
         }
+
 
         //   Log.d("RMM", " " + hd.getDay() + " " + cDay.getDay() + " " + hd.getMonth() + " " + cDay.getMonth());
         return false;

@@ -60,18 +60,32 @@ public class CalendarActivity extends MyActivityTemplate {
                int i = 0;
              List<CalendarRow> currentDay = new ArrayList<CalendarRow>();
             for(CalendarRow c: calDay){
+               // Log.i("RMM2", "tytul habitu tej daty:"+ c.getHabit().toString());
+                //Log.i("RMM2", "Tytul habitu tego kalendarza:"+currentHabit.getTitle().toString());
 
-                if(c.getHabit().toString().equals(currentHabit.getTitle().toString()))
                 //if(c.getHabit().equals(sessionManager.getHabitTitle()))
+                if(c.getHabit().toString().equals(currentHabit.getTitle().toString()))
                 {
-                    Log.i("RMM2", "jestem!");
+                    //Log.i("RMM2", "jestem!");
                     currentDay.add(c);
+                    Log.i("RMM2", "To jest tytul nawyku "+ i + "daty: "+c.getHabit());
+                    long timestamp = c.getTime();
+                    //Log.i("RMM2", "Sprawdzam czy to tu2222");
+                    //Date d = new Date((long)timestamp*1000);
+                    Calendar ca =  Calendar.getInstance();
+                    Date d = new Date((long)timestamp*1000);
+                    ca.setTime(d);
+                    int year1 = ca.get(Calendar.YEAR);
+                    int month1 = ca.get(Calendar.MONTH); // Note: zero based!
+                    int day1 = ca.get(Calendar.DAY_OF_MONTH);
+                    Log.i("RMM2", "To jest data "+ i + "daty: "+day1 + " "+ month1 +" "+ year1);
+                    Log.i("RMM2", "To jest state "+ i + "daty: "+c.getState());
                 }
                 i++;
             }
             Log.i("RMM2", "To jest jakis log:"+calDay.size());
             Log.i("RMM2", "To jest jakis log2:"+currentDay.size());
-            Log.i("RMM2", "To jest i: "+ i);
+            //Log.i("RMM2", "To jest i: "+ i);
 
             /*HabitDecorator habDecor = new HabitDecorator(definedHabits);
             DoneHabitDecorator doneHabDecor = new DoneHabitDecorator(definedHabits);
@@ -183,18 +197,27 @@ public class CalendarActivity extends MyActivityTemplate {
                                     //CalendarRow HabitDay = new CalendarRow();
                                     //HabitDay.setHabit(currentHabit.getTitle());
                                     //HabitDay.setState(0);
-                                    Date d = new Date(calendarDay.getYear(), calendarDay.getMonth() - 1,calendarDay.getDay());
+                                    //Date d = new Date(calendarDay.getYear(), (calendarDay.getMonth()+1),calendarDay.getDay()); // -1
                                     Calendar calendar = Calendar.getInstance();
-                                    calendar.setTime(d);
+                                    int day2 = calendar.get(Calendar.DAY_OF_MONTH);
+                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth()+1),calendarDay.getDay());
 
                                    // d.getTime();
                                    // HabitDay.setTime(d.getTime());
                                     //calDay.add(HabitDay);
 
-                                    //Log.i("RMM2", "To jest jakis log:"+currentDay.size());
+                                    Log.i("RMM2", "To : "+calendarDay.getYear()+" "+ (calendarDay.getMonth()+1)+" "+calendarDay.getDay());
 
                                     try {
                                         dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 0);
+                                        int year = calendar.get(Calendar.YEAR);
+                                        int month = calendar.get(Calendar.MONTH); // Note: zero based!
+                                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                                        Log.i("RMM2", "To jest tytul nawyku " + "daty: "+sessionManager.getHabitTitle());
+                                        Log.i("RMM2", "To jest data " + "daty: "+calendar.getTime() + " "+ calendar.toString());
+
+                                        Log.i("RMM2", "/n To jest data " +year+" "+month+" " +day);
+                                       // Log.i("RMM2", "To jest state " + "daty: "+c.getState());
                                         //dbHelper.close();
                                         //dbHelper.insertDate(d.getTime(),currentHabit.getTitle().toString(), 0);
                                         //dbHelper.insertDate(HabitDay.getTime(),HabitDay.getHabit().toString(), HabitDay.getState());
