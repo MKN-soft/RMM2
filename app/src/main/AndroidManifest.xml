@@ -52,6 +52,7 @@
         </activity>
 
         <service android:name=".services.SynchronizationService" />
+        <service android:name=".services.HabitService" />
     </application>
 
 </manifest>

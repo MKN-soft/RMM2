@@ -13,14 +13,14 @@ import teamproject.rmm2.R;
  */
 public class MakeNotification {
 
-    public MakeNotification(Context context, Class<?> activity) {
+    public MakeNotification(Context context, Class<?> activity, int icon, String title, String text, int notification_id) {
         // Make notification
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.ic_halo)
-                        .setContentTitle(context.getResources().getString(R.string.notification_habit_title))
-                        .setContentText(context.getResources().getString(R.string.notification_habit_description));
-        int NOTIFICATION_ID = 12345;
+                        .setSmallIcon(icon)
+                        .setContentTitle(title)
+                        .setContentText(text);
+        int NOTIFICATION_ID = notification_id;
 
         Intent targetIntent = new Intent(context, activity);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, targetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
