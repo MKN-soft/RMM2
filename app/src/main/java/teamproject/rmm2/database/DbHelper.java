@@ -415,6 +415,20 @@ public class DbHelper extends SQLiteOpenHelper {
                 */
     }
 
+    public void updateDate(Calendar calendar, String habitTitle, int state){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Contract.Calendar.COLUMN_STATE, state);
+
+        //database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" +  Contract.Calendar.COLUMN_DATE  + " = " + "\'" + convertTimeToUnixTimestamp(calendar) + "\'", null);
+
+        //database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" +  Contract.Calendar.COLUMN_DATE  + " = " +convertTimeToUnixTimestamp(calendar), null);
+
+
+        //chyba dobre
+         database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" +  " AND " + Contract.Calendar.COLUMN_DATE  + " = " + "\'" + convertTimeToUnixTimestamp(calendar) + "\'", null);
+    }
 
 
 
