@@ -7,6 +7,7 @@ import android.support.v4.app.NotificationCompat;
 import teamproject.rmm2.Helpers.MakeNotification;
 import teamproject.rmm2.MainActivity;
 import teamproject.rmm2.MyActivityTemplate;
+import teamproject.rmm2.R;
 
 /**
  * Created by MSI on 2015-09-08.
@@ -42,7 +43,8 @@ public class SynchronizationService extends IntentService {
 
     private void notification() {
         // Make notification
-        MakeNotification makeNotification = new MakeNotification(getApplicationContext(), MainActivity.class);
+        MakeNotification makeNotification = new MakeNotification(getApplicationContext(), MainActivity.class, R.drawable.ic_halo,
+                getApplicationContext().getResources().getString(R.string.notification_habit_title), getApplicationContext().getResources().getString(R.string.notification_habit_description), 0);
     }
 
 }
