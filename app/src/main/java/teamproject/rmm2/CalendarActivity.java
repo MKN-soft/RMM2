@@ -200,6 +200,10 @@ public class CalendarActivity extends MyActivityTemplate {
                                                // Calendar calendar = Calendar.getInstance();
                                                // calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
                                                // dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
+                                                Calendar calendar = Calendar.getInstance();
+                                                calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                dbHelper.updateDate(calendar, currentHabit.getTitle().toString(), 1);
+
                                                 Log.i("RMM2", "znaleziony do zrobienia ");
                                                 found = true;
 
@@ -221,6 +225,10 @@ public class CalendarActivity extends MyActivityTemplate {
                                                     //Calendar calendar = Calendar.getInstance();
                                                     //calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
                                                     //dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
+                                                    Calendar calendar = Calendar.getInstance();
+                                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                    dbHelper.updateDate(calendar, currentHabit.getTitle().toString(), 1);
+
                                                     Log.i("RMM2", "znaleziony do zrobienia 2 ");
                                                     found = true;
 
@@ -242,6 +250,9 @@ public class CalendarActivity extends MyActivityTemplate {
                                                         //Calendar calendar = Calendar.getInstance();
                                                         //calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
                                                         //dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
+                                                        Calendar calendar = Calendar.getInstance();
+                                                        calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                        dbHelper.updateDate(calendar, currentHabit.getTitle().toString(), 1);
 
                                                         Log.i("RMM2", "znaleziony do zrobienia 3 ");
                                                         found = true;
@@ -335,6 +346,10 @@ public class CalendarActivity extends MyActivityTemplate {
                                     //Date d = new Date(calendarDay.getYear(), (calendarDay.getMonth()+1),calendarDay.getDay()); // -1
                                     Calendar calendar = Calendar.getInstance();
                                     int day2 = calendar.get(Calendar.DAY_OF_MONTH);
+                                    int month = calendar.get(Calendar.MONTH);
+                                    //if(month == 12)
+                                     //   calendar.set(calendarDay.getYear(), 11, calendarDay.getDay());
+
                                     calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
 
                                    // d.getTime();
@@ -347,8 +362,9 @@ public class CalendarActivity extends MyActivityTemplate {
                                         Log.i("RMM2","dodanie do zrobienia");
                                         dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 0);
                                         int year = calendar.get(Calendar.YEAR);
-                                        int month = calendar.get(Calendar.MONTH); // Note: zero based!
+                                        //int month = calendar.get(Calendar.MONTH); // Note: zero based!
                                         int day = calendar.get(Calendar.DAY_OF_MONTH);
+
                                        // Log.i("RMM2", "To jest tytul nawyku " + "daty: "+sessionManager.getHabitTitle());
                                         //Log.i("RMM2", "To jest data " + "daty: "+calendar.getTime() + " "+ calendar.toString());
 
