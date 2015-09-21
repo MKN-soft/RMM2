@@ -1,5 +1,6 @@
 package teamproject.rmm2.database;
 
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +8,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +33,9 @@ public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 9;
     public static final String DATABASE_NAME = "RMM2.db";
+
+//    length of day in seconds
+    public static final long DAY = 24*60*60;
 
     /**
      * "constructor" for database
@@ -72,6 +77,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * This makes constraints work
      * @param db - SQLiteDatabase
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN) // that's because setForeigkKeyConstaintsEnabled works on API >= 16
     public void onConfigure(SQLiteDatabase db){
         db.setForeignKeyConstraintsEnabled(true);
     }
@@ -359,6 +365,37 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * insert date using unixTimestamp as argument
+     * @param unixTimestamp
+     * @param habittitle
+     * @param state
+     * @throws SQLiteConstraintException
+     */
+    private void insertDate(long unixTimestamp, String habittitle, int state) throws SQLiteConstraintException{
+        // public void insertDate(long unixTimestamp, String habittitle, int state) throws SQLiteConstraintException{
+        //We insert dates as UNIX time on midnight hour 00:00:00
+        // Gets the data repository in write mode
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Contract.Calendar.COLUMN_DATE, unixTimestamp);   // uses  date in unix time - only hours 00:00:00
+        values.put(Contract.Calendar.COLUMN_HABIT_TITLE, habittitle);
+        values.put(Contract.Calendar.COLUMN_STATE, state);
+
+
+        /*
+        The first argument for insert() is simply the table name. The second argument provides the name of a column in which
+        the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
+        the framework will not insert a row when there are no values).
+         */
+        database.insert //TODO uncommentOrThrow(
+                (
+                Contract.Calendar.TABLE_NAME,
+                null,
+                values);
+    }
+
+    /**
      * inserts state, only on creation (or update) of database
      * @param state
      * @param stateName
@@ -457,6 +494,94 @@ public class DbHelper extends SQLiteOpenHelper {
                 " AND " + Contract.Calendar.COLUMN_STATE + " = 1";
         Cursor cursor = database.rawQuery(query, null);
         return cursor.getCount();
+    }
+
+    /**
+     * gets most recent date for given habit title
+     * @return CalendarRow or Null
+     */
+    public CalendarRow getMostRecentCalendarEntry(String habitTitle){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+//        SQL query to get most recent (biggest) timestamp for habitTitle
+        String MostRecentTimestampQuery = "SELECT MAX(" + Contract.Calendar.COLUMN_DATE + ") FROM " + Contract.Calendar.TABLE_NAME +
+                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'";
+
+//        get biggest/ most recent timestamp
+        Cursor cursor = db.rawQuery(MostRecentTimestampQuery, null);
+
+//        check if cursor is not empty
+        if(cursor!=null && cursor.moveToFirst()) {
+
+            final long timestamp = cursor.getLong(0);
+
+            String mostRecentRowQuery = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
+                    " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'" +
+                    " AND " + Contract.Calendar.COLUMN_DATE + " = " + timestamp;
+
+//        get most recent entry (row) for habitTitle
+            cursor = db.rawQuery(mostRecentRowQuery, null);
+
+//            if empty
+            if(!cursor.moveToFirst()){
+                return null;
+            }
+
+            CalendarRow calendarRow = new CalendarRow();
+
+            calendarRow.setId(cursor.getInt(0));
+            calendarRow.setTime(cursor.getLong(1));
+            calendarRow.setHabit(cursor.getString(2));
+            calendarRow.setState(cursor.getInt(3));
+
+            return calendarRow;
+        }
+//        if cursor is empty or null
+        else{
+            return null;
+        }
+    }
+
+    /**
+     * sets "to do" states for dates in CALENDAR for all habits, 30 days ahead
+     */
+    public void setTodosFor30Days(){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+//        get all habits
+        List<HabitRow> habitRowList;
+        habitRowList = this.getAllHabits();
+
+//        for every habit set dates 30 days ahead. Cycle through all habits.
+        for(HabitRow habitRow : habitRowList){
+//            get most recent CALENDAR entry for this habit
+            CalendarRow calendarRow = this.getMostRecentCalendarEntry(habitRow.getTitle());
+//            if there are entries in CALENDAR
+            if(calendarRow!=null){
+                long dateCounter = calendarRow.getTime();
+
+//                making entries for 30 days ahead
+                while(dateCounter <= calendarRow.getTime()+ 30*DAY){
+                    this.insertDate(dateCounter,calendarRow.getHabit(),-1);
+                    dateCounter += habitRow.getFrequency()*habitRow.getPeriod()*this.DAY;
+                }
+            }
+//            if there are no entries in CALENDAR (calendarRow is null)
+            else{
+//                inserting first entry
+                final long unixTimetamp = this.convertTimeToUnixTimestamp(Calendar.getInstance());
+                insertDate(unixTimetamp, habitRow.getTitle(), -1);
+
+                long dateCounter = unixTimetamp;
+
+//                making entries for 30 days ahead
+                while(dateCounter <= unixTimetamp+ 30*DAY){
+                    this.insertDate(dateCounter,habitRow.getTitle(),-1);
+                    dateCounter += habitRow.getFrequency()*habitRow.getPeriod()*this.DAY;
+                }
+            }
+        }
+
     }
 
     private long convertTimeToUnixTimestamp(Calendar calendar){

@@ -31,7 +31,6 @@ import teamproject.rmm2.models.HabitRow;
 import teamproject.rmm2.models.NavDrawerItem;
 import teamproject.rmm2.services.SynchronizationService;
 
-//TODO Main Activity - menu and stuff
 
 public class MainActivity extends MyActivityTemplate {
 
@@ -98,46 +97,12 @@ public class MainActivity extends MyActivityTemplate {
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         dbHelper.insertDate(calendar, "a", 1);
 
-        calendar.set(Calendar.DAY_OF_MONTH, 2);
-        dbHelper.insertDate(calendar, "a", 1);
-
-        calendar.set(Calendar.DAY_OF_MONTH, 3);
-        dbHelper.insertDate(calendar, "a", 0);
-
-        calendar.set(Calendar.DAY_OF_MONTH, 4);
-        dbHelper.insertDate(calendar, "a", 1);
-
-        calendar.set(Calendar.DAY_OF_MONTH, 5);
-        dbHelper.insertDate(calendar, "a", 1);
-
-        calendar.set(Calendar.DAY_OF_MONTH, 6);
-        dbHelper.insertDate(calendar, "a", -1);
-
-        calendar.set(Calendar.DAY_OF_MONTH, 7);
-        dbHelper.insertDate(calendar, "a", 1);
-
-        calendar.set(Calendar.DAY_OF_MONTH, 8);
-        dbHelper.insertDate(calendar,"a",1);
-
-        calendar.set(Calendar.DAY_OF_MONTH, 9);
-        dbHelper.insertDate(calendar,"a",1);
-
-        calendar.set(Calendar.DAY_OF_MONTH, 10);
-        dbHelper.insertDate(calendar,"a",1);
 
         //new
         calendar.set(2015, 9, 16);
         dbHelper.insertDate(calendar,"b",1);
 
-//        testing statistics
-
-        Statistics statisticsA = new Statistics(getContext(), "a");
-/*        Statistics statisticsB = new Statistics(getContext(), "b");
-        Statistics statisticsC = new Statistics(getContext(), "c");
-
-        List<CalendarRow> calendarRowListA = dbHelper.getDatesForHabit("a");
-        List<CalendarRow> calendarRowListB = dbHelper.getDatesForHabit("b");
-        List<CalendarRow> calendarRowListC = dbHelper.getDatesForHabit("c");*/
+        dbHelper.setTodosFor30Days();
 
         /********************************************************
          //END OF DATABASE TESTING
@@ -351,7 +316,7 @@ public class MainActivity extends MyActivityTemplate {
 
         //inserting with current time
         try {
-            dbHelper.insertDate(calendar, "test_habit", 0);   //TODO foreign key not working properly!
+            dbHelper.insertDate(calendar, "test_habit", 0);
         }
         catch(SQLiteConstraintException e){
             textView.setText("Constraint exception!");
