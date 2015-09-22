@@ -7,7 +7,9 @@ import android.support.v4.app.NotificationCompat;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import teamproject.rmm2.Helpers.AppConfig;
@@ -63,15 +65,19 @@ public class SynchronizationService extends IntentService {
         for (int i = 0; i < habitRowList.size(); i ++) {
             Statistics statistics = new Statistics(getApplicationContext(), habitRowList.get(i).getTitle());
 
+            Calendar creationDate = habitRowList.get(i).getCreationDate();
+            Calendar updateDate = habitRowList.get(i).getLastUpdateDate();
+
+            SimpleDateFormat format = new SimpleDateFormat("EEEE, yyyy-mm-dd");
+
             // Build list for Connection Task
             List<NameValuePair> list = new ArrayList<>();
             list.add(new BasicNameValuePair("tag", AppConfig.TAG_SYNCHRO));
             list.add(new BasicNameValuePair("username", sessionManager.getSavedUserName()));
             list.add(new BasicNameValuePair("czy_sie_udalo", "false"));
-            list.add(new BasicNameValuePair("data_wprowadzenia", "1991-05-05"));
+            list.add(new BasicNameValuePair("data_wprowadzenia", format.format(creationDate.getTime())));
             list.add(new BasicNameValuePair("czestotliwosc", Integer.toString(habitRowList.get(i).getFrequency())));
-            list.add(new BasicNameValuePair("kiedy_ostatnio_aktualizowano_nawyk", "1991-06-06" +
-                    ""));
+            list.add(new BasicNameValuePair("kiedy_ostatnio_aktualizowano_nawyk", format.format(updateDate.getTime())));
             list.add(new BasicNameValuePair("ilosc_nawykow", Integer.toString(statistics.getIloscNawykow())));
             list.add(new BasicNameValuePair("najlepsza_passa", Float.toString(statistics.getNajlepszaPassa())));
             list.add(new BasicNameValuePair("srednia_dlugosc_ciagu", Float.toString(statistics.getSredniaDlugoscCiagu())));
