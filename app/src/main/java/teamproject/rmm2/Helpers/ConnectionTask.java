@@ -47,7 +47,7 @@ public class ConnectionTask extends AsyncTask<Void, Void, Void> {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+//        progressDialog.show();
     }
 
     @Override
@@ -68,6 +68,8 @@ public class ConnectionTask extends AsyncTask<Void, Void, Void> {
 
         progressDialog.dismiss();
         progressDialog.cancel();
+
+        android.os.Debug.waitForDebugger();
 
         String salt = " ";
         String username = " ";

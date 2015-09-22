@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -100,13 +101,25 @@ public class MainActivity extends MyActivityTemplate {
 
         //new
         calendar.set(2015, 9, 16);
-        dbHelper.insertDate(calendar,"b",1);
+        dbHelper.insertDate(calendar, "b", 1);
 
         dbHelper.setTodosFor30Days();
 
         /********************************************************
          //END OF DATABASE TESTING
          ********************************************************/
+
+
+        Button buttonStatistics;
+        buttonStatistics = (Button) findViewById(R.id.buttonStatistics);
+
+        buttonStatistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SynchronizationService.class);
+                startService(intent);
+            }
+        });
 
 
         if (savedInstanceState == null) {
@@ -349,4 +362,5 @@ public class MainActivity extends MyActivityTemplate {
             textView.setText("No such habit!");
         }
     }
+
 }

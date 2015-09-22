@@ -13,6 +13,7 @@ import java.util.List;
 import teamproject.rmm2.Helpers.AppConfig;
 import teamproject.rmm2.Helpers.ConnectionTask;
 import teamproject.rmm2.Helpers.MakeNotification;
+import teamproject.rmm2.Helpers.SessionManager;
 import teamproject.rmm2.Helpers.Statistics;
 import teamproject.rmm2.MainActivity;
 import teamproject.rmm2.MyActivityTemplate;
@@ -55,23 +56,30 @@ public class SynchronizationService extends IntentService {
         // Get all habits
         List<HabitRow> habitRowList = dbHelper.getAllHabits();
 
-        for (int i = 0; i > habitRowList.size(); i ++) {
+        // Session Manager
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+
+
+        for (int i = 0; i < habitRowList.size(); i ++) {
             Statistics statistics = new Statistics(getApplicationContext(), habitRowList.get(i).getTitle());
 
             // Build list for Connection Task
             List<NameValuePair> list = new ArrayList<>();
             list.add(new BasicNameValuePair("tag", AppConfig.TAG_SYNCHRO));
-            list.add(new BasicNameValuePair("czy_sie_udalo", ));
-            list.add(new BasicNameValuePair("data_wprowadzenia", ));
+            list.add(new BasicNameValuePair("username", sessionManager.getSavedUserName()));
+            list.add(new BasicNameValuePair("czy_sie_udalo", "false"));
+            list.add(new BasicNameValuePair("data_wprowadzenia", "1991-05-05"));
             list.add(new BasicNameValuePair("czestotliwosc", Integer.toString(habitRowList.get(i).getFrequency())));
-            list.add(new BasicNameValuePair("kiedy_ostatnio_aktualizowano_nawyk", ));
+            list.add(new BasicNameValuePair("kiedy_ostatnio_aktualizowano_nawyk", "1991-06-06" +
+                    ""));
             list.add(new BasicNameValuePair("ilosc_nawykow", Integer.toString(statistics.getIloscNawykow())));
             list.add(new BasicNameValuePair("najlepsza_passa", Float.toString(statistics.getNajlepszaPassa())));
             list.add(new BasicNameValuePair("srednia_dlugosc_ciagu", Float.toString(statistics.getSredniaDlugoscCiagu())));
             list.add(new BasicNameValuePair("procent_powodzen", Float.toString(statistics.getProcent_powodzen())));
 
 
-            ConnectionTask connectionTask = new ConnectionTask(getApplicationContext(), );
+            ConnectionTask connectionTask = new ConnectionTask(getApplicationContext(), list);
+            connectionTask.execute();
         }
     }
 
