@@ -103,14 +103,11 @@ public class MainActivity extends MyActivityTemplate {
         //new
         calendar.set(2015, 9, 16);
         dbHelper.insertDate(calendar, "b", 1);
-<<<<<<< HEAD
-=======
 
         //dbHelper.setTodosFor30Days();
         //TEST
         setTodosFor30Days setTodosFor30Days = new setTodosFor30Days(getContext());
         setTodosFor30Days.execute();
->>>>>>> master
 
 
         /********************************************************

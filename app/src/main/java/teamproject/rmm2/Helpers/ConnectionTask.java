@@ -69,8 +69,6 @@ public class ConnectionTask extends AsyncTask<Void, Void, Void> {
         progressDialog.dismiss();
         progressDialog.cancel();
 
-        android.os.Debug.waitForDebugger();
-
         String salt = " ";
         String username = " ";
         String tag = " ";
