@@ -598,13 +598,13 @@ public class DbHelper extends SQLiteOpenHelper {
             else{
 //                inserting first entry
                 final long unixTimetamp = this.convertTimeToUnixTimestamp(Calendar.getInstance());
-                insertDate(unixTimetamp, habitRow.getTitle(), -1);
+                insertDate(unixTimetamp, habitRow.getTitle(), 0);
 
                 long dateCounter = unixTimetamp;
 
 //                making entries for 30 days ahead
                 while(dateCounter <= unixTimetamp+ 30*DAY){
-                    this.insertDate(dateCounter,habitRow.getTitle(),-1);
+                    this.insertDate(dateCounter,habitRow.getTitle(),0);
                     dateCounter += habitRow.getFrequency()*habitRow.getPeriod()*this.DAY;
                 }
             }
