@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class AddHabitActivity extends MyActivityTemplate {
 
     private EditText habitName, habitDescription, habitFrequency;
@@ -77,7 +79,7 @@ public class AddHabitActivity extends MyActivityTemplate {
             public void onClick(View v) {
 
                 try {
-                      dbHelper.insertHabit(habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()), habitPeriodicity);
+                      dbHelper.insertHabit(habitName.getText().toString(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()), habitPeriodicity, Calendar.getInstance());
                 }
                 catch (SQLiteConstraintException e) {
                     Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();

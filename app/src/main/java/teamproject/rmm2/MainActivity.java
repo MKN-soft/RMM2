@@ -87,9 +87,9 @@ public class MainActivity extends MyActivityTemplate {
         dbHelper.insertState(1, "DONE");
 
 //        inserting habits
-        dbHelper.insertHabit("a","a",1,1);
-        dbHelper.insertHabit("b","b",1,7);
-        dbHelper.insertHabit("c","c",2,1);
+        dbHelper.insertHabit("a","a",1,1, Calendar.getInstance());
+        dbHelper.insertHabit("b","b",1,7, Calendar.getInstance());
+        dbHelper.insertHabit("c","c",2,1, Calendar.getInstance());
 
 //        inserting dates (CALENDAR table)
         Calendar calendar = Calendar.getInstance();
@@ -220,7 +220,7 @@ public class MainActivity extends MyActivityTemplate {
         //ok until here
 
         try {
-            dbHelper.insertHabit("test_habit", "desc", 1,1);
+            dbHelper.insertHabit("test_habit", "desc", 1,1, Calendar.getInstance());
         } catch (SQLiteConstraintException e) {
             textView.setText("Duplicate record!");
             return;

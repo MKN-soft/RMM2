@@ -306,8 +306,10 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param title
      * @param description
      * @param frequency
+     * @param period
+     * @param creationDate : Calendar
      */
-    public void insertHabit(String title, String description, int frequency, int period) throws SQLiteConstraintException{
+    public void insertHabit(String title, String description, int frequency, int period, Calendar creationDate) throws SQLiteConstraintException{
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -317,6 +319,8 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
         values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
         values.put(Contract.Habits.COLUMN_HABIT_PERIOD, period);
+        values.put(Contract.Habits.COLUMN_CREATION_DATE,this.convertTimeToUnixTimestamp(creationDate));
+        values.put(Contract.Habits.COLUMN_LAST_UPDATE_DATE, 0);
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;
@@ -422,6 +426,14 @@ public class DbHelper extends SQLiteOpenHelper {
                 values);
     }
 
+    /**
+     * edits habit except lastUpdateDate
+     * @param context
+     * @param description
+     * @param frequency
+     * @param periodicity
+     * @throws SQLiteConstraintException
+     */
     public void editHabit(Context context, String description, int frequency, int periodicity) throws SQLiteConstraintException {
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -438,7 +450,7 @@ public class DbHelper extends SQLiteOpenHelper {
         //        " WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + "=" + "\'" + sessionManager.getHabitTitle() + "\'");
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId;
+//        long newRowId;
         /*
         The first argument for insert() is simply the table name. The second argument provides the name of a column in which
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
@@ -450,6 +462,22 @@ public class DbHelper extends SQLiteOpenHelper {
                 null,
                 values);
                 */
+    }
+
+    /**
+     * edits last update date
+     * @param lastUpdate
+     */
+    public void editHabitUpdateDate(String habitTitle, Calendar lastUpdate){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(Contract.Habits.COLUMN_LAST_UPDATE_DATE, this.convertTimeToUnixTimestamp(lastUpdate));
+
+        database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'", null);
+
     }
 
     public void updateDate(Calendar calendar, String habitTitle, int state){
@@ -464,7 +492,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
         //chyba dobre
-         database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" +  " AND " + Contract.Calendar.COLUMN_DATE  + " = " + "\'" + convertTimeToUnixTimestamp(calendar) + "\'", null);
+         database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" + " AND " + Contract.Calendar.COLUMN_DATE + " = " + "\'" + convertTimeToUnixTimestamp(calendar) + "\'", null);
     }
 
 
