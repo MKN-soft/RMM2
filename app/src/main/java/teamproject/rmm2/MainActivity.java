@@ -24,6 +24,7 @@ import java.util.List;
 import teamproject.rmm2.Helpers.RepeatForService;
 import teamproject.rmm2.Helpers.Statistics;
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
+import teamproject.rmm2.database.asynctask.setTodosFor30Days;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
 import teamproject.rmm2.fragments.SettingsFragment;
@@ -88,9 +89,9 @@ public class MainActivity extends MyActivityTemplate {
         dbHelper.insertState(1, "DONE");
 
 //        inserting habits
-        dbHelper.insertHabit("a","a",1,1);
-        dbHelper.insertHabit("b","b",1,7);
-        dbHelper.insertHabit("c","c",2,1);
+        dbHelper.insertHabit("a","a",1,1, Calendar.getInstance());
+        dbHelper.insertHabit("b","b",1,7, Calendar.getInstance());
+        dbHelper.insertHabit("c","c",2,1, Calendar.getInstance());
 
 //        inserting dates (CALENDAR table)
         Calendar calendar = Calendar.getInstance();
@@ -102,8 +103,15 @@ public class MainActivity extends MyActivityTemplate {
         //new
         calendar.set(2015, 9, 16);
         dbHelper.insertDate(calendar, "b", 1);
+<<<<<<< HEAD
+=======
 
-        dbHelper.setTodosFor30Days();
+        //dbHelper.setTodosFor30Days();
+        //TEST
+        setTodosFor30Days setTodosFor30Days = new setTodosFor30Days(getContext());
+        setTodosFor30Days.execute();
+>>>>>>> master
+
 
         /********************************************************
          //END OF DATABASE TESTING
@@ -233,7 +241,7 @@ public class MainActivity extends MyActivityTemplate {
         //ok until here
 
         try {
-            dbHelper.insertHabit("test_habit", "desc", 1,1);
+            dbHelper.insertHabit("test_habit", "desc", 1,1, Calendar.getInstance());
         } catch (SQLiteConstraintException e) {
             textView.setText("Duplicate record!");
             return;
