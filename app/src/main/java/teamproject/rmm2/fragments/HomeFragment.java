@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import teamproject.rmm2.HabitDetailActivity;
 import teamproject.rmm2.Helpers.SessionManager;
@@ -22,6 +23,7 @@ import teamproject.rmm2.MainActivity;
 import teamproject.rmm2.R;
 import teamproject.rmm2.adapters.HabitAdapter;
 import teamproject.rmm2.database.DbHelper;
+import teamproject.rmm2.database.asynctask.getAllHabitsTask;
 import teamproject.rmm2.models.HabitRow;
 
 public class HomeFragment extends ListFragment {
@@ -48,8 +50,19 @@ public class HomeFragment extends ListFragment {
          */
 
         // Get data from database to Habit List
-        dbHelper = new DbHelper(getActivity().getApplicationContext());
-        List<HabitRow> habitRowList = dbHelper.getAllHabits();
+        //dbHelper = new DbHelper(getActivity().getApplicationContext());
+        //List<HabitRow> habitRowList = dbHelper.getAllHabits();
+
+        getAllHabitsTask getAllHabitsTask = new getAllHabitsTask(getActivity().getApplicationContext());
+        List<HabitRow> habitRowList = null;
+        try {
+            habitRowList = getAllHabitsTask.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
 
         if (habitRowList != null)
             for(int i = 0; i < habitRowList.size(); i++)

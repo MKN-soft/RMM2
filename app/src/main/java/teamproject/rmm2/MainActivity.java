@@ -23,6 +23,7 @@ import java.util.List;
 import teamproject.rmm2.Helpers.RepeatForService;
 import teamproject.rmm2.Helpers.Statistics;
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
+import teamproject.rmm2.database.asynctask.setTodosFor30Days;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
 import teamproject.rmm2.fragments.SettingsFragment;
@@ -100,9 +101,13 @@ public class MainActivity extends MyActivityTemplate {
 
         //new
         calendar.set(2015, 9, 16);
-        dbHelper.insertDate(calendar,"b",1);
+        dbHelper.insertDate(calendar, "b", 1);
 
-        dbHelper.setTodosFor30Days();
+        //dbHelper.setTodosFor30Days();
+        //TEST
+        setTodosFor30Days setTodosFor30Days = new setTodosFor30Days(getContext());
+        setTodosFor30Days.execute();
+
 
         /********************************************************
          //END OF DATABASE TESTING
