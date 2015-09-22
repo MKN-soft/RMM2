@@ -29,7 +29,6 @@ public class Statistics {
     private float procent_powodzen;
     private int nawykID;
 
-    //TODO all the neccessary methods
 
     public Statistics (Context context, String habitTitle){
         this.dbHelper = new DbHelper(context);
@@ -103,7 +102,6 @@ public class Statistics {
      * liczy najlepsza_passa oraz srednia_dlugosc_ciagu dla nawyku o tytule z konstruktora
      */
     private void streakStats(){
-        //TODO check & test
         //Get list in ascending order
         List<CalendarRow> calendarRowList = dbHelper.getDatesForHabit(tytulNawyku);
 
@@ -122,7 +120,6 @@ public class Statistics {
 
 
         for(CalendarRow row: calendarRowList){
-            //todo delete when finished debugging
             int id = row.getId();
             //po resecie streak wiadomo ze to kolejna passa (na starcie tez jest 0)
             if(streak == 0){
@@ -174,7 +171,6 @@ public class Statistics {
      * wykonane/(wykonane+niewykonane)*100%
      */
     private void countPercentage(){
-//        TODO check & test
         float percentage=0;
 
 
