@@ -68,7 +68,7 @@ public class SynchronizationService extends IntentService {
             Calendar creationDate = habitRowList.get(i).getCreationDate();
             Calendar updateDate = habitRowList.get(i).getLastUpdateDate();
 
-            SimpleDateFormat format = new SimpleDateFormat("EEEE, yyyy-mm-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
             // Build list for Connection Task
             List<NameValuePair> list = new ArrayList<>();
