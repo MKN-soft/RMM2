@@ -152,7 +152,6 @@ body{text-align:center;}
 	}
 	
 .content{
-	height:300px;
 	background:#CCC8B3;
 	border-top:#FFFFFF 2px solid;
 	margin:0;
@@ -160,7 +159,7 @@ body{text-align:center;}
 	}
 	
 #secondary{
-	height:300px;
+	
 	background:#F6F0E0;
 	border-top:#FFFFFF 2px solid;
 	margin:0;

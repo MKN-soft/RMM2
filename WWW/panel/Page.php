@@ -28,7 +28,7 @@ class Page {
 			$this->sessionStaph();
 		}
 		if ($_GET['page'] == "statistics") {
-			$this->showStatistics();
+			$this->showStatisticsDetails();
 		}
 		
 		return $string;
@@ -56,44 +56,52 @@ class Page {
 					echo "Czestotliwosc: ".$row->czestotliwosc;
 					echo "</br>";
 					echo "Kiedy ostatnio aktualizowano nawyk: ".$row->kiedy_ostatnio_aktualizowano_nawyk;
+					echo "</br>";
+					echo "Statystyki:";
+					echo "</br>";
+					$this->showStatistics($row->id);
 				}
 			}		
 		}
 	}
 	
-	public function showStatistics() {
+	public function showStatisticsDetails() {
 		$statistics = $this->getStatistics();
 		
-		
-		if (is_numeric($_GET['stat'])) {
-			while($row = mysql_fetch_object($statistics)){
-				if ($_GET['stat'] == $row->id) {
-					echo "Ilosc nawykow: ".$row->ilosc_nawykow;
-					echo "</br>";
-					echo "Najlepsza passa: ".$row->najlepsza_passa;
-					echo "</br>";
-					echo "Srednia dlugosc ciagu: ".$row->srednia_dlugosc_ciagu;
-					echo "</br>";
-					echo "% Powodzen: ".$row->procent_powodzen;
-					echo "</br>";
-					echo "&emsp; <a href=\"?page=habits&habit=$row->id\">Nawyk id: '$row->nawyki_id'</a> ";
-				}
+		while($row = mysql_fetch_object($statistics)){
+			if ($_GET['stat'] == $row->id) {
+				echo "&emsp; <a href=\"?page=habits&habit=$row->nawyki_id\">Wstecz</a> ";
+				echo "</br>";
+				echo "</br>";
+				echo "Ilosc nawykow: ".$row->ilosc_nawykow;
+				echo "</br>";
+				echo "Najlepsza passa: ".$row->najlepsza_passa;
+				echo "</br>";
+				echo "Srednia dlugosc ciagu: ".$row->srednia_dlugosc_ciagu;
+				echo "</br>";
+				echo "% Powodzen: ".$row->procent_powodzen;
 			}
 		}
-		else {
-			while($row = mysql_fetch_object($statistics)){
-				echo "&emsp; <a href=\"?page=statistics&stat=$row->id\">Statystyki id: '$row->id'</a> ";
-			}		
-		}
+		
+	}
+	
+	public function showStatistics($id) {
+		$statistics = $this->getStatistics($id);
+		
+		while($row = mysql_fetch_object($statistics)){
+			echo "&emsp; <a href=\"?page=statistics&stat=$row->id\">Statystyki id: '$row->id'</a> ";
+			echo "</br>";
+		}		
+		
 		 
 	}
 	
-	public function getStatistics() {
+	public function getStatistics($id) {
 		require_once '../php/FunctionsDB.php';
 		
 
 		$this->db = new FunctionsDB();
-		$result = $this->db->getStatistics($this->username);
+		$result = $this->db->getStatistics($this->username, $id);
 		
 		return $result;
 	}

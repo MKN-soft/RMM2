@@ -13,11 +13,11 @@ SELECT * FROM Uzytkownicy WHERE salt = _salt;
 CREATE PROCEDURE getUserByUsernameAndPassword(IN _login varchar(50), IN _haslo varchar(50))
 SELECT * FROM Uzytkownicy WHERE login = _login;
 
-CREATE PROCEDURE getStatistics(IN _login varchar(50))
+CREATE PROCEDURE getStatistics(IN _login varchar(50), IN _id int(11))
 SELECT Statystyki.id, najlepsza_passa, srednia_dlugosc_ciagu, procent_powodzen, nawyki_id FROM Statystyki 
 				JOIN Nawyki ON Nawyki.id = Statystyki.nawyki_id 
 				JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id
-				WHERE Uzytkownicy.login = _login;
+				WHERE Uzytkownicy.login = _login AND Nawyki.id = _id;
 
 CREATE PROCEDURE isUserExists(IN _login varchar(50))
 SELECT login FROM Uzytkownicy WHERE login = _login;

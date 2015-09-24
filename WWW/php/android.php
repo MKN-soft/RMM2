@@ -121,24 +121,24 @@ class Android {
 
 	private function synchro() {
 		$tag = $_POST['tag'];
-		$salt = $_POST['salt'];
+		$username = $_POST['username'];
 		
 		$czy_sie_udalo = $_POST['czy_sie_udalo'];
 		$data_wprowadzenia = $_POST['data_wprowadzenia'];
-		$czestotliwosc = $_POST['czestotliwosc'];
+		$czestotliwosc = intval($_POST['czestotliwosc']);
 		$kiedy_ostatnio_aktualizowano_nawyk = $_POST['kiedy_ostatnio_aktualizowano_nawyk'];
 		
+		$user = $this->db->getUserByUsername($username);
 		
-		$user = $this->db->getUserBySalt($salt);
 		// check if user exists
 		if ($user) {
 			if ($this->db->storeHabits($user['id'], $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk)) {
 
-				$ilosc_nawykow = $_POST['ilosc_nawykow'];
-				$najlepsza_passa = $_POST['najlepsza_passa'];
-				$srednia_dlugosc_ciagu = $_POST['srednia_dlugosc_ciagu'];
-				$procent_powodzen = $_POST['procent_powodzen'];
-				$nawyki_id = mysql_insert_id();
+				$ilosc_nawykow = intval($_POST['ilosc_nawykow']);
+				$najlepsza_passa = floatval($_POST['najlepsza_passa']);
+				$srednia_dlugosc_ciagu = floatval($_POST['srednia_dlugosc_ciagu']);
+				$procent_powodzen = floatval($_POST['procent_powodzen']);
+				$nawyki_id = $this->db->getNawykId();
 				
 				if ($this->db->storeStatistics($ilosc_nawykow, $najlepsza_passa, $srednia_dlugosc_ciagu, $procent_powodzen, $nawyki_id)) {
 					// success
