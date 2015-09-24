@@ -34,7 +34,7 @@ public class LauncherActivity extends MyActivityTemplate {
         super.onCreate(savedInstanceState);
 
         //TODO uncomment this shit below before releasing app! I'ts just for testing purposes
-        if(/*isLogged() ==*/ true){
+        if(isLogged() == true){
             //NOT my first time here!
 
             //Hooking activity
