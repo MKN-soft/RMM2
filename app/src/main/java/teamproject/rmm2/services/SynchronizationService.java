@@ -2,7 +2,6 @@ package teamproject.rmm2.services;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -18,7 +17,6 @@ import teamproject.rmm2.Helpers.MakeNotification;
 import teamproject.rmm2.Helpers.SessionManager;
 import teamproject.rmm2.Helpers.Statistics;
 import teamproject.rmm2.MainActivity;
-import teamproject.rmm2.MyActivityTemplate;
 import teamproject.rmm2.R;
 import teamproject.rmm2.database.DbHelper;
 import teamproject.rmm2.models.HabitRow;
@@ -60,7 +58,6 @@ public class SynchronizationService extends IntentService {
 
         // Session Manager
         SessionManager sessionManager = new SessionManager(getApplicationContext());
-
 
         for (int i = 0; i < habitRowList.size(); i ++) {
             Statistics statistics = new Statistics(getApplicationContext(), habitRowList.get(i).getTitle());
