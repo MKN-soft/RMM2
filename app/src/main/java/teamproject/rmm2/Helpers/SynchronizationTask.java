@@ -58,15 +58,8 @@ public class SynchronizationTask extends AsyncTask<Void, Void, Boolean> {
     protected void onPostExecute(Boolean result) {
         super.onPostExecute(result);
 
-        String message = " ";
-        try {
-            message = json.getString("errorMsg");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         // ONLY FOR TESTS!!!! Uncomment if you want
-        MakeNotification makeNotification = new MakeNotification(context, MainActivity.class, R.mipmap.ic_test, "Synchronization Task TEST", jParser.getErrorMsg() + " " + message, 1);
+        MakeNotification makeNotification = new MakeNotification(context, MainActivity.class, R.mipmap.ic_test, "Synchronization Task TEST", jParser.getErrorMsg(), 1);
     }
 
 }

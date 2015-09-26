@@ -14,17 +14,40 @@ class FunctionsDB {
 	
 	function __destruct() {	}
 	
-	public function storeHabits($id, $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk) {
+	public function storeHabits($id, $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk, $nazwa_nawyku) {
 		$this->db->connect();
 		
-		$sql = "CALL storeHabits('$id', '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk')";
-		
+		// FIND HABIT
+		$sql = "CALL getHabitsByTitle('$nazwa_nawyku')";
 		$result = mysql_query($sql);
+		
+		// check for success
+		if ($result) {
+			// UPDATE HABIT
+			$habit = mysql_fetch_array($result);
+			
+			$this->db->close();
+			
+			$this->db->connect();
+
+			$sql = "CALL editHabits($id, '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku', $habit[id])";
+			$result = mysql_query($sql);
+			
+		}
+		else {
+			// ADD HABIT
+			$sql = "CALL storeHabits('$id', '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku')";
+			$result = mysql_query($sql);
+
+		}
 		
 				
 		$nawyki_id = mysql_query("select last_insert_id() as id;");
 		$echo = mysql_fetch_array($nawyki_id);
 		$this->nawyk_id = $echo['id'];
+		
+		if ($this->nawyk_id == 0)
+			$this->nawyk_id = $habit[id];
 		
 		$this->db->close();
 		

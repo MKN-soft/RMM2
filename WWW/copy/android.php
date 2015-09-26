@@ -1,20 +1,5 @@
 <?php
 
-$_POST['tag'] = "synchro";
-$_POST['username'] = "kwmacioszek@gmail.com";
-
-$_POST['czy_sie_udalo'] = "false";
-$_POST['data_wprowadzenia'] = "2015-09-26";
-$_POST['czestotliwosc'] = "122";
-$_POST['kiedy_ostatnio_aktualizowano_nawyk'] = "2015-09-27";
-$_POST['nazwa_nawyku'] = "habit";
-
-$_POST['ilosc_nawykow'] = 10;
-$_POST['najlepsza_passa'] = 10.01;
-$_POST['srednia_dlugosc_ciagu'] = 10.001;
-$_POST['procent_powodzen'] = 10.0001;
-
-
 class Android {
 	
 	private $db;
@@ -68,13 +53,14 @@ class Android {
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 		
+		
 		// check for user
 		$user = $this->db->getUserByUsernameAndPassword($username, $password);
-
-		if ($user != 1 && $user != 2) {
+		if ($user != false) {
 			// user exists
 			$this->response['error'] = FALSE;
-			$this->response['username'] = $user['login'];
+			$this->response['name'] = $user['name'];
+			$this->response['username'] = $user['email'];
 			$this->response['salt'] = $user['salt'];
 			$this->response['created_at'] = $user['created_at'];
 			$this->response['updated_at'] = $user['updated_at'];
@@ -82,15 +68,9 @@ class Android {
 			echo json_encode($this->response);
 		}
 		else {
+			// user not found
 			$this->response['error'] = TRUE;
-			
-			if ($user == 1)
-				// user not found
-				$this->response['errorMsg'] = "Username not found!";
-			if ($user == 2)	
-				// wrong password
-				$this->response['errorMsg'] = "Wrong password!";
-			
+			$this->response['errorMsg'] = "Incorrect username or password!";
 			
 			echo json_encode($this->response);
 		}
@@ -116,8 +96,9 @@ class Android {
 			if ($user) {
 				// success
 				$this->response["error"] = FALSE;
-                $this->response["uid"] = $user["id"];
-                $this->response["username"] = $user["login"];
+                $this->response["uid"] = $user["unique_id"];
+                $this->response["name"] = $user["name"];
+                $this->response["username"] = $user["username"];
 				$this->response['salt'] = $user['salt'];
                 $this->response["created_at"] = $user["created_at"];
                 $this->response["updated_at"] = $user["updated_at"];
@@ -136,46 +117,26 @@ class Android {
 
 	private function synchro() {
 		$tag = $_POST['tag'];
-		$username = $_POST['username'];
+		$salt = $_POST['salt'];
+		$time = $_POST['average_time'];
+		$size = $_POST['average_board_size'];
+		$movements = $_POST['average_movements'];
 		
-		$czy_sie_udalo = $_POST['czy_sie_udalo'];
-		$data_wprowadzenia = $_POST['data_wprowadzenia'];
-		$czestotliwosc = intval($_POST['czestotliwosc']);
-		$kiedy_ostatnio_aktualizowano_nawyk = $_POST['kiedy_ostatnio_aktualizowano_nawyk'];
-		$nazwa_nawyku = $_POST['nazwa_nawyku'];
-		
-		$user = $this->db->getUserByUsername($username);
-		
+		$user = $this->db->getUserBySalt($salt);
 		// check if user exists
 		if ($user) {
-			if ($this->db->storeHabits($user['id'], $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk, $nazwa_nawyku)) {
-
-				$ilosc_nawykow = intval($_POST['ilosc_nawykow']);
-				$najlepsza_passa = floatval($_POST['najlepsza_passa']);
-				$srednia_dlugosc_ciagu = floatval($_POST['srednia_dlugosc_ciagu']);
-				$procent_powodzen = floatval($_POST['procent_powodzen']);
-				$nawyki_id = $this->db->getNawykId();
+			if ($this->db->storeStatistics($user['id'], $time, $size, $movements)) {
+				// success
+				$this->response['error'] = FALSE;
+				$this->response['tag'] = $tag;
+				$this->response['errorMsg'] = "Success!";
 				
-				if ($this->db->storeStatistics($ilosc_nawykow, $najlepsza_passa, $srednia_dlugosc_ciagu, $procent_powodzen, $nawyki_id)) {
-					// success
-					$this->response['error'] = FALSE;
-					$this->response['tag'] = $tag;
-					$this->response['errorMsg'] = "Success!";
-					
-					echo json_encode($this->response);
-				}
-				else {
-					// fail - cannot add statistics
-					$this->response['error'] = TRUE;
-					$this->response['errorMsg'] = "Cannot add statistics!";	
-					
-					echo json_encode($this->response);
-				}
+				echo json_encode($this->response);
 			}
 			else {
-				// fail - cannot add habits
+				// fail
 				$this->response['error'] = TRUE;
-				$this->response['errorMsg'] = "Cannot add habits!";
+				$this->response['errorMsg'] = "Cannot add statistics!";
 				
 				echo json_encode($this->response);
 			}

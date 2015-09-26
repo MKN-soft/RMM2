@@ -82,6 +82,7 @@ public class SynchronizationService extends IntentService {
             list.add(new BasicNameValuePair("najlepsza_passa", Float.toString(statistics.getNajlepszaPassa())));
             list.add(new BasicNameValuePair("srednia_dlugosc_ciagu", Float.toString(statistics.getSredniaDlugoscCiagu())));
             list.add(new BasicNameValuePair("procent_powodzen", Float.toString(statistics.getProcent_powodzen())));
+            list.add(new BasicNameValuePair("nazwa_nawyku", habitRowList.get(i).getTitle()));
 
 
             listLists.add(list);

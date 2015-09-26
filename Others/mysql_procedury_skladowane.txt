@@ -1,8 +1,8 @@
 CREATE PROCEDURE storeUser (IN l varchar(50), IN h varchar(50), IN s varchar(128), IN c DATE, IN u DATE)
 INSERT INTO Uzytkownicy(login, haslo, salt, created_at, updated_at) VALUES (l, h, s, c, u);
 
-CREATE PROCEDURE storeHabits (IN  id int(11), IN czy varchar(32), IN d date, IN c int(11), IN k varchar(32))
-INSERT INTO Nawyki (uzytkownik_id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk) VALUES (id, czy, d, c, k);
+CREATE PROCEDURE storeHabits (IN  id int(11), IN czy varchar(32), IN d date, IN c int(11), IN k varchar(32), IN nn varchar(50))
+INSERT INTO Nawyki (uzytkownik_id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk, nazwa) VALUES (id, czy, d, c, k, nn);
 
 CREATE PROCEDURE storeStatistics (IN _ilosc_nawykow int(11), IN _najlepsza_passa int(11), IN _srednia_dlugosc_ciagu int(11), IN _procent_powodzen int(11), IN _nawyki_id int(11))
 INSERT INTO Statystyki (ilosc_nawykow, najlepsza_passa, srednia_dlugosc_ciagu, procent_powodzen, nawyki_id) VALUES (_ilosc_nawykow, _najlepsza_passa, _srednia_dlugosc_ciagu, _procent_powodzen, _nawyki_id);
@@ -21,4 +21,18 @@ SELECT Statystyki.id, najlepsza_passa, srednia_dlugosc_ciagu, procent_powodzen, 
 
 CREATE PROCEDURE isUserExists(IN _login varchar(50))
 SELECT login FROM Uzytkownicy WHERE login = _login;
+
+CREATE PROCEDURE getHabitStatistics(IN _habitid int(11))
+SELECT Statystyki.id, ilosc_nawykow,najlepsza_passa, srednia_dlugosc_ciagu, procent_powodzen, nawyki_id FROM Statystyki
+				WHERE Statystyki.id = _habitid;
+
+CREATE PROCEDURE getHabitsByUser(IN _username varchar(32))
+SELECT Nawyki.id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk, nazwa FROM Nawyki JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id WHERE Uzytkownicy.login = _username;
+
+CREATE PROCEDURE getHabitsByTitle(IN _title varchar(50))
+SELECT * FROM Nawyki WHERE nazwa = _title;
+
+CREATE PROCEDURE editHabits (IN  id int(11), IN czy varchar(32), IN d date, IN c int(11), IN k varchar(32), IN nn varchar(50), IN _id_nawyku int(11))
+UPDATE Nawyki SET czy_sie_udalo = czy, data_wprowadzenia = d, czestotliwosc = c, kiedy_ostatnio_aktualizowano_nawyk = k, nazwa = nn
+WHERE id = _id_nawyku AND uzytkownik_id = id;
 
