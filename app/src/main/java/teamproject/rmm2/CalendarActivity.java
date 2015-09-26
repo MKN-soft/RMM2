@@ -191,6 +191,7 @@ public class CalendarActivity extends MyActivityTemplate {
                                                 Calendar calendar = Calendar.getInstance();
                                                 calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
                                                 dbHelper.updateDate(calendar, currentHabit.getTitle().toString(), 1);
+                                                dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
 
                                                 found = true;
 
@@ -215,6 +216,7 @@ public class CalendarActivity extends MyActivityTemplate {
                                                     Calendar calendar = Calendar.getInstance();
                                                     calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
                                                     dbHelper.updateDate(calendar, currentHabit.getTitle().toString(), 1);
+                                                    dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
 
                                                     found = true;
 
@@ -239,6 +241,7 @@ public class CalendarActivity extends MyActivityTemplate {
                                                         Calendar calendar = Calendar.getInstance();
                                                         calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
                                                         dbHelper.updateDate(calendar, currentHabit.getTitle().toString(), 1);
+                                                        dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
 
                                                         found = true;
 
@@ -258,6 +261,7 @@ public class CalendarActivity extends MyActivityTemplate {
 
                                             try {
                                                 dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
+                                                dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
                                                 }
                                             catch (SQLiteConstraintException e) {
                                                 Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();
@@ -275,6 +279,7 @@ public class CalendarActivity extends MyActivityTemplate {
 
                                                 try {
                                                     dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
+                                                    dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
                                                 }
                                                 catch (SQLiteConstraintException e) {
                                                     Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();
@@ -292,6 +297,7 @@ public class CalendarActivity extends MyActivityTemplate {
 
                                                     try {
                                                         dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
+                                                        dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
                                                     }
                                                     catch (SQLiteConstraintException e) {
                                                         Toast.makeText(getContext(), "Duplicate record!", Toast.LENGTH_SHORT).show();
@@ -341,6 +347,7 @@ public class CalendarActivity extends MyActivityTemplate {
 
                                     try {
                                         dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 0);
+                                        dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
                                         int year = calendar.get(Calendar.YEAR);
                                         //int month = calendar.get(Calendar.MONTH); // Note: zero based!
                                         int day = calendar.get(Calendar.DAY_OF_MONTH);

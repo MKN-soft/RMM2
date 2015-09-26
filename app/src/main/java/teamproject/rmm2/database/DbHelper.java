@@ -361,7 +361,6 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(Contract.Calendar.COLUMN_HABIT_TITLE, habittitle);
         values.put(Contract.Calendar.COLUMN_STATE, state);
 
-
         /*
         The first argument for insert() is simply the table name. The second argument provides the name of a column in which
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
@@ -369,9 +368,9 @@ public class DbHelper extends SQLiteOpenHelper {
          */
         database.insert//TODO uncomment OrThrow(
                 (
-                Contract.Calendar.TABLE_NAME,
-                null,
-                values);
+                        Contract.Calendar.TABLE_NAME,
+                        null,
+                        values);
     }
 
     /**
@@ -472,18 +471,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /**
      * edits last update date
-     * @param lastUpdate
      */
-    public void editHabitUpdateDate(String habitTitle, Calendar lastUpdate){
+    public void editHabitUpdateDate(String habitTitle) throws SQLiteConstraintException {
+        SQLiteDatabase database = this.getReadableDatabase();
 
-        SQLiteDatabase database = this.getWritableDatabase();
-
+        Calendar updateDate = Calendar.getInstance();
+        // Set update date for habit
         ContentValues values = new ContentValues();
-
-        values.put(Contract.Habits.COLUMN_LAST_UPDATE_DATE, this.convertTimeToUnixTimestamp(lastUpdate));
+        values.put(Contract.Habits.COLUMN_LAST_UPDATE_DATE, this.convertTimeToUnixTimestamp(updateDate));
 
         database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'", null);
-
     }
 
     public void updateDate(Calendar calendar, String habitTitle, int state){
@@ -500,10 +497,6 @@ public class DbHelper extends SQLiteOpenHelper {
         //chyba dobre
          database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" + " AND " + Contract.Calendar.COLUMN_DATE + " = " + "\'" + convertTimeToUnixTimestamp(calendar) + "\'", null);
     }
-
-
-
-
 
     public void deleteHabit(String habitTitle){
         // Gets the data repository in write mode

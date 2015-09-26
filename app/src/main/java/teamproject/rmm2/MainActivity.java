@@ -89,25 +89,25 @@ public class MainActivity extends MyActivityTemplate {
         dbHelper.insertState(1, "DONE");
 
 //        inserting habits
-        dbHelper.insertHabit("a","a",1,1, Calendar.getInstance());
-        dbHelper.insertHabit("b","b",1,7, Calendar.getInstance());
-        dbHelper.insertHabit("c","c",2,1, Calendar.getInstance());
+        //dbHelper.insertHabit("a","a",1,1, Calendar.getInstance());
+        //dbHelper.insertHabit("b","b",1,7, Calendar.getInstance());
+        //dbHelper.insertHabit("c","c",2,1, Calendar.getInstance());
 
 //        inserting dates (CALENDAR table)
-        Calendar calendar = Calendar.getInstance();
+        //Calendar calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        dbHelper.insertDate(calendar, "a", 1);
+        //calendar.set(Calendar.DAY_OF_MONTH, 1);
+        //dbHelper.insertDate(calendar, "a", 1);
 
 
         //new
-        calendar.set(2015, 9, 16);
-        dbHelper.insertDate(calendar, "b", 1);
+        //calendar.set(2015, 9, 16);
+        //dbHelper.insertDate(calendar, "b", 1);
 
         //dbHelper.setTodosFor30Days();
         //TEST
-        setTodosFor30Days setTodosFor30Days = new setTodosFor30Days(getContext());
-        setTodosFor30Days.execute();
+        //setTodosFor30Days setTodosFor30Days = new setTodosFor30Days(getContext());
+        //setTodosFor30Days.execute();
 
 
         /********************************************************
