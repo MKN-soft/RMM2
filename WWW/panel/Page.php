@@ -28,7 +28,9 @@ class Page {
 			$this->sessionStaph();
 		}
 		if ($_GET['page'] == "statistics") {
-			$this->showStatisticsDetails();
+			if (is_numeric($_GET['stat'])) {
+				$this->showStatisticsDetails($_GET['stat']);
+			}
 		}
 		
 		return $string;
@@ -55,6 +57,8 @@ class Page {
 					echo "</br>";
 					echo "Czestotliwosc: ".$row->czestotliwosc;
 					echo "</br>";
+					if ($row->kiedy_ostatnio_aktualizowano_nawyk == "1970-01-01")
+						$row->kiedy_ostatnio_aktualizowano_nawyk = "-";
 					echo "Kiedy ostatnio aktualizowano nawyk: ".$row->kiedy_ostatnio_aktualizowano_nawyk;
 					echo "</br>";
 					echo "Statystyki:";
@@ -65,11 +69,11 @@ class Page {
 		}
 	}
 	
-	public function showStatisticsDetails() {
-		$statistics = $this->getStatistics();
+	public function showStatisticsDetails($habitID) {
+		$statistics = $this->getHabitStatistics($habitID);
 		
 		while($row = mysql_fetch_object($statistics)){
-			if ($_GET['stat'] == $row->id) {
+			if ($habitID == $row->id) {
 				echo "&emsp; <a href=\"?page=habits&habit=$row->nawyki_id\">Wstecz</a> ";
 				echo "</br>";
 				echo "</br>";
@@ -94,6 +98,15 @@ class Page {
 		}		
 		
 		 
+	}
+	
+	public function getHabitStatistics($habitID) {
+		require_once '../php/FunctionsDB.php';
+		
+		$this->db = new FunctionsDB();
+		$result = $this->db->getHabitStatistics($habitID);
+		
+		return $result;
 	}
 	
 	public function getStatistics($id) {

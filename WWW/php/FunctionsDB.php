@@ -126,6 +126,21 @@ class FunctionsDB {
 		}
 	}
 	
+	public function getHabitStatistics($habitID) {
+		$sql = "CALL getHabitStatistics('$habitID')";
+		
+		$result = mysql_query($sql);
+		
+		$this->db->close();
+		
+		if (isset($result)) {
+			return $result;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public function getStatisticsDetails($id, $email) {
 		//$sql = "SELECT Statystyki.id, najlepsza_passa, srednia_dlugosc_ciagu, procent_powodzen, nawyki_id FROM Statystyki 
 		//		JOIN Nawyki ON Nawyki.id = Statystyki.nawyki_id 

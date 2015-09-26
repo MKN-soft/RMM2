@@ -52,7 +52,8 @@ public class ConnectionTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if (isConnectingToInternet()) {
+        IsConnected isConnected = new IsConnected(context);
+        if (isConnected.check()) {
             json = jParser.getJSONFromUrl(AppConfig.URL_API, list);
         }
         else {
@@ -105,19 +106,6 @@ public class ConnectionTask extends AsyncTask<Void, Void, Void> {
             String errorMsg = jParser.getErrorMsg();
             Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
         }
-    }
-
-    private boolean isConnectingToInternet() {
-        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null) {
-                for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
-                        return true;
-            }
-        }
-        return false;
     }
 
 }

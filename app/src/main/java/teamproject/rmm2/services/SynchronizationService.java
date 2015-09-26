@@ -10,12 +10,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import teamproject.rmm2.Helpers.AppConfig;
 import teamproject.rmm2.Helpers.ConnectionTask;
 import teamproject.rmm2.Helpers.MakeNotification;
 import teamproject.rmm2.Helpers.SessionManager;
 import teamproject.rmm2.Helpers.Statistics;
+import teamproject.rmm2.Helpers.SynchronizationTask;
 import teamproject.rmm2.MainActivity;
 import teamproject.rmm2.R;
 import teamproject.rmm2.database.DbHelper;
@@ -42,14 +44,12 @@ public class SynchronizationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         // Synchronization
-        synchronization();
-
-        // Notification
-        notification();
-
+        if (synchronization())
+            // Notification
+            notification();
     }
 
-    private void synchronization() {
+    private boolean synchronization() {
         //TODO Make synchronization (statistics)
         DbHelper dbHelper = new DbHelper(getApplicationContext());
 
@@ -58,6 +58,9 @@ public class SynchronizationService extends IntentService {
 
         // Session Manager
         SessionManager sessionManager = new SessionManager(getApplicationContext());
+
+        // List of lists
+        List<List<NameValuePair>> listLists = new ArrayList<>();
 
         for (int i = 0; i < habitRowList.size(); i ++) {
             Statistics statistics = new Statistics(getApplicationContext(), habitRowList.get(i).getTitle());
@@ -81,9 +84,22 @@ public class SynchronizationService extends IntentService {
             list.add(new BasicNameValuePair("procent_powodzen", Float.toString(statistics.getProcent_powodzen())));
 
 
-            ConnectionTask connectionTask = new ConnectionTask(getApplicationContext(), list);
-            connectionTask.execute();
+            listLists.add(list);
         }
+
+        SynchronizationTask synchronizationTask = new SynchronizationTask(getApplicationContext(), listLists);
+
+        boolean bul = false;
+
+        try {
+            bul = synchronizationTask.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return bul;
     }
 
     private void notification() {
