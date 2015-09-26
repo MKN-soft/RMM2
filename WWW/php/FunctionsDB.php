@@ -20,14 +20,13 @@ class FunctionsDB {
 		// FIND HABIT
 		$sql = "CALL getHabitsByTitle('$nazwa_nawyku')";
 		$result = mysql_query($sql);
-		
+	
+		$habit = mysql_fetch_array($result);
+		$this->db->close();
+			
 		// check for success
-		if ($result) {
+		if ($habit[id]) {
 			// UPDATE HABIT
-			$habit = mysql_fetch_array($result);
-			
-			$this->db->close();
-			
 			$this->db->connect();
 
 			$sql = "CALL editHabits($id, '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku', $habit[id])";
@@ -36,9 +35,10 @@ class FunctionsDB {
 		}
 		else {
 			// ADD HABIT
+			$this->db->connect();
+			
 			$sql = "CALL storeHabits('$id', '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku')";
 			$result = mysql_query($sql);
-
 		}
 		
 				

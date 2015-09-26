@@ -1,20 +1,5 @@
 <?php
 
-$_POST['tag'] = "synchro";
-$_POST['username'] = "kwmacioszek@gmail.com";
-
-$_POST['czy_sie_udalo'] = "false";
-$_POST['data_wprowadzenia'] = "2015-09-26";
-$_POST['czestotliwosc'] = "122";
-$_POST['kiedy_ostatnio_aktualizowano_nawyk'] = "2015-09-27";
-$_POST['nazwa_nawyku'] = "habit";
-
-$_POST['ilosc_nawykow'] = 10;
-$_POST['najlepsza_passa'] = 10.01;
-$_POST['srednia_dlugosc_ciagu'] = 10.001;
-$_POST['procent_powodzen'] = 10.0001;
-
-
 class Android {
 	
 	private $db;
