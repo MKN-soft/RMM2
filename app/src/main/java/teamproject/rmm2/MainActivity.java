@@ -19,12 +19,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import teamproject.rmm2.Helpers.RepeatForService;
-import teamproject.rmm2.Helpers.Statistics;
 import teamproject.rmm2.adapters.NavDrawerListAdapter;
-import teamproject.rmm2.database.asynctask.setTodosFor30Days;
+import teamproject.rmm2.database.asynctask.SetTodos;
 import teamproject.rmm2.fragments.GoProFragment;
 import teamproject.rmm2.fragments.HomeFragment;
 import teamproject.rmm2.fragments.SettingsFragment;
@@ -32,6 +30,7 @@ import teamproject.rmm2.models.CalendarRow;
 import teamproject.rmm2.models.HabitRow;
 import teamproject.rmm2.models.NavDrawerItem;
 import teamproject.rmm2.services.SynchronizationService;
+import teamproject.rmm2.statistics.Statistics;
 
 
 public class MainActivity extends MyActivityTemplate {
@@ -89,9 +88,9 @@ public class MainActivity extends MyActivityTemplate {
         dbHelper.insertState(1, "DONE");
 
 //        inserting habits
-        //dbHelper.insertHabit("a","a",1,1, Calendar.getInstance());
-        //dbHelper.insertHabit("b","b",1,7, Calendar.getInstance());
-        //dbHelper.insertHabit("c","c",2,1, Calendar.getInstance());
+        dbHelper.insertHabit("a","a",1,1, Calendar.getInstance());
+        dbHelper.insertHabit("b","b",1,7, Calendar.getInstance());
+        dbHelper.insertHabit("c","c",2,1, Calendar.getInstance());
 
 //        inserting dates (CALENDAR table)
         //Calendar calendar = Calendar.getInstance();
@@ -100,14 +99,14 @@ public class MainActivity extends MyActivityTemplate {
         //dbHelper.insertDate(calendar, "a", 1);
 
 
-        //new
-        //calendar.set(2015, 9, 16);
-        //dbHelper.insertDate(calendar, "b", 1);
-
-        //dbHelper.setTodosFor30Days();
+        //dbHelper.setTodos();
         //TEST
-        //setTodosFor30Days setTodosFor30Days = new setTodosFor30Days(getContext());
-        //setTodosFor30Days.execute();
+        SetTodos setTodos = new SetTodos(getContext());
+        setTodos.execute();
+
+        Statistics statisticsA = new Statistics(this.getContext(),"a");
+        Statistics statisticsB = new Statistics(this.getContext(),"b");
+        Statistics statisticsC = new Statistics(this.getContext(),"c");
 
 
         /********************************************************
@@ -224,147 +223,6 @@ public class MainActivity extends MyActivityTemplate {
                                 long id) {
             // display view for selected nav drawer item
             displayView(position);
-        }
-    }
-
-    //TODO delete testers
-    /**
-     * testing purposes, delete when not needed
-     * @param v
-     */
-    public void dbputhabit(View v){
-        TextView textView = (TextView) findViewById(R.id.test_db_textview);
-        textView.setText("Processing...");
-        //ok until here
-
-        try {
-            dbHelper.insertHabit("test_habit", "desc", 1,1, Calendar.getInstance());
-        } catch (SQLiteConstraintException e) {
-            textView.setText("Duplicate record!");
-            return;
-        }
-        catch(Exception e){
-            textView.setText("Unexpected exception!");
-            return;
-        }
-
-       textView.setText("Habit inserted");
-
-    }
-
-    /**
-     * testing purposes, delete when not needed
-     * @param v
-     */
-    public void dbgethabit(View v) {
-        TextView textView = (TextView) findViewById(R.id.test_db_textview);
-        textView.setText("getting text from db");
-
-        HabitRow habitRow = dbHelper.getHabit("test_habit");
-
-        if (habitRow != null) {
-            textView.setText(habitRow.getTitle() + "," + habitRow.getDescription() + "," + String.valueOf(habitRow.getFrequency()));
-        }
-        else {
-            textView.setText("No such habit!");
-        }
-    }
-
-    /**
-     * testing purposes, delete when not needed
-     * @param v
-     */
-    /*public void dbputstate(View v){
-        TextView textView = (TextView) findViewById(R.id.test_db_textview);
-        textView.setText("Inserting state...");
-        //ok until here
-
-        try {
-            dbHelper.insertState(0);
-        }
-        catch(SQLiteConstraintException e){
-            textView.setText("Duplicate record!");
-            return;
-        }
-        catch(Exception e){
-            textView.setText("Unexpected exception!");
-            return;
-        }
-
-        textView.setText("State inserted");
-
-    }*/
-
-    /**
-     * testing purposes, delete when not needed
-     * @param v
-     */
-    public void dbgetstate(View v){
-        TextView textView = (TextView) findViewById(R.id.test_db_textview);
-        textView.setText("getting text from db");
-
-        int aux = 0;
-
-        try{
-             aux = dbHelper.getState(0);
-        }
-        catch(NoSuchFieldException e){
-            textView.setText("No such state!");
-            return;
-        }
-
-        textView.setText(Integer.toString(aux));
-
-
-    }
-
-    /**
-     * testing purposes, delete when not needed
-     * @param v
-     */
-    public void dbputdate(View v){
-        TextView textView = (TextView) findViewById(R.id.test_db_textview);
-        textView.setText("Processing...");
-        //ok until here
-
-        //getting current time in Calendar object
-        Calendar calendar = Calendar.getInstance();
-
-        long time = calendar.getTimeInMillis()/1000L;
-
-        //inserting with current time
-        try {
-            dbHelper.insertDate(calendar, "test_habit", 0);
-        }
-        catch(SQLiteConstraintException e){
-            textView.setText("Constraint exception!");
-            return;
-        }
-        catch(Exception e){
-            textView.setText("Unexpected exception!");
-            return;
-        }
-
-        textView.setText("Date inserted");
-
-    }
-
-    public void dbgetdate(View v){
-        TextView textView = (TextView) findViewById(R.id.test_db_textview);
-        textView.setText("getting text from db");
-
-        //gets current date
-        Calendar calendar = Calendar.getInstance();
-
-        long time = calendar.getTimeInMillis();
-
-        CalendarRow calendarRow = dbHelper.getDate(calendar, "test_habit");
-
-        if (calendarRow != null) {
-            textView.setText(String.valueOf(calendarRow.getTime()) + "," + calendarRow.getHabit() + "," + String.valueOf(calendarRow.getState()));
-        }
-        else {
-            textView.setText("No such habit!");
         }
     }
 

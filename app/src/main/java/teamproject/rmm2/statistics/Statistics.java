@@ -1,13 +1,10 @@
-package teamproject.rmm2.Helpers;
+package teamproject.rmm2.statistics;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.Calendar;
 import java.util.List;
 
-import teamproject.rmm2.MainActivity;
 import teamproject.rmm2.database.DbHelper;
 import teamproject.rmm2.models.CalendarRow;
 import teamproject.rmm2.models.HabitRow;
@@ -95,7 +92,7 @@ public class Statistics {
      * Liczy iloscNawykow pobierając dane z CALENDAR dla nawyku o tytule pdoanym w konstruktorze.
      */
     private void countDates(){
-        setIloscNawykow(dbHelper.getDateCountForHabit(tytulNawyku));
+        setIloscNawykow(dbHelper.getActualCount(tytulNawyku));
     }
 
     /**
@@ -120,6 +117,11 @@ public class Statistics {
 
 
         for(CalendarRow row: calendarRowList){
+//            if the date is later than today then later dates are also (SQL query contains "ORDER BY ASC")
+            if(row.getTime() > Calendar.getInstance().getTimeInMillis()/1000){
+                break;
+            }
+
             int id = row.getId();
             //po resecie streak wiadomo ze to kolejna passa (na starcie tez jest 0)
             if(streak == 0){
@@ -152,7 +154,7 @@ public class Statistics {
         }
 
         setNajlepszaPassa(longestStreak);
-        setSredniaDlugoscCiagu((float)dbHelper.getSuccessDateCountForHabit(tytulNawyku)/(float)streakCount);  // ilosc dat z sukcesami/ ilosc pass
+        setSredniaDlugoscCiagu((float)dbHelper.getActualSuccessCount(tytulNawyku)/(float)streakCount);  // ilosc dat z sukcesami/ ilosc pass
 
     }
 
@@ -174,8 +176,8 @@ public class Statistics {
         float percentage=0;
 
 
-        int successCount = dbHelper.getSuccessDateCountForHabit(tytulNawyku);
-        int totalCount = dbHelper.getDateCountForHabit(tytulNawyku);
+        int successCount = dbHelper.getActualSuccessCount(tytulNawyku);
+        int totalCount = dbHelper.getActualCount(tytulNawyku);
 
         if(totalCount == 0){
             setProcent_powodzen(0);

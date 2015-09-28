@@ -11,11 +11,11 @@ import teamproject.rmm2.models.HabitRow;
 /**
  * Created by MSI on 2015-09-22.
  */
-public class getAllHabitsTask extends AsyncTask<Void, Void, List<HabitRow>> {
+public class GetAllHabitsTask extends AsyncTask<Void, Void, List<HabitRow>> {
     private Context context;
     private DbHelper dbHelper;
 
-    public getAllHabitsTask(Context context) {
+    public GetAllHabitsTask(Context context) {
         this.context = context;
         dbHelper = new DbHelper(this.context);
     }

@@ -13,10 +13,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import teamproject.rmm2.Helpers.AppConfig;
-import teamproject.rmm2.Helpers.ConnectionTask;
 import teamproject.rmm2.Helpers.MakeNotification;
 import teamproject.rmm2.Helpers.SessionManager;
-import teamproject.rmm2.Helpers.Statistics;
+import teamproject.rmm2.statistics.Statistics;
 import teamproject.rmm2.Helpers.SynchronizationTask;
 import teamproject.rmm2.MainActivity;
 import teamproject.rmm2.R;

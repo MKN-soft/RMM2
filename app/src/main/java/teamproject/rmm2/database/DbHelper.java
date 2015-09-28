@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 
@@ -31,7 +30,7 @@ import teamproject.rmm2.models.HabitRow;
  */
 public class DbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 9;
+    public static final int DATABASE_VERSION = 10;
     public static final String DATABASE_NAME = "RMM2.db";
 
 //    length of day in seconds
@@ -162,8 +161,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 habitRow.setDescription(cursor.getString(2));
                 habitRow.setFrequency(cursor.getInt(3));
                 habitRow.setPeriod(cursor.getInt(4));
-                habitRow.setCreationDate(cursor.getLong(5));
-                habitRow.setLastUpdateDate(cursor.getLong(6));
+//                habitRow.setCreationDate(cursor.getLong(5));
+//                habitRow.setLastUpdateDate(cursor.getLong(6));
 
                 //adding to list
                 habitRowList.add(habitRow);
@@ -184,7 +183,7 @@ public class DbHelper extends SQLiteOpenHelper {
         // Gets the data repository in read mode
         SQLiteDatabase database = this.getReadableDatabase();
 
-        final long unixTimestamp = convertTimeToUnixTimestamp(calendar);
+        final long unixTimestamp = convertTimeToUnix(calendar);
 
         //Preparing query (only for convenience purposes)
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
@@ -325,7 +324,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(Contract.Habits.COLUMN_HABIT_DESCRIPTION, description);
         values.put(Contract.Habits.COLUMN_HABIT_FREQUENCY, frequency);
         values.put(Contract.Habits.COLUMN_HABIT_PERIOD, period);
-        values.put(Contract.Habits.COLUMN_CREATION_DATE,this.convertTimeToUnixTimestamp(creationDate));
+        values.put(Contract.Habits.COLUMN_CREATION_DATE,this.convertTimeToUnix(creationDate));
         values.put(Contract.Habits.COLUMN_LAST_UPDATE_DATE, 0);
 
         // Insert the new row, returning the primary key value of the new row
@@ -354,7 +353,7 @@ public class DbHelper extends SQLiteOpenHelper {
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
-        final long unixTimestamp = convertTimeToUnixTimestamp(calendar);
+        final long unixTimestamp = convertTimeToUnix(calendar);
 
         ContentValues values = new ContentValues();
         values.put(Contract.Calendar.COLUMN_DATE, unixTimestamp);   // uses  date in unix time - only hours 00:00:00
@@ -478,7 +477,7 @@ public class DbHelper extends SQLiteOpenHelper {
         Calendar updateDate = Calendar.getInstance();
         // Set update date for habit
         ContentValues values = new ContentValues();
-        values.put(Contract.Habits.COLUMN_LAST_UPDATE_DATE, this.convertTimeToUnixTimestamp(updateDate));
+        values.put(Contract.Habits.COLUMN_LAST_UPDATE_DATE, this.convertTimeToUnix(updateDate));
 
         database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'", null);
     }
@@ -489,13 +488,13 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Contract.Calendar.COLUMN_STATE, state);
 
-        //database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" +  Contract.Calendar.COLUMN_DATE  + " = " + "\'" + convertTimeToUnixTimestamp(calendar) + "\'", null);
+        //database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" +  Contract.Calendar.COLUMN_DATE  + " = " + "\'" + convertTimeToUnix(calendar) + "\'", null);
 
-        //database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" +  Contract.Calendar.COLUMN_DATE  + " = " +convertTimeToUnixTimestamp(calendar), null);
+        //database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" +  Contract.Calendar.COLUMN_DATE  + " = " +convertTimeToUnix(calendar), null);
 
 
         //chyba dobre
-         database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" + " AND " + Contract.Calendar.COLUMN_DATE + " = " + "\'" + convertTimeToUnixTimestamp(calendar) + "\'", null);
+         database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" + " AND " + Contract.Calendar.COLUMN_DATE + " = " + "\'" + convertTimeToUnix(calendar) + "\'", null);
     }
 
     public void deleteHabit(String habitTitle){
@@ -505,20 +504,22 @@ public class DbHelper extends SQLiteOpenHelper {
         database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'", null);
     }
 
-    public int getDateCountForHabit(String habitTitle){
+    public int getActualCount(String habitTitle){
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
-                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'";
+                " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'" +
+                " AND " + Contract.Calendar.COLUMN_DATE + " <= " + this.convertTimeToUnix(java.util.Calendar.getInstance());;
 
         Cursor cursor = database.rawQuery(query, null);
         return cursor.getCount();
     }
 
-    public int getSuccessDateCountForHabit(String habitTitle){
+    public int getActualSuccessCount(String habitTitle){
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
                 " WHERE " + Contract.Calendar.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'" +
-                " AND " + Contract.Calendar.COLUMN_STATE + " = 1";
+                " AND " + Contract.Calendar.COLUMN_STATE + " = 1" +
+                " AND " + Contract.Calendar.COLUMN_DATE + " <= " + this.convertTimeToUnix(java.util.Calendar.getInstance());
         Cursor cursor = database.rawQuery(query, null);
         return cursor.getCount();
     }
@@ -527,7 +528,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * gets most recent date for given habit title
      * @return CalendarRow or Null
      */
-    public CalendarRow getMostRecentCalendarEntry(String habitTitle){
+    public CalendarRow getLastCalendarEntry(String habitTitle){
         SQLiteDatabase db = this.getReadableDatabase();
 
 //        SQL query to get most recent (biggest) timestamp for habitTitle
@@ -572,7 +573,7 @@ public class DbHelper extends SQLiteOpenHelper {
     /**
      * sets "to do" states for dates in CALENDAR for all habits, 30 days ahead
      */
-    public void setTodosFor30Days(){
+    public void setTodos(){
         SQLiteDatabase db = this.getWritableDatabase();
 
 //        get all habits
@@ -582,21 +583,21 @@ public class DbHelper extends SQLiteOpenHelper {
 //        for every habit set dates 30 days ahead. Cycle through all habits.
         for(HabitRow habitRow : habitRowList){
 //            get most recent CALENDAR entry for this habit
-            CalendarRow calendarRow = this.getMostRecentCalendarEntry(habitRow.getTitle());
+            CalendarRow calendarRow = this.getLastCalendarEntry(habitRow.getTitle());
 //            if there are entries in CALENDAR
             if(calendarRow!=null){
                 long dateCounter = calendarRow.getTime();
 
 //                making entries for 30 days ahead
                 while(dateCounter <= calendarRow.getTime()+ 30*DAY){
-                    this.insertDate(dateCounter,calendarRow.getHabit(),-1);
+                    this.insertDate(dateCounter,calendarRow.getHabit(),0);
                     dateCounter += habitRow.getFrequency()*habitRow.getPeriod()*this.DAY;
                 }
             }
 //            if there are no entries in CALENDAR (calendarRow is null)
             else{
 //                inserting first entry
-                final long unixTimetamp = this.convertTimeToUnixTimestamp(Calendar.getInstance());
+                final long unixTimetamp = this.convertTimeToUnix(Calendar.getInstance());
                 insertDate(unixTimetamp, habitRow.getTitle(), 0);
 
                 long dateCounter = unixTimetamp;
@@ -611,7 +612,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    private long convertTimeToUnixTimestamp(Calendar calendar){
+    private long convertTimeToUnix(Calendar calendar){
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
