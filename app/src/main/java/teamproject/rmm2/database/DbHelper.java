@@ -162,8 +162,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 habitRow.setDescription(cursor.getString(2));
                 habitRow.setFrequency(cursor.getInt(3));
                 habitRow.setPeriod(cursor.getInt(4));
-//                habitRow.setCreationDate(cursor.getLong(5));
-//                habitRow.setLastUpdateDate(cursor.getLong(6));
+                habitRow.setCreationDate(cursor.getLong(5));
+                habitRow.setLastUpdateDate(cursor.getLong(6));
 
                 //adding to list
                 habitRowList.add(habitRow);

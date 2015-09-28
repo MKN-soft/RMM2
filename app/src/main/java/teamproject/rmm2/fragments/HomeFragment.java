@@ -37,7 +37,6 @@ public class HomeFragment extends ListFragment {
         habitList = new ArrayList<>();
         Resources resources = getResources();
 
-        //TODO Add habits to the list, from database ?
             // 1. get data from DB
             // 2. add data to the list
         // EXAMPLE
