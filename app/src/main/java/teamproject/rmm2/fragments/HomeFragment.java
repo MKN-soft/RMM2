@@ -21,7 +21,7 @@ import teamproject.rmm2.Helpers.SessionManager;
 import teamproject.rmm2.R;
 import teamproject.rmm2.adapters.HabitAdapter;
 import teamproject.rmm2.database.DbHelper;
-import teamproject.rmm2.database.asynctask.GetAllHabitsTask;
+import teamproject.rmm2.database.asynctask.getAllHabitsTask;
 import teamproject.rmm2.models.HabitRow;
 
 public class HomeFragment extends ListFragment {
@@ -51,7 +51,7 @@ public class HomeFragment extends ListFragment {
         //dbHelper = new DbHelper(getActivity().getApplicationContext());
         //List<HabitRow> habitRowList = dbHelper.getAllHabits();
 
-        GetAllHabitsTask getAllHabitsTask = new GetAllHabitsTask(getActivity().getApplicationContext());
+        getAllHabitsTask getAllHabitsTask = new getAllHabitsTask(getActivity().getApplicationContext());
         List<HabitRow> habitRowList = null;
         try {
             habitRowList = getAllHabitsTask.execute().get();
