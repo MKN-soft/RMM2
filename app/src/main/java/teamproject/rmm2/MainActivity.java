@@ -93,16 +93,14 @@ public class MainActivity extends MyActivityTemplate {
         dbHelper.insertHabit("c","c",2,1, Calendar.getInstance());
 
 //        inserting dates (CALENDAR table)
-        //Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
 
         //calendar.set(Calendar.DAY_OF_MONTH, 1);
-        //dbHelper.insertDate(calendar, "a", 1);
+        dbHelper.insertDate(calendar, "a", 1);
 
-
-        //dbHelper.setTodos();
         //TEST
-        SetTodos setTodos = new SetTodos(getContext());
-        setTodos.execute();
+//        SetTodos setTodos = new SetTodos(getContext());
+//        setTodos.execute();
 
         Statistics statisticsA = new Statistics(this.getContext(),"a");
         Statistics statisticsB = new Statistics(this.getContext(),"b");
