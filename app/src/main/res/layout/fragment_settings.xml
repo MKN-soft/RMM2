@@ -19,32 +19,14 @@
         android:layout_marginTop="10dp"
         android:src="@mipmap/ic_people" />
 
-    <TextView
-        android:id="@+id/userLogin"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/userPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/userLogin"
-        android:layout_centerHorizontal="true"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/userSalt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/userPassword"
-        android:layout_centerHorizontal="true"
-        android:text="New Text" />
+        android:text="@string/releaseStatistics"
+        android:id="@+id/buttonStatistics"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

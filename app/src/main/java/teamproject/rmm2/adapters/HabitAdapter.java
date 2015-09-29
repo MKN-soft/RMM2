@@ -16,6 +16,8 @@ import teamproject.rmm2.models.HabitRow;
 
 /**
  * Created by MSI on 2015-09-03.
+ *
+ * Adapter object for dynamically generated listView holding one habit informations from database.
  */
 public class HabitAdapter extends ArrayAdapter<HabitRow> {
 

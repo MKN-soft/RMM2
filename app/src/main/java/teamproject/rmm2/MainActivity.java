@@ -113,18 +113,6 @@ public class MainActivity extends MyActivityTemplate {
          ********************************************************/
 
 
-        Button buttonStatistics;
-        buttonStatistics = (Button) findViewById(R.id.buttonStatistics);
-
-        buttonStatistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SynchronizationService.class);
-                startService(intent);
-            }
-        });
-
-
         if (savedInstanceState == null) {
             // on first time display view for first nav item
             displayView(0);

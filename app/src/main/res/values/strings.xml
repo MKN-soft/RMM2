@@ -34,7 +34,7 @@
     <string name="notification_habit_description">Keep your habits in check you miserable maggot!</string>
     <string name="notification_habit_frequency_title">Testing Habit Service</string>
     <string name="notification_habit_frequency_description">Building probability time limit for complete habits for one month</string>
-    <string name="releaseStatistics">Release the Kraken!</string>
+    <string name="releaseStatistics">Synchronization</string>
 
     <!-- String arrays! -->
 
