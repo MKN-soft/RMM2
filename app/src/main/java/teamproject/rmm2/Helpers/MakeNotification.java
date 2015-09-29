@@ -10,6 +10,8 @@ import teamproject.rmm2.R;
 
 /**
  * Created by MSI on 2015-09-08.
+ *
+ * Object for making any notifactions from any activity aplication.
  */
 public class MakeNotification {
 

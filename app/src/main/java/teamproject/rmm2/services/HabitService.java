@@ -10,6 +10,8 @@ import teamproject.rmm2.database.DbHelper;
 
 /**
  * Created by MSI on 2015-09-19.
+ *
+ * Service for making frequency TODOs for habits.
  */
 public class HabitService extends IntentService {
 

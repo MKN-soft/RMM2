@@ -14,6 +14,8 @@ import teamproject.rmm2.R;
 
 /**
  * Created by MSI on 2015-09-24.
+ *
+ * Specific task for synchronization, very similar to ConnectionTask.
  */
 public class SynchronizationTask extends AsyncTask<Void, Void, Boolean> {
 

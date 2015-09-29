@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 /**
  * Created by Marcin on 2015-07-12.
+ *
+ * Session manager holding any values that not need in hold in database.
  */
 public class SessionManager {
 

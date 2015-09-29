@@ -6,6 +6,8 @@ import android.net.NetworkInfo;
 
 /**
  * Created by MSI on 2015-09-26.
+ *
+ * Checking if user connected to internet.
  */
 public class IsConnected {
 
@@ -15,6 +17,11 @@ public class IsConnected {
         this.context = context;
     }
 
+    /**
+     * If internet service is running, return true or false.
+     *
+     * @return boolean
+     */
     public boolean check() {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {

@@ -24,6 +24,8 @@ import teamproject.rmm2.models.HabitRow;
 
 /**
  * Created by MSI on 2015-09-08.
+ *
+ * Service for synchronization data with WWW.
  */
 public class SynchronizationService extends IntentService {
 

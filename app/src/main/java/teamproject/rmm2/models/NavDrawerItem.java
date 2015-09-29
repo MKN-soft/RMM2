@@ -2,6 +2,8 @@ package teamproject.rmm2.models;
 
 /**
  * Created by MSI on 2015-08-05.
+ *
+ * Holding data for one Navigation menu item.
  */
 public class NavDrawerItem {
 

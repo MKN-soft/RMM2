@@ -13,6 +13,8 @@ import teamproject.rmm2.services.SynchronizationService;
 
 /**
  * Created by MSI on 2015-09-08.
+ *
+ * Setting repeat in time for specific service.
  */
 public class RepeatForService {
 
@@ -22,6 +24,11 @@ public class RepeatForService {
         this.context = context;
     }
 
+    /**
+     * Getting specific notification and set running time.
+     *
+     * @param service
+     */
     public void NotificationsHandler(Class<?> service) {
 //        // Get time NOW
 //        Calendar currentCalendar = new GregorianCalendar();

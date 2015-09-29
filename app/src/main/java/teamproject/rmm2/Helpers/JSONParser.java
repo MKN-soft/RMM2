@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-/*
+/**
  Parses data that is received and sent via JSON.
  */
 public class JSONParser {

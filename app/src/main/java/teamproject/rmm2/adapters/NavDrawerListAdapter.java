@@ -16,6 +16,8 @@ import teamproject.rmm2.models.NavDrawerItem;
 
 /**
  * Created by MSI on 2015-08-05.
+ *
+ * Navigation drawer list adapter for holding one object from main menu navigation.
  */
 public class NavDrawerListAdapter extends BaseAdapter {
 
