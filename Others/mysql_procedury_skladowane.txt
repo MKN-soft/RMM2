@@ -29,8 +29,11 @@ SELECT Statystyki.id, ilosc_nawykow,najlepsza_passa, srednia_dlugosc_ciagu, proc
 CREATE PROCEDURE getHabitsByUser(IN _username varchar(32))
 SELECT Nawyki.id, czy_sie_udalo, data_wprowadzenia, czestotliwosc, kiedy_ostatnio_aktualizowano_nawyk, nazwa FROM Nawyki JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id WHERE Uzytkownicy.login = _username;
 
-CREATE PROCEDURE getHabitsByTitle(IN _title varchar(50))
-SELECT * FROM Nawyki WHERE nazwa = _title LIMIT 1;
+CREATE PROCEDURE getHabitsByTitle(IN _title varchar(50), IN _usernameID varchar(50))
+SELECT * FROM Nawyki 
+JOIN Uzytkownicy ON Uzytkownicy.id = Nawyki.uzytkownik_id 
+WHERE nazwa = _title AND Uzytkownicy.id = _usernameID 
+LIMIT 1;
 
 CREATE PROCEDURE editHabits (IN  _uzytkownik_id int(11), IN czy varchar(32), IN d date, IN c int(11), IN k varchar(32), IN nn varchar(50), IN _id_nawyku int(11))
 UPDATE Nawyki SET czy_sie_udalo = czy, data_wprowadzenia = d, czestotliwosc = c, kiedy_ostatnio_aktualizowano_nawyk = k, nazwa = nn
