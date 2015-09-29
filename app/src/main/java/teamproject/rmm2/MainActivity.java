@@ -92,6 +92,7 @@ public class MainActivity extends MyActivityTemplate {
         dbHelper.insertHabit("b","b",1,7, Calendar.getInstance());
         dbHelper.insertHabit("c","c",2,1, Calendar.getInstance());
 
+
 //        inserting dates (CALENDAR table)
         Calendar calendar = Calendar.getInstance();
 

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -353,6 +354,7 @@ public class DbHelper extends SQLiteOpenHelper {
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
 
+        int month = (calendar.get(Calendar.MONTH));
         final long unixTimestamp = convertTimeToUnix(calendar);
 
         ContentValues values = new ContentValues();

@@ -67,7 +67,8 @@ public class DoneHabitDecorator implements DayViewDecorator {
             // Log.i("RMM2", "year!!! : "+ year);
             //Log.i("RMM2", "cDay.getYear()!!! : "+ cDay.getYear());
             // Log.i("RMM2", "Po dniu!!!");
-            if ((d.getMonth() - 1) == cDay.getMonth()) {//month - 1
+        // if ((d.getMonth() - 1) == cDay.getMonth()) {//month - 1
+            if ((d.getMonth()) == (cDay.getMonth())) {//month - 1
                 //Log.i("RMM2", "Po miesiącu!!!");
                 if (year == cDay.getYear()) {// if (d.getYear() == cDay.getYear()) {
                     //Log.i("RMM2", "Jest niezrobiony!!!");

@@ -95,6 +95,7 @@ public class CalendarActivity extends MyActivityTemplate {
 
             SimpleDateFormat todayMonth = new SimpleDateFormat("MM");
             String tM = todayMonth.format(today);
+            //final int tMonth = Integer.parseInt(tM) - 1;
             final int tMonth = Integer.parseInt(tM) - 1;
 
             SimpleDateFormat todayYear = new SimpleDateFormat("yyyy");
@@ -183,13 +184,15 @@ public class CalendarActivity extends MyActivityTemplate {
                                             int year = myCal.get(Calendar.YEAR);
                                             int month = myCal.get(Calendar.MONTH);
                                             int day = myCal.get(Calendar.DAY_OF_MONTH);
-                                            if (year == calendarDay.getYear() && month == (calendarDay.getMonth() + 1) && day == calendarDay.getDay()) {
+                                            //if (year == calendarDay.getYear() && month == (calendarDay.getMonth() + 1) && day == calendarDay.getDay()) {
+                                            if (year == calendarDay.getYear() && month == (calendarDay.getMonth()) && day == calendarDay.getDay()) {
                                                // hab.setState(1);
                                                // Calendar calendar = Calendar.getInstance();
                                                // calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
                                                // dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
                                                 Calendar calendar = Calendar.getInstance();
-                                                calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                               // calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                calendar.set(calendarDay.getYear(), (calendarDay.getMonth() ), calendarDay.getDay());
                                                 dbHelper.updateDate(calendar, currentHabit.getTitle().toString(), 1);
                                                 dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
 
@@ -208,13 +211,15 @@ public class CalendarActivity extends MyActivityTemplate {
                                                 int year = myCal.get(Calendar.YEAR);
                                                 int month = myCal.get(Calendar.MONTH);
                                                 int day = myCal.get(Calendar.DAY_OF_MONTH);
-                                                if (year == calendarDay.getYear() && month == (calendarDay.getMonth() + 1) && day == calendarDay.getDay()) {
-                                                   // hab.setState(1);
+                                                //if (year == calendarDay.getYear() && month == (calendarDay.getMonth() + 1) && day == calendarDay.getDay()) {
+                                                if (year == calendarDay.getYear() && month == (calendarDay.getMonth()) && day == calendarDay.getDay()) {
+                                                 // hab.setState(1);
                                                     //Calendar calendar = Calendar.getInstance();
                                                     //calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
                                                     //dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
                                                     Calendar calendar = Calendar.getInstance();
-                                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                    //calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth() ), calendarDay.getDay());
                                                     dbHelper.updateDate(calendar, currentHabit.getTitle().toString(), 1);
                                                     dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
 
@@ -233,13 +238,15 @@ public class CalendarActivity extends MyActivityTemplate {
                                                     int year = myCal.get(Calendar.YEAR);
                                                     int month = myCal.get(Calendar.MONTH);
                                                     int day = myCal.get(Calendar.DAY_OF_MONTH);
-                                                    if (year == calendarDay.getYear() && month == (calendarDay.getMonth() + 1) && day == calendarDay.getDay()) {
-                                                       // hab.setState(1);
+                                                    //if (year == calendarDay.getYear() && month == (calendarDay.getMonth() + 1) && day == calendarDay.getDay()) {
+                                                    if (year == calendarDay.getYear() && month == (calendarDay.getMonth()) && day == calendarDay.getDay()) {
+                                                     // hab.setState(1);
                                                         //Calendar calendar = Calendar.getInstance();
                                                         //calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
                                                         //dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
                                                         Calendar calendar = Calendar.getInstance();
-                                                        calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                        //calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                        calendar.set(calendarDay.getYear(), (calendarDay.getMonth()), calendarDay.getDay());
                                                         dbHelper.updateDate(calendar, currentHabit.getTitle().toString(), 1);
                                                         dbHelper.editHabitUpdateDate(sessionManager.getHabitTitle());
 
@@ -257,7 +264,8 @@ public class CalendarActivity extends MyActivityTemplate {
                                     if (found == false) {
                                         if(tYear > calendarDay.getYear()){
                                             Calendar calendar = Calendar.getInstance();
-                                            calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                            //calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                            calendar.set(calendarDay.getYear(), (calendarDay.getMonth()), calendarDay.getDay());
 
                                             try {
                                                 dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
@@ -275,7 +283,8 @@ public class CalendarActivity extends MyActivityTemplate {
                                         }else if(tYear == calendarDay.getYear()) {
                                             if (tMonth > calendarDay.getMonth()){
                                                 Calendar calendar = Calendar.getInstance();
-                                                calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                               // calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                calendar.set(calendarDay.getYear(), (calendarDay.getMonth()), calendarDay.getDay());
 
                                                 try {
                                                     dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
@@ -293,7 +302,8 @@ public class CalendarActivity extends MyActivityTemplate {
                                             }else if( tMonth == calendarDay.getMonth()) {
                                                 if (tDay > calendarDay.getDay() || tDay == calendarDay.getDay()) {
                                                     Calendar calendar = Calendar.getInstance();
-                                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                    //calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth()), calendarDay.getDay());
 
                                                     try {
                                                         dbHelper.insertDate(calendar,sessionManager.getHabitTitle(), 1);
@@ -335,11 +345,12 @@ public class CalendarActivity extends MyActivityTemplate {
                                     Calendar calendar = Calendar.getInstance();
                                     int day2 = calendar.get(Calendar.DAY_OF_MONTH);
                                     int month = calendar.get(Calendar.MONTH);
-                                    //if(month == 12)
-                                     //   calendar.set(calendarDay.getYear(), 11, calendarDay.getDay());
 
-                                    calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
 
+                                    //calendar.set(calendarDay.getYear(), (calendarDay.getMonth() + 1), calendarDay.getDay());
+                                    calendar.set(calendarDay.getYear(), calendarDay.getMonth(), calendarDay.getDay());
+
+                                    //Log.i("RMM2", "Dodana data: "+calendarDay.getYear() +" "+ (calendarDay.getMonth() + 1)+ " "+ calendarDay.getDay());
                                    // d.getTime();
                                    // HabitDay.setTime(d.getTime());
                                     //calDay.add(HabitDay);
@@ -351,6 +362,9 @@ public class CalendarActivity extends MyActivityTemplate {
                                         int year = calendar.get(Calendar.YEAR);
                                         //int month = calendar.get(Calendar.MONTH); // Note: zero based!
                                         int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                                        //Calendar c = Calendar.getInstance();
+                                        //Log.d("RMM2", "pokaz sie"+ c.toString());
 
 
                                         //dbHelper.close();
