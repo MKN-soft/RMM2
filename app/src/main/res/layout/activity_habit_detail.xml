@@ -13,119 +13,119 @@
 
         android:layout_gravity="center_horizontal" />
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/habitTitle"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Header Text"
+                android:textColor="#181717"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Schedule" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/habitDescription"
+                android:layout_below="@+id/habitTitle"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/habitFrequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="frequency"
+            android:textColor="#a0a0a0"
+            android:textIsSelectable="false"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/habitCreationDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="21st November, 2013"
+            android:textColor="#615f5f"
+            android:textSize="11sp"
+            android:layout_gravity="right" />
+
+        <TextView
+            android:id="@+id/habitUpdateDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="21st November, 2013"
+            android:textColor="#615f5f"
+            android:textSize="11sp"
+            android:layout_gravity="right" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:background="#fff"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
+            <Button
+                android:id="@+id/editHabit"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:orientation="horizontal">
+                android:text="@string/editHabit"
+                android:textSize="13sp"
+                android:layout_weight="0.75" />
 
-                <TextView
-                    android:id="@+id/habitTitle"
-                    android:layout_width="195dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:text="Header Text"
-                    android:textColor="#181717"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/schedule"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="Schedule" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/habitDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:text="Tweet description text"
-                android:textColor="#393939"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/habitUpdateDate"
+            <Button
+                android:id="@+id/deleteHabit"
+                style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="21st November, 2013"
-                android:textColor="#615f5f"
-                android:textSize="11sp"
-                android:layout_gravity="right" />
-
-            <TextView
-                android:id="@+id/habitFrequency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="frequency"
-                android:textColor="#393939" />
-
-            <TextView
-                android:id="@+id/habitCreationDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="21st November, 2013"
-                android:textColor="#615f5f"
-                android:textSize="11sp"
-                android:layout_gravity="right" />
-
-            <TextView
-                android:id="@+id/habitPeriodicity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="frequency"
-                android:textColor="#393939" />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/editHabit"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="100dp"
-                    android:layout_height="45dp"
-                    android:text="@string/editHabit"
-                    android:textSize="13sp" />
-
-                <Button
-                    android:id="@+id/deleteHabit"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="110dp"
-                    android:layout_height="45dp"
-                    android:text="@string/deleteHabit"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
+                android:layout_height="fill_parent"
+                android:text="@string/deleteHabit"
+                android:textSize="13sp"
+                android:layout_weight="0.15" />
         </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
     </ScrollView>
 
 </LinearLayout>

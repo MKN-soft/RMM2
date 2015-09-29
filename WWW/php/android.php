@@ -134,12 +134,13 @@ class Android {
 		$czestotliwosc = intval($_POST['czestotliwosc']);
 		$kiedy_ostatnio_aktualizowano_nawyk = $_POST['kiedy_ostatnio_aktualizowano_nawyk'];
 		$nazwa_nawyku = $_POST['nazwa_nawyku'];
+		$odstep_czestotliwosci = intval($_POST['odstep_czestotliwosci']);
 		
 		$user = $this->db->getUserByUsername($username);
 		
 		// check if user exists
 		if ($user) {
-			if ($this->db->storeHabits($user['id'], $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk, $nazwa_nawyku)) {
+			if ($this->db->storeHabits($user['id'], $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk, $nazwa_nawyku, $odstep_czestotliwosci)) {
 				$ilosc_nawykow = intval($_POST['ilosc_nawykow']);
 				$najlepsza_passa = floatval($_POST['najlepsza_passa']);
 				$srednia_dlugosc_ciagu = floatval($_POST['srednia_dlugosc_ciagu']);

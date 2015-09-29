@@ -18,7 +18,7 @@ class FunctionsDB {
 	
 	function __destruct() {	}
 	
-	public function storeHabits($id, $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk, $nazwa_nawyku) {
+	public function storeHabits($id, $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk, $nazwa_nawyku, $odstep_czestotliwosci) {
 		$this->db->connect();
 		
 		// FIND HABIT
@@ -33,7 +33,7 @@ class FunctionsDB {
 			// UPDATE HABIT
 			$this->db->connect();
 
-			$sql = "CALL editHabits($id, '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku', $habit[0])";
+			$sql = "CALL editHabits($id, '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku', $habit[0], '$odstep_czestotliwosci')";
 			$result = mysql_query($sql);
 			
 		}
@@ -41,7 +41,7 @@ class FunctionsDB {
 			// ADD HABIT
 			$this->db->connect();
 			
-			$sql = "CALL storeHabits('$id', '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku')";
+			$sql = "CALL storeHabits('$id', '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku', '$odstep_czestotliwosci')";
 			$result = mysql_query($sql);
 		}
 		

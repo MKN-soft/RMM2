@@ -20,7 +20,7 @@ import teamproject.rmm2.models.HabitRow;
 public class HabitDetailActivity extends MyActivityTemplate {
 
     private HabitRow item;
-    private TextView title, description, frequency, creationDate, updateDate, periodicity;
+    private TextView title, description, frequency, creationDate, updateDate;
     private ImageView image;
     private Button editHabit, deleteHabit, schedule;
 
@@ -38,12 +38,10 @@ public class HabitDetailActivity extends MyActivityTemplate {
         creationDate = (TextView) findViewById(R.id.habitCreationDate);
         updateDate = (TextView) findViewById(R.id.habitUpdateDate);
         image = (ImageView) findViewById(R.id.habitImage);
-        periodicity = (TextView) findViewById(R.id.habitPeriodicity);
 
         title.setText(item.getTitle());
         description.setText(item.getDescription());
-        frequency.setText(Integer.toString(item.getFrequency()));
-        periodicity.setText(periodicityToString(item.getPeriod()));
+        frequency.setText(Integer.toString(item.getFrequency()) + " " + periodicityToString(item.getPeriod()));
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         creationDate.setText("Creation date: " + format.format(item.getCreationDate().getTime()));

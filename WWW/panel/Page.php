@@ -58,7 +58,14 @@ class Page {
 					echo "</br>";
 					echo "Data wprowadzenia: ".$row->data_wprowadzenia;
 					echo "</br>";
-					echo "Czestotliwosc: ".$row->czestotliwosc;
+					if ($row->odstep_czestotliwosci == 1)
+						$periodicity = "Day";
+					else if ($row->odstep_czestotliwosci == 7)
+						$periodicity = "Week";
+					else if ($row->odstep_czestotliwosci == 30)
+						$periodicity = "Month";
+					
+					echo "Czestotliwosc: ".$row->czestotliwosc." ".$periodicity;
 					echo "</br>";
 					if ($row->kiedy_ostatnio_aktualizowano_nawyk == "1970-01-01")
 						$row->kiedy_ostatnio_aktualizowano_nawyk = "-";
