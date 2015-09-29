@@ -78,7 +78,6 @@ public class EditHabitActivity extends MyActivityTemplate {
         editHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO make functionality
                 dbHelper.editHabit(getContext(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()), habitPeriodicity);
 
                 Intent intent = new Intent(EditHabitActivity.this, MainActivity.class);

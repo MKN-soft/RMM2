@@ -350,8 +350,7 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insert//TODO uncommentOrThrow(
-                (
+        database.insertOrThrow(
                 Contract.Habits.TABLE_NAME,
                 null,
                 values);
@@ -382,8 +381,7 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insert//TODO uncomment OrThrow(
-                (
+        database.insertOrThrow(
                         Contract.Calendar.TABLE_NAME,
                         null,
                         values);
@@ -413,8 +411,7 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insert //TODO uncommentOrThrow(
-                (
+        database.insertOrThrow(
                 Contract.Calendar.TABLE_NAME,
                 null,
                 values);
@@ -440,8 +437,7 @@ public class DbHelper extends SQLiteOpenHelper {
         the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
         the framework will not insert a row when there are no values).
          */
-        database.insert//todo uncomment OrThrow(
-                (
+        database.insertOrThrow(
                 Contract.States.TABLE_NAME,
                 null,
                 values);
