@@ -21,6 +21,9 @@ import teamproject.rmm2.models.HabitRow;
 /**
  * Created by Marcin on 2015-07-21.
  *
+ * This class inherits after Android.database.SQLiteOpenHelper class and contains methods operating on database:
+ * creation, selecting, inserting etc. This class makes interaction with database easy. Every interaction needs only 1 method to be called.
+ *
  * A useful set of APIs is available in the SQLiteOpenHelper class.
  * When you use this class to obtain references to your database,
  * the system performs the potentially long-running operations of creating
@@ -82,12 +85,14 @@ public class DbHelper extends SQLiteOpenHelper {
         db.setForeignKeyConstraintsEnabled(true);
     }
 
+
     //auxiliary classes for GETTING data from DB
 
-
-
-
-
+    /**
+     * Selects habit with the same title as argument from HABITS table
+     * @param title
+     * @return HabitRow
+     */
     public HabitRow getHabit(String title){
         //SHIT WORKS! Good example for other stuff
         // Gets the data repository in read mode
@@ -124,6 +129,12 @@ public class DbHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * selects entry from STATE table. Used mostly for testing.
+     * @param state
+     * @return
+     * @throws NoSuchFieldException
+     */
     public int getState(int state) throws NoSuchFieldException {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "SELECT * FROM " + Contract.States.TABLE_NAME +
@@ -249,6 +260,10 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Selects all entries from CALENDAR table.
+     * @return
+     */
     public List<CalendarRow> getAllDates(){
         SQLiteDatabase database = this.getReadableDatabase();
         //Preparing query (only for convenience purposes)
@@ -451,27 +466,11 @@ public class DbHelper extends SQLiteOpenHelper {
         SessionManager sessionManager = new SessionManager(context);
 
         database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + sessionManager.getHabitTitle() + "\'", null);
-        //database.execSQL("UPDATE " + Contract.Habits.TABLE_NAME +
-        //        " SET " + Contract.Habits.COLUMN_HABIT_DESCRIPTION + "=" + "\'" + description + "\'" + ", " + Contract.Habits.COLUMN_HABIT_FREQUENCY + "=" + "\'" + frequency + "\'" +
-        //        " WHERE " + Contract.Habits.COLUMN_HABIT_TITLE + "=" + "\'" + sessionManager.getHabitTitle() + "\'");
 
-        // Insert the new row, returning the primary key value of the new row
-//        long newRowId;
-        /*
-        The first argument for insert() is simply the table name. The second argument provides the name of a column in which
-        the framework can insert NULL in the event that the ContentValues is empty (if you instead set this to "null", then
-        the framework will not insert a row when there are no values).
-         */
-        /*
-        database.insertOrThrow(
-                Contract.Habits.TABLE_NAME,
-                null,
-                values);
-                */
     }
 
     /**
-     * edits last update date
+     * edits last update date in HABITS table entry.
      */
     public void editHabitUpdateDate(String habitTitle) throws SQLiteConstraintException {
         SQLiteDatabase database = this.getReadableDatabase();
@@ -484,6 +483,12 @@ public class DbHelper extends SQLiteOpenHelper {
         database.update(Contract.Habits.TABLE_NAME, values, Contract.Habits.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'", null);
     }
 
+    /**
+     * updates entry with the same data as arguments in CALENDAR table.
+     * @param calendar
+     * @param habitTitle
+     * @param state
+     */
     public void updateDate(Calendar calendar, String habitTitle, int state){
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -499,6 +504,10 @@ public class DbHelper extends SQLiteOpenHelper {
          database.update(Contract.Calendar.TABLE_NAME, values, Contract.Calendar.COLUMN_HABIT_TITLE + " = " + "\'" + habitTitle + "\'" + " AND " + Contract.Calendar.COLUMN_DATE + " = " + "\'" + convertTimeToUnix(calendar) + "\'", null);
     }
 
+    /**
+     * Deletes entry in HABITS table if the title is the same as argument.
+     * @param habitTitle
+     */
     public void deleteHabit(String habitTitle){
         // Gets the data repository in write mode
         SQLiteDatabase database = this.getWritableDatabase();
@@ -506,6 +515,12 @@ public class DbHelper extends SQLiteOpenHelper {
         database.delete(Contract.Habits.TABLE_NAME, Contract.Habits.COLUMN_HABIT_TITLE + " LIKE \'" + habitTitle + "\'", null);
     }
 
+    /**
+     * Returns actual count of all entries in CALENDAR table for given habit title. Counts every day until actual day (included).
+     * Does not count days after actual date.
+     * @param habitTitle
+     * @return
+     */
     public int getActualCount(String habitTitle){
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
@@ -516,6 +531,13 @@ public class DbHelper extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
+    /**
+     * Returns actual  count of all entries in CALENDAR table for given habit title that are successful (state is 1).
+     * Counts every day until actual day (included).
+     * Does not count days after actual date.
+     * @param habitTitle
+     * @return
+     */
     public int getActualSuccessCount(String habitTitle){
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "SELECT * FROM " + Contract.Calendar.TABLE_NAME +
@@ -573,7 +595,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * sets "to do" states for dates in CALENDAR for all habits, 30 days ahead
+     * sets "to do" states (that are equal 1) for dates in CALENDAR for all habits, 30 days ahead
      */
     public void setTodos(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -614,6 +636,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Auxiliar method converting Calendar objects to unix timestamp format for the database to use.
+     * @param calendar
+     * @return
+     */
     private long convertTimeToUnix(Calendar calendar){
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);

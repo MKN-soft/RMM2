@@ -2,6 +2,7 @@ package teamproject.rmm2.models;
 
 /**
  * Created by Marcin on 2015-08-20.
+ * Represents row in CALENDAR table in sqLite database RMM2.db
  */
 public class CalendarRow {
     private int id;
