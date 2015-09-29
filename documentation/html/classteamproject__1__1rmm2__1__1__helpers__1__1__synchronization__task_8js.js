@@ -1,0 +1,4 @@
+var classteamproject__1__1rmm2__1__1__helpers__1__1__synchronization__task_8js =
+[
+    [ "classteamproject_1_1rmm2_1_1_helpers_1_1_synchronization_task", "classteamproject__1__1rmm2__1__1__helpers__1__1__synchronization__task_8js.html#ae1c6508d6fd34eb32f2d62490dedfb47", null ]
+];

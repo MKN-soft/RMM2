@@ -81,7 +81,7 @@ public class MainActivity extends MyActivityTemplate {
 
         /********************************************************
         //DATABASE TESTING, insert habits, get statistics etc.
-        ********************************************************/
+        ********************************************************
 
         dbHelper.insertState(-1, "FAIL");
         dbHelper.insertState(0, "NEUTRAL");

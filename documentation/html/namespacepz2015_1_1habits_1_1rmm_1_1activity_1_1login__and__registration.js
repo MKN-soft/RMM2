@@ -1,0 +1,6 @@
+var namespacepz2015_1_1habits_1_1rmm_1_1activity_1_1login__and__registration =
+[
+    [ "ConnectionTask", "classpz2015_1_1habits_1_1rmm_1_1activity_1_1login__and__registration_1_1_connection_task.html", "classpz2015_1_1habits_1_1rmm_1_1activity_1_1login__and__registration_1_1_connection_task" ],
+    [ "LoginActivity", "classpz2015_1_1habits_1_1rmm_1_1activity_1_1login__and__registration_1_1_login_activity.html", "classpz2015_1_1habits_1_1rmm_1_1activity_1_1login__and__registration_1_1_login_activity" ],
+    [ "Validate", "classpz2015_1_1habits_1_1rmm_1_1activity_1_1login__and__registration_1_1_validate.html", "classpz2015_1_1habits_1_1rmm_1_1activity_1_1login__and__registration_1_1_validate" ]
+];
