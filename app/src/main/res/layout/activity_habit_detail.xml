@@ -81,7 +81,16 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/habitDate"
+                    android:id="@+id/habitCreationDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="21st November, 2013"
+                    android:textColor="#615f5f"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/habitUpdateDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

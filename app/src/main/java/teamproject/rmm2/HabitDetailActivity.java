@@ -13,12 +13,14 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+
 import teamproject.rmm2.models.HabitRow;
 
 public class HabitDetailActivity extends MyActivityTemplate {
 
     private HabitRow item;
-    private TextView title, description, frequency, date, periodicity;
+    private TextView title, description, frequency, creationDate, updateDate, periodicity;
     private ImageView image;
     private Button editHabit, deleteHabit, schedule;
 
@@ -33,7 +35,8 @@ public class HabitDetailActivity extends MyActivityTemplate {
         title = (TextView) findViewById(R.id.habitTitle);
         description = (TextView) findViewById(R.id.habitDescription);
         frequency = (TextView) findViewById(R.id.habitFrequency);
-        date = (TextView) findViewById(R.id.habitDate);
+        creationDate = (TextView) findViewById(R.id.habitCreationDate);
+        updateDate = (TextView) findViewById(R.id.habitUpdateDate);
         image = (ImageView) findViewById(R.id.habitImage);
         periodicity = (TextView) findViewById(R.id.habitPeriodicity);
 
@@ -41,6 +44,10 @@ public class HabitDetailActivity extends MyActivityTemplate {
         description.setText(item.getDescription());
         frequency.setText(Integer.toString(item.getFrequency()));
         periodicity.setText(periodicityToString(item.getPeriod()));
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        creationDate.setText("Creation date: " + format.format(item.getCreationDate().getTime()));
+        updateDate.setText("Last update date: " + format.format(item.getLastUpdateDate().getTime()));
 
         deleteHabit = (Button) findViewById(R.id.deleteHabit);
         editHabit = (Button) findViewById(R.id.editHabit);

@@ -20,7 +20,7 @@ public class SetTodos extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        dbHelper.setTodos();
+        //dbHelper.setTodos();
 
         return null;
     }
