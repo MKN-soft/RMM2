@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class for connect with database. Using configuration file config.php .
+ */
 class ConnectDB {
 	
 	function __construct() { }

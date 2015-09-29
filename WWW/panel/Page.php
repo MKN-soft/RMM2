@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class for managing website, showing statistics etc.
+ */
 class Page {
 	
 	private $db;

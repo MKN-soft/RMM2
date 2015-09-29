@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Database config file
  */
 define("DB_HOST", "sql.serwer1538500.home.pl");

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Methods for insert, update, select from database.
+ */
+
 class FunctionsDB {
 
 	private $db;
@@ -18,18 +22,18 @@ class FunctionsDB {
 		$this->db->connect();
 		
 		// FIND HABIT
-		$sql = "CALL getHabitsByTitle('$nazwa_nawyku')";
+		$sql = "CALL getHabitsByTitle('$nazwa_nawyku', '$id')";
 		$result = mysql_query($sql);
-	
-		$habit = mysql_fetch_array($result);
+		
+		$habit = mysql_fetch_row($result);	
 		$this->db->close();
 			
 		// check for success
-		if ($habit[id]) {
+		if ($habit[0]) {
 			// UPDATE HABIT
 			$this->db->connect();
 
-			$sql = "CALL editHabits($id, '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku', $habit[id])";
+			$sql = "CALL editHabits($id, '$czy_sie_udalo', '$data_wprowadzenia', '$czestotliwosc', '$kiedy_ostatnio_aktualizowano_nawyk', '$nazwa_nawyku', $habit[0])";
 			$result = mysql_query($sql);
 			
 		}
@@ -47,7 +51,7 @@ class FunctionsDB {
 		$this->nawyk_id = $echo['id'];
 		
 		if ($this->nawyk_id == 0)
-			$this->nawyk_id = $habit[id];
+			$this->nawyk_id = $habit[0];
 		
 		$this->db->close();
 		

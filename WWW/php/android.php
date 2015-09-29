@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Main class for manage android login, registration or synchronization. 
+ */
 class Android {
 	
 	private $db;
@@ -13,6 +16,9 @@ class Android {
 		
 	}
 	
+	/**
+	 * Method running by android, manage which run tag.
+	 */
 	public function runAPI() {	
 		if (isset($_POST['tag']) && $_POST['tag'] != '') {
 			// get tag
@@ -134,7 +140,6 @@ class Android {
 		// check if user exists
 		if ($user) {
 			if ($this->db->storeHabits($user['id'], $czy_sie_udalo, $data_wprowadzenia, $czestotliwosc, $kiedy_ostatnio_aktualizowano_nawyk, $nazwa_nawyku)) {
-
 				$ilosc_nawykow = intval($_POST['ilosc_nawykow']);
 				$najlepsza_passa = floatval($_POST['najlepsza_passa']);
 				$srednia_dlugosc_ciagu = floatval($_POST['srednia_dlugosc_ciagu']);
