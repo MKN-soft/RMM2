@@ -7,6 +7,7 @@ import java.util.Calendar;
 
 /**
  * Created by Marcin on 2015-08-20.
+ * Represents row HABITS table in sqLite database RMM2.db
  */
 public class HabitRow {
     private Drawable icon;

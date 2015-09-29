@@ -4,6 +4,7 @@ package teamproject.rmm2.database;
 /**
  * Created by Marcin on 2015-07-21.
  * Contract class for SQLite. Contract class explicitly specifies the layout of schema in a systematic and self-documenting way.
+ * It's final String fields are SQL queries.
  */
  final public class Contract {
     /*
@@ -16,7 +17,8 @@ that some Android classes such as cursor adaptors will expect it to have. It's n
 but this can help your database work harmoniously with the Android framework.*/
 
     /**
-     * Inner class that defines the table contents
+     * Inner class that defines HABITS table contents in RMM2.db database.
+     * HABITS store data about habits inserted by user.
      */
     static abstract class Habits{
         public static final String TABLE_NAME = "habits";
@@ -29,6 +31,10 @@ but this can help your database work harmoniously with the Android framework.*/
         public static final String COLUMN_LAST_UPDATE_DATE = "last_update";
     }
 
+    /**
+     * Inner class that defines CALENDAR table contents in RMM2.db database.
+     * CALENDAR stores data about when the user did or didn't complete his habit or when he should do one.
+     */
     static abstract class Calendar{
         public static final String TABLE_NAME = "calendar";
         public static final String COLUMN_ID = "id";
@@ -37,6 +43,10 @@ but this can help your database work harmoniously with the Android framework.*/
         public static final String COLUMN_STATE = "state";
     }
 
+    /**
+     * Inner class that defines STATES table contents in RMM2.db database.
+     * Auxiliary table storing states - if the user did or did not succeed.
+     */
     static abstract class States{
         public static final String TABLE_NAME = "states";
         public static final String COLUMN_ID = "id";
