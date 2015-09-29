@@ -11,10 +11,11 @@ import java.util.regex.Pattern;
 public class Validate {
     // Regular Expression
     private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    private static final String PASSWORD_REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$";
+    private static final String PASSWORD_REGEX = "^(?=(.*\\d){1})(?=.*[a-zA-Z])(?=.*[!@#$%])[0-9a-zA-Z!@#$%]{8,}";
+    //^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,*}$
     /*
             Password matching expression.
-            Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.
+            Password must be at least 8 characters, and must include at least one digit, letters, and one special character.
     */
 
     // Error Messages
