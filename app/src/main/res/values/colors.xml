@@ -25,6 +25,6 @@
     <color name="frame_background">#bcbcbc</color>
 
     <!-- Add Habit Colors -->
-    <color name="bg_addHabit">#CC33CC</color>
+    <color name="bg_addHabit">#C0C0C0</color>
 
 </resources>

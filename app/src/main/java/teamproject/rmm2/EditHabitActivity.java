@@ -23,6 +23,7 @@ public class EditHabitActivity extends MyActivityTemplate {
     private TextView habitName;
     private EditText habitDescription, habitFrequency;
     private ImageView habitImage;
+    private String habitDescriptionString, habitFrequencyString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,9 @@ public class EditHabitActivity extends MyActivityTemplate {
         habitFrequency.setText(Integer.toString(item.getFrequency()));
         habitPeriodicity = item.getPeriod();
         //TODO Set image??
+
+        habitDescriptionString = item.getDescription();
+        habitFrequencyString = Integer.toString(item.getFrequency());
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -78,7 +82,21 @@ public class EditHabitActivity extends MyActivityTemplate {
         editHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbHelper.editHabit(getContext(), habitDescription.getText().toString(), Integer.parseInt(habitFrequency.getText().toString()), habitPeriodicity);
+
+                // Check if editText is empty
+                //****
+                if (habitDescription.getText().toString() != habitDescriptionString)
+                    habitDescriptionString = habitDescription.getText().toString();
+
+                if (habitFrequency.getText().toString() != habitFrequencyString)
+                    habitFrequencyString = habitFrequency.getText().toString();
+                //****
+
+                if (habitFrequencyString.matches(""))
+                    habitFrequencyString = Integer.toString(item.getFrequency());
+
+
+                dbHelper.editHabit(getContext(), habitDescriptionString, Integer.parseInt(habitFrequencyString), habitPeriodicity);
 
                 Intent intent = new Intent(EditHabitActivity.this, MainActivity.class);
                 startActivity(intent);

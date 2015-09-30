@@ -396,6 +396,7 @@ public class CalendarActivity extends MyActivityTemplate {
             });
         }
 
+
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_calendar;

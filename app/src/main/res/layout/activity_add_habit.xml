@@ -18,10 +18,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:capitalize="characters"
             android:text="@string/addHabit"
-            android:textSize="15dp"
+            android:textSize="24dp"
             android:textStyle="bold"
             android:textColor="@color/white" />
 
@@ -29,26 +28,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="10dp" >
+            android:layout_marginBottom="30dp" >
 
-            <ImageView
-                android:id="@+id/addHabitImage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp" />
+            <!--<ImageView-->
+                <!--android:id="@+id/addHabitImage"-->
+                <!--android:layout_width="80dp"-->
+                <!--android:layout_height="80dp"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginTop="5dp" />-->
 
-            <Button
-                android:id="@+id/chooseImage"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Choose Image"
-                android:textColor="@color/bg_addHabit"
-                android:background="@color/btn_register_bg"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+            <!--<Button-->
+                <!--android:id="@+id/chooseImage"-->
+                <!--style="?android:attr/buttonStyleSmall"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Choose Image"-->
+                <!--android:textColor="@color/bg_addHabit"-->
+                <!--android:background="@color/btn_register_bg"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentEnd="true" />-->
         </RelativeLayout>
 
         <EditText

@@ -26,16 +26,16 @@ public class AddHabitActivity extends MyActivityTemplate {
         super.onCreate(savedInstanceState);
 
         Button addHabitButton = (Button) findViewById(R.id.addHabitButton);
-        Button chooseImage = (Button) findViewById(R.id.chooseImage);
+        //Button chooseImage = (Button) findViewById(R.id.chooseImage);
 
         habitName = (EditText) findViewById(R.id.addHabitName);
         habitDescription = (EditText) findViewById(R.id.addHabitDescription);
         habitFrequency = (EditText) findViewById(R.id.addHabitFrequency);
 
         final Drawable image = getResources().getDrawable(R.mipmap.ic_question_mark);
-        ImageView habitImage = (ImageView) findViewById(R.id.addHabitImage);
+        //ImageView habitImage = (ImageView) findViewById(R.id.addHabitImage);
 
-        habitImage.setImageDrawable(image);
+        //habitImage.setImageDrawable(image);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -67,12 +67,12 @@ public class AddHabitActivity extends MyActivityTemplate {
             }
         });
 
-        chooseImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO Make Choose Image Activity
-            }
-        });
+//        chooseImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO Make Choose Image Activity
+//            }
+//        });
 
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +97,13 @@ public class AddHabitActivity extends MyActivityTemplate {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AddHabitActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
